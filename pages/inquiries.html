@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Make an Inquiry</title>
+  <link rel="stylesheet" href="../css/inquiries.css">
+</head>
+<body>
+  <div class="inquiry-header">
+    <h1>Get in Touch</h1>
+    <p>We’re happy to answer your questions</p>
+  </div>
+
+  <form class="inquiry-form" method="POST" action="/submit-inquiry">
+    <label for="name">Your Name</label>
+    <input type="text" id="name" name="name" required>
+
+    <label for="email">Email Address</label>
+    <input type="email" id="email" name="email" required>
+
+    <label for="message">Your Message</label>
+    <textarea id="message" name="message" required></textarea>
+
+    <button type="submit">Send Inquiry</button>
+  </form>
+</body>
+</html>
