@@ -14,5 +14,94 @@
         </div>
     </section>
     <footer><p>&copy; 2025 Great Mar-cy’s & Sons Limited</p></footer>
+    <div class="property-card" data-location="ilorin">
+  <h3>3 Bedroom Flat in Ilorin</h3>
+</div>
+
+<div class="property-card" data-location="lagos">
+  <h3>2 Bedroom in Lagos</h3>
+</div>
+
+<div class="property-card" data-location="ilorin">
+  <h3>Modern Bungalow</h3>
+  <p>Located in Ilorin</p>
+</div>
+
+<div class="property-card" data-location="ajegunle">
+  <h3>Land for Sale</h3>
+  <p>Ajegunle Road</p>
+</div>
+
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const query = urlParams.get('q');
+
+    if (query) {
+      const properties = document.querySelectorAll('.property-card');
+      let matchFound = false;
+
+      properties.forEach(property => {
+        const location = property.getAttribute('data-location')?.toLowerCase() || '';
+        if (location.includes(query.toLowerCase())) {
+          property.style.display = 'block';
+          matchFound = true;
+        } else {
+          property.style.display = 'none';
+        }
+      });
+
+      if (!matchFound) {
+        document.querySelector('.properties-list').innerHTML = `<p>No results found for "${query}"</p>`;
+      }
+    }
+  });
+</script>
+
+<h2>Property Listings</h2>
+<div id="property-list"></div>
+
+<script>
+// Dummy property data (you can replace this with real ones from backend)
+const properties = [
+  { title: "3 Bedroom Duplex", location: "Ilorin", price: "₦25M" },
+  { title: "Land in Olooru", location: "Olooru", price: "₦1.5M" },
+  { title: "Bungalow at Tanke", location: "Tanke", price: "₦18M" },
+];
+
+function getQueryParam(name) {
+  const params = new URLSearchParams(window.location.search);
+  return params.get(name)?.toLowerCase() || "";
+}
+
+function filterProperties(query) {
+  const container = document.getElementById("property-list");
+  container.innerHTML = "";
+
+  const filtered = properties.filter(prop =>
+    prop.title.toLowerCase().includes(query) ||
+    prop.location.toLowerCase().includes(query)
+  );
+
+  if (filtered.length === 0) {
+    container.innerHTML = "<p>No matching properties found.</p>";
+    return;
+  }
+
+  filtered.forEach(prop => {
+    const item = document.createElement("div");
+    item.innerHTML = `<h3>${prop.title}</h3><p>${prop.location}</p><p>${prop.price}</p>`;
+    item.style.border = "1px solid #ccc";
+    item.style.padding = "10px";
+    item.style.marginBottom = "10px";
+    container.appendChild(item);
+  });
+}
+
+
+const query = getQueryParam("query");
+filterProperties(query);
+</script>
+
 </body>
 </html>

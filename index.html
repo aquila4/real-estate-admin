@@ -23,8 +23,11 @@
     <section class="hero">
         <h2>Welcome to Great Mar-cy’s & Sons Limited</h2>
         <p>We connect you to verified and affordable land and properties across Kwara State. Whether you're buying, investing, or looking for commercial spaces, you're in the right place.</p>
-        <input type="text" placeholder="Search location or type...">
-      </div>
+        <!-- Search Bar Right Below the Welcome Text -->
+    <form action="/pages/property.html" method="GET" class="search-form">
+      <input type="text" name="q" placeholder="Search by location..." required>
+      <button type="submit">Search</button>
+    </form>
     </section>
     <section class="background-banner">
     <div class="banner-overlay">
@@ -98,6 +101,11 @@
   })();
   </script>
   <!--End of Tawk.to Script-->
+  <form action="/property.html" method="GET">
+  <input type="text" name="q" placeholder="Search by location..." required>
+  <button type="submit">Search</button>
+</form>
+
 
 </body>
 </html>
