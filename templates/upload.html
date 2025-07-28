@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Upload Property</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+    h1 {
+      color: #004080;
+    }
+    form {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      max-width: 600px;
+      margin-bottom: 30px;
+    }
+    input, textarea {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      margin-top: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+    }
+    button {
+      background-color: #004080;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    .property-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+    .property-card {
+      background: white;
+      border-radius: 10px;
+      padding: 15px;
+      box-shadow: 0 0 8px rgba(0,0,0,0.1);
+    }
+    .property-card img,
+    .property-card video {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+    .property-card h3 {
+      margin: 10px 0 5px;
+      color: #333;
+    }
+    .property-card p {
+      margin: 5px 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+<h2>Upload New Property</h2>
+
+  <form action="{{ url_for('upload') }}" method="post" enctype="multipart/form-data">
+    <input type="text" name="title" placeholder="Property Title" required><br>
+    <input type="text" name="location" placeholder="Location" required><br>
+    <textarea name="description" placeholder="Description" required></textarea><br>
+    <input type="file" name="image" accept="image/*" required><br>
+    <input type="file" name="video" accept="video/*" required><br>
+    <button type="submit">Upload Property</button>
+  </form>
+
+  <hr>
+
+  <h2>Uploaded Properties</h2>
+  {% for property in properties %}
+    <div class="property-card">
+      <h3>{{ property['title'] }}</h3>
+      <p><strong>Location:</strong> {{ property['location'] }}</p>
+      <p><strong>Description:</strong> {{ property['description'] }}</p>
+      <img src="{{ url_for('static', filename=property['image'].replace('static/', '')) }}" width="200">
+      <br>
+      <video src="{{ url_for('static', filename=property['video'].replace('static/', '')) }}" width="200" controls></video>
+      <form action="{{ url_for('delete_property', property_id=property['id']) }}" method="post" onsubmit="return confirm('Delete this property?')">
+        <button type="submit">Delete</button>
+      </form>
+    </div>
+    <hr>
+  {% endfor %}
+</body>
+</html>
+  
+  

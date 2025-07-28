@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Great Mar-cy’s Estate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}?v=2">
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <img src="{{ url_for('static', filename='image/logo.jpg') }}?v=2" alt="Great Marcy Logo" class="logo">
+
+    <!-- Hamburger -->
+    <div class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="nav-menu" id="navMenu">
+      <a href="{{ url_for('home') }}?v=2">Home</a>
+      <a href="{{ url_for('about') }}?v=2">About</a>
+      <a href="{{ url_for('agent') }}?v=2">Agents</a>
+      <a href="{{ url_for('property') }}?v=2">Properties</a>
+      <a href="https://wa.me/2349139070404" target="_blank">Contact</a>
+      <a href="{{ url_for('admin_login') }}?v=2">Admin Login</a>
+      <a href="{{ url_for('admin_dashboard') }}" class="admin-link">Admin Dashboard</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h2>Welcome to Great Mar-cy’s & Sons Limited</h2>
+    <p>We connect you to verified and affordable land and properties across Kwara State.</p>
+    <form action="{{ url_for('property') }}?v=2" method="GET" class="search-form">
+      <input type="text" name="query" placeholder="Search properties..." required>
+      <button type="submit">Search</button>
+    </form>
+  </section>
+
+  <!-- Banner -->
+  <section class="background-banner">
+    <div class="banner-overlay">
+      <h2>Welcome Home</h2>
+      <p>Experience comfort and class with Great Mar-cy’s properties.</p>
+    </div>
+  </section>
+
+  <!-- Featured Properties -->
+  <section class="featured">
+    <h3>Featured Properties</h3>
+    <div class="property-card row">
+      <img src="{{ url_for('static', filename='image/pic5.jpg') }}?v=2" alt="property">
+      <img src="{{ url_for('static', filename='image/pic1.jpg') }}?v=2" alt="Property 1">
+      <img src="{{ url_for('static', filename='image/pic2.jpg') }}?v=2" alt="Property 2">
+      <img src="{{ url_for('static', filename='image/pic3.jpg') }}?v=2" alt="Property 3">
+      <img src="{{ url_for('static', filename='image/pic4.jpg') }}?v=2" alt="Property 4">
+      <img src="{{ url_for('static', filename='image/pic3.jpg') }}?v=2" alt="Property 5">
+    </div>
+  </section>
+
+  <!-- Block Section -->
+  <section class="block-section">
+    <h2>Block Section - Olooru</h2>
+    
+    <a href="https://wa.me/2349139070404" target="_blank" class="cta-btn">Contact for Inspection</a>
+  </section>
+
+  <!-- About Preview -->
+  <section class="about-preview">
+    <h3>About Us</h3>
+    <p>Great Mar-cy’s & Sons Limited is your trusted partner for real estate investment in Ilorin.
+      <a href="{{ url_for('about') }}?v=2">Read more →</a>
+    </p>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+      <p>OLD JEBBA ROAD KULENDE AREA SANGO ILORIN, KWARA STATE, NIGERIA</p>
+      <p>Email: akinsulieabimbola@gmail.com | Phone: +234 9139070404, +234 9028939653</p>
+    </div>
+  </footer>
+
+  <!-- Cookie Banner -->
+  <div class="cookie-banner" id="cookie-banner">
+    <p>This website uses cookies to ensure you get the best experience.
+      <a href="{{ url_for('privacy') }}?v=2" target="_blank" style="color: #fff; text-decoration: underline;">Learn More</a>
+    </p>
+    <button id="accept-cookies">Accept</button>
+  </div>
+
+  <!-- Cookie Banner Style -->
+  <style>
+    .cookie-banner {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background: #004080;
+      color: #fff;
+      padding: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 10000;
+    }
+    .cookie-banner button {
+      background: #fff;
+      color: #004080;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+  </style>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/script.js') }}?v=2"></script>
+  <script>
+    // Set current year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Hamburger toggle
+    const hamburger = document.getElementById('hamburger');
+    const navMenu = document.getElementById('navMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      navMenu.classList.toggle('show');
+      document.body.classList.toggle('lock-scroll');
+    });
+
+    // Cookie acceptance
+    document.getElementById("accept-cookies").onclick = () => {
+      document.getElementById("cookie-banner").style.display = "none";
+      localStorage.setItem("cookieAccepted", "yes");
+    };
+
+    window.onload = () => {
+      if (localStorage.getItem("cookieAccepted") === "yes") {
+        document.getElementById("cookie-banner").style.display = "none";
+      }
+    };
+  </script>
+
+  <!-- Tawk.to Live Chat -->
+  <script type="text/javascript">
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+    (function () {
+      var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+      s1.async = true;
+      s1.src = 'https://embed.tawk.to/6878d02fae6162191205a059/1j0buqfek';
+      s1.charset = 'UTF-8';
+      s1.setAttribute('crossorigin', '*');
+      s0.parentNode.insertBefore(s1, s0);
+    })();
+  </script>
+
+</body>
+</html>

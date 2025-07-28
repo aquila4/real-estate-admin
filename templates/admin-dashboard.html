@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin-dashboard.css') }}?v=3">
+</head>
+<body>
+
+  <h1>Welcome to Admin Dashboard</h1>
+
+  <!-- ✅ Home Button -->
+  <a href="{{ url_for('home') }}" class="home-button">🏠 Home</a>
+
+  <!-- ✅ Flash Messages -->
+  {% with messages = get_flashed_messages() %}
+    {% if messages %}
+      <div class="flash-message">
+        {% for message in messages %}
+          <p>{{ message }}</p>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
+  <!-- ✅ Property List -->
+  {% if properties %}
+    <div class="property-list">
+      {% for property in properties %}
+        <div class="property-card">
+          <h3>{{ property['title'] }}</h3>
+          <p><strong>Location:</strong> {{ property['location'] }}</p>
+          <p><strong>Description:</strong> {{ property['description'] }}</p>
+          
+          {% if property['image'] %}
+            <img src="{{ url_for('static', filename='uploads/' + property['image']) }}" alt="Property Image" width="200">
+          {% endif %}
+          
+          {% if property['video'] %}
+            <video width="250" controls poster="{{ url_for('static', filename='uploads/' + property['image']) }}">
+              <source src="{{ url_for('static', filename='uploads/' + property['video']) }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {% endif %}
+
+          <!-- ✅ Delete Button -->
+          <form action="{{ url_for('delete_property', property_id=property['id']) }}" method="POST" onsubmit="return confirm('Are you sure you want to delete this property?');">
+            <button type="submit">Delete</button>
+          </form>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p>No properties available yet.</p>
+  {% endif %}
+
+</body>
+</html>

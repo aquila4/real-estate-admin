@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Properties - Great Mar-cy</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f8fc;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #003366;
+      margin-bottom: 30px;
+    }
+
+    .property-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .property-card {
+      background-color: white;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+      transition: transform 0.2s ease;
+    }
+
+    .property-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .property-media img,
+    .property-media video {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .property-details {
+      padding: 15px;
+    }
+
+    .property-details h3 {
+      color: #004080;
+      font-size: 18px;
+      margin: 0 0 10px;
+    }
+
+    .property-details p {
+      color: #555;
+      font-size: 14px;
+      margin: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Uploaded Properties</h1>
+
+    {% if properties %}
+      <div class="property-grid">
+        {% for property in properties %}
+          <div class="property-card">
+            <div class="property-media">
+             {% if property['image'] %}
+  <img src="{{ url_for('static', filename='uploads/' + property['image']) }}" alt="Property Image">
+{% endif %}
+{% if property['video'] %}
+  <video controls>
+    <source src="{{ url_for('static', filename='uploads/' + property['video']) }}" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+{% endif %}
+
+            </div>
+            <div class="property-details">
+              <h3>{{ property[1] }}</h3>
+              <p>{{ property[2] }}</p>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+      <p style="text-align: center; color: #666;">No properties uploaded yet.</p>
+    {% endif %}
+  </div>
+
+</body>
+</html>

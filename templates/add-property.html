@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Add Property</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/add-property.css') }}?v=3">
+</head>
+<body>
+
+  <h1>Add New Property</h1>
+  <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+    <label>Title:</label>
+    <input type="text" name="title" placeholder="Property Title" required>
+
+    <label>Location:</label>
+    <input type="text" name="location" placeholder="Location" required>
+
+    <label>Description:</label>
+    <textarea name="description" rows="4" placeholder="Property Description" required></textarea>
+
+    <label>Main Image:</label>
+    <input type="file" name="image" accept="image/*" required>
+
+    <label>Main Video:</label>
+    <input type="file" name="video" accept="video/*">
+
+    <label>Gallery Images (multiple):</label>
+    <input type="file" name="images" accept="image/*" multiple>
+
+    <label>Gallery Videos (multiple):</label>
+    <input type="file" name="videos" accept="video/*" multiple>
+
+    <button type="submit">Upload Property</button>
+    <div style="margin-bottom: 20px;">
+  <a href="{{ url_for('admin_dashboard') }}" style="text-decoration: none; color: white; background-color: #004080; padding: 10px 15px; border-radius: 5px;">
+    ← Back to Admin Dashboard
+  </a>
+</div>
+
+  </form>
+
+  {% if properties %}
+    <h2 style="text-align:center; color:#003366;">Uploaded Properties</h2>
+    <div class="property-grid">
+      {% for property in properties %}
+        <div class="property-card">
+          <div class="property-media">
+            {% if property[3] %}
+              <img src="{{ url_for('static', filename=property[3].split('static/')[1]) }}" alt="Main Image">
+            {% endif %}
+            {% if property[4] %}
+              <video controls>
+                <source src="{{ url_for('static', filename=property[4].split('static/')[1]) }}" type="video/mp4">
+              </video>
+            {% endif %}
+          </div>
+          <div class="property-details">
+            <h3>{{ property[1] }}</h3>
+            <p><strong>Location:</strong> {{ property[2] }}</p>
+            <p>{{ property[5] }}</p> <!-- description -->
+            <form action="{{ url_for('delete_property', property_id=property[0]) }}" method="POST" class="delete-form">
+              <button type="submit">Delete</button>
+            </form>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <p style="text-align:center; color:#666;">No properties uploaded yet.</p>
+  {% endif %}
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>About Us - Great Mar-cy’s & Sons Limited</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}?v=2">
+</head>
+<body>
+
+  <section class="about-hero">
+    <h1>About Great Mar-cy’s & Sons Limited</h1>
+    <p>Your Trusted Real Estate Partner in Ilorin, Kwara State.</p>
+  </section>
+
+  <section class="about-content">
+    <div class="about-text">
+      <h2>Who We Are</h2>
+      <p>We are a reputable real estate company delivering secure, affordable, and legally sound property solutions. From land to commercial spaces, we offer unmatched professionalism and transparency.</p>
+      <p>With years of experience, we support your investment, building, or homeownership journey with integrity and dedication.</p>
+    </div>
+
+    <div class="about-images">
+      <img src="{{ url_for('static', filename='image/pic1.jpg') }}?v=2" alt="Office View 1">
+      <img src="{{ url_for('static', filename='image/pic2.jpg') }}?v=2" alt="Office View 2">
+      <img src="{{ url_for('static', filename='image/pic3.jpg') }}?v=2" alt="Office View 3">
+      <img src="{{ url_for('static', filename='image/pic4.jpg') }}?v=2" alt="Office View 6">
+    </div>
+
+    <div class="about-video">
+      <h3>Watch Our Company Tour</h3>
+      <video controls width="100%" poster="{{ url_for('static', filename='image/thumbnail.jpg') }}?v=2">
+  <source src="{{ url_for('static', filename='image/vid11.mp4') }}?v=2" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+    </div>
+
+    <div class="about-address">
+      <h3>Visit Us</h3>
+      <p>Great Mar-cy’s & Sons Limited</p>
+      <p>OLD JEBBA ROAD KULENDE AREA SANGO ILORIN, KWARA STATE, NIGERIA</p>
+      <p>Email: akinsulieabimbola@gmail.com</p>
+      <p>Phone: +234 9139070404, +234 9028939653</p>
+    </div>
+  </section>
+
+</body>
+</html>
