@@ -35,6 +35,11 @@ def agent():
 def privacy():
     return render_template('privacy.html')
 
+@app.route('/google78ddd9d79ee95af7.html')
+def google_verify():
+    return app.send_static_file('google78ddd9d79ee95af7.html')
+
+
 # ========== Upload Route ==========
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
