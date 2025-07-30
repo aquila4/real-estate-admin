@@ -506,6 +506,8 @@ header {
 
 
 
+
+
 /* Base navbar styling */
 .navbar {
   background-color: #004080;
@@ -629,3 +631,23 @@ header {
 
  
 
+.estate-name {
+  font-size: 3rem;              /* Big size */
+  font-weight: 900;             /* Extra bold */
+  color: #0a2c5f;               /* Strong deep blue (or choose your brand color) */
+  text-align: center;
+  text-transform: uppercase;    /* Makes it ALL CAPS */
+  letter-spacing: 2px;          /* Adds space between letters */
+  margin-bottom: 1rem;
+}
+
+/* Optional: Add an underline or decoration */
+.estate-name::after {
+  content: '';
+  display: block;
+  width: 80px;
+  height: 4px;
+  background-color: #0a2c5f;
+  margin: 0.5rem auto 0;
+  border-radius: 2px;
+}
