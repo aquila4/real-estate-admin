@@ -39,6 +39,11 @@ def privacy():
 def google_verification():
     return app.send_static_file('google78ddd9d79ee95af7.html')
 
+@app.route('/sitemap.xml')
+def sitemap():
+    return send_from_directory('static', 'sitemap.xml')
+
+
 
 
 # ========== Upload Route ==========
