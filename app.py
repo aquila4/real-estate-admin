@@ -44,8 +44,6 @@ def sitemap():
     return send_from_directory('static', 'sitemap.xml')
 
 
-
-
 # ========== Upload Route ==========
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
