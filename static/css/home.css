@@ -651,3 +651,65 @@ header {
   margin: 0.5rem auto 0;
   border-radius: 2px;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.estate-highlight {
+  background-image: url('/static/image/success-estate-bg.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px 20px;
+  color: white;
+}
+
+
+.estate-highlight .estate-name,
+.estate-highlight .block-section h2 {
+  font-size: 2.5rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 20px;
+  color: #fff;
+  text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+}
+
+.property-card img {
+  width: 100%;
+  max-width: 300px;
+  margin: 10px;
+  border-radius: 8px;
+}
+
+.block-section {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.cta-btn {
+  background-color: #007bff;
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  display: inline-block;
+  margin-top: 20px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.2);
+}
