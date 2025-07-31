@@ -128,3 +128,22 @@ form button:hover {
     transform: translateY(0);
   }
 }
+
+
+
+
+
+
+
+.form-title {
+  text-align: center;
+  font-size: 2rem;
+  color: #004080;
+  background: #f0f8ff;
+  padding: 1rem 0;
+  margin-bottom: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  font-weight: 600;
+  letter-spacing: 1px;
+}
