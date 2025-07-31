@@ -2,14 +2,27 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Properties - Great Mar-cy</title>
+  <title>Our Properties - Great Mar-cy</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f8fc;
+      background-color: #f0f4f8;
       margin: 0;
       padding: 0;
+    }
+
+    header {
+      background-color: #004080;
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+      border-bottom: 5px solid #003366;
+    }
+
+    header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
     }
 
     .container {
@@ -18,29 +31,23 @@
       padding: 40px 20px;
     }
 
-    h1 {
-      text-align: center;
-      color: #003366;
-      margin-bottom: 30px;
-    }
-
     .property-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
     }
 
     .property-card {
-      background-color: white;
-      border: 1px solid #ddd;
+      background-color: #fff;
       border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
       overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-      transition: transform 0.2s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .property-card:hover {
       transform: translateY(-5px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.12);
     }
 
     .property-media img,
@@ -52,54 +59,84 @@
     }
 
     .property-details {
-      padding: 15px;
+      padding: 20px;
     }
 
     .property-details h3 {
-      color: #004080;
-      font-size: 18px;
-      margin: 0 0 10px;
+      color: #003366;
+      font-size: 20px;
+      margin-bottom: 10px;
     }
 
     .property-details p {
-      color: #555;
+  color: #444;
+  font-size: 15px;
+  margin-bottom: 8px;
+}
+
+.property-details strong {
+  color: #003366;
+}
+
+
+    .no-properties {
+      text-align: center;
+      color: #777;
+      padding: 60px 0;
+      font-size: 18px;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      background-color: #f0f4f8;
+      color: #888;
       font-size: 14px;
-      margin: 0;
     }
   </style>
 </head>
 <body>
 
-  <div class="container">
-    <h1>Uploaded Properties</h1>
+  <header>
+    <h1>Explore Our Premium Listings</h1>
+    <p>Discover amazing properties from Great Mar-cy’s & Sons Ltd</p>
+  </header>
 
+  <div class="container">
     {% if properties %}
       <div class="property-grid">
         {% for property in properties %}
           <div class="property-card">
             <div class="property-media">
-             {% if property['image'] %}
-  <img src="{{ url_for('static', filename='uploads/' + property['image']) }}" alt="Property Image">
-{% endif %}
-{% if property['video'] %}
-  <video controls>
-    <source src="{{ url_for('static', filename='uploads/' + property['video']) }}" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-{% endif %}
-
+              {% if property['image'] %}
+                <img src="{{ url_for('static', filename='uploads/' + property['image']) }}" alt="Property Image">
+              {% endif %}
+              {% if property['video'] %}
+                <video controls>
+                  <source src="{{ url_for('static', filename='uploads/' + property['video']) }}" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+              {% endif %}
             </div>
             <div class="property-details">
-              <h3>{{ property[1] }}</h3>
-              <p>{{ property[2] }}</p>
-            </div>
-          </div>
+              <p><strong>Title:</strong> {{ property['title'] }}</p>
+              <p><strong>Location:</strong> {{ property['location'] }}</p>
+              <p><strong>Description:</strong> {{ property['description'] }}</p>
+</div>
+
+
         {% endfor %}
       </div>
     {% else %}
-      <p style="text-align: center; color: #666;">No properties uploaded yet.</p>
+      <div class="no-properties">
+        No properties have been uploaded yet. Please check back soon!
+      </div>
     {% endif %}
   </div>
+
+  <footer>
+    &copy; {{ current_year }} Great Mar-cy’s & Sons Limited. All rights reserved.
+  </footer>
 
 </body>
 </html>

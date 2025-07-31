@@ -7,10 +7,18 @@
 </head>
 <body>
 
+  <!-- HTML -->
+<div class="dashboard-header">
   <h1>Welcome to Admin Dashboard</h1>
+  <p class="subtitle">Manage properties, messages, and settings with ease</p>
+</div>
+
 
   <!-- ✅ Home Button -->
+  <!-- HTML -->
+<div class="home-link-container">
   <a href="{{ url_for('home') }}" class="home-button">🏠 Home</a>
+</div>
 
   <!-- ✅ Flash Messages -->
   {% with messages = get_flashed_messages() %}
