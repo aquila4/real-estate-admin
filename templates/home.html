@@ -8,7 +8,6 @@
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-
   gtag('config', 'AW-17421133724');
 </script>
   <meta charset="UTF-8">
@@ -33,12 +32,8 @@
       <a href="{{ url_for('about') }}?v=2">About</a>
       <a href="{{ url_for('agent') }}?v=2">Agents</a>
       <a href="{{ url_for('property') }}?v=2">Property Listing</a>
-      <a href="https://wa.me/2349139070404" target="_blank"
-   onclick="gtag('event', 'whatsapp_click', {
-     'event_category': 'contact',
-     'event_label': 'WhatsApp Button - Header'
-   });">
-  Contact</a>
+      <a href="{{ url_for('contact') }}">Contact</a>
+
 
       <a href="{{ url_for('admin_login') }}?v=2">Admin Login</a>
       <a href="{{ url_for('admin_dashboard') }}" class="admin-link">Admin Dashboard</a>
