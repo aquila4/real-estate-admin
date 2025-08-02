@@ -51,6 +51,7 @@ def sitemap():
 
 
 # ========== Upload Route ==========
+import traceback  # add at the top
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if not session.get('admin_logged_in'):
@@ -62,41 +63,40 @@ def upload():
             location = request.form['location']
             description = request.form['description']
 
-            # Save single image
-            image_file = request.files.get('image')
             image_filename = ''
+            video_filename = ''
+
+            # Save main image
+            image_file = request.files.get('image')
             if image_file and image_file.filename:
                 image_filename = secure_filename(image_file.filename)
                 image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
 
-            # Save single video
+            # Save main video
             video_file = request.files.get('video')
-            video_filename = ''
             if video_file and video_file.filename:
                 video_filename = secure_filename(video_file.filename)
                 video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
 
-            # Save multiple images
-            multiple_images = request.files.getlist('images')
+            # Save additional images
             image_list = []
-            for img in multiple_images:
+            for img in request.files.getlist('images'):
                 if img and img.filename:
                     filename = secure_filename(img.filename)
                     img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     image_list.append(filename)
             images_str = ','.join(image_list)
 
-            # Save multiple videos
-            multiple_videos = request.files.getlist('videos')
+            # Save additional videos
             video_list = []
-            for vid in multiple_videos:
+            for vid in request.files.getlist('videos'):
                 if vid and vid.filename:
                     filename = secure_filename(vid.filename)
                     vid.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
                     video_list.append(filename)
             videos_str = ','.join(video_list)
 
-            # Save to database
+            # Save to DB
             conn = sqlite3.connect('database.db')
             cursor = conn.cursor()
             cursor.execute('''
@@ -114,6 +114,7 @@ def upload():
             return "Upload failed. Check logs.", 500
 
     return render_template('add-property.html')
+
 
 
 
