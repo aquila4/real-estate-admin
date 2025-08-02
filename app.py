@@ -51,7 +51,8 @@ def sitemap():
 
 
 # ========== Upload Route ==========
-import traceback  # add at the top
+import traceback  # at the top of your file
+
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if not session.get('admin_logged_in'):
@@ -111,9 +112,11 @@ def upload():
 
         except Exception as e:
             print("❌ Upload error:", e)
+            traceback.print_exc()  # 🔍 This shows full error in Railway logs
             return "Upload failed. Check logs.", 500
 
     return render_template('add-property.html')
+
 
 
 
