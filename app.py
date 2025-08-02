@@ -7,6 +7,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
 
+
+
 UPLOAD_FOLDER = 'static/uploads'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
@@ -55,56 +57,65 @@ def upload():
         return redirect(url_for('admin_login'))
 
     if request.method == 'POST':
-        title = request.form['title']
-        location = request.form['location']
-        description = request.form['description']
+        try:
+            title = request.form['title']
+            location = request.form['location']
+            description = request.form['description']
 
-        # Save single image
-        image_file = request.files.get('image')
-        image_filename = ''
-        if image_file and image_file.filename:
-            image_filename = secure_filename(image_file.filename)
-            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+            # Save single image
+            image_file = request.files.get('image')
+            image_filename = ''
+            if image_file and image_file.filename:
+                image_filename = secure_filename(image_file.filename)
+                image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
 
-        # Save single video
-        video_file = request.files.get('video')
-        video_filename = ''
-        if video_file and video_file.filename:
-            video_filename = secure_filename(video_file.filename)
-            video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
+            # Save single video
+            video_file = request.files.get('video')
+            video_filename = ''
+            if video_file and video_file.filename:
+                video_filename = secure_filename(video_file.filename)
+                video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
 
-        # Save multiple images
-        multiple_images = request.files.getlist('images')
-        image_list = []
-        for img in multiple_images:
-            if img and img.filename:
-                filename = secure_filename(img.filename)
-                img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                image_list.append(filename)
-        images_str = ','.join(image_list)
+            # Save multiple images
+            multiple_images = request.files.getlist('images')
+            image_list = []
+            for img in multiple_images:
+                if img and img.filename:
+                    filename = secure_filename(img.filename)
+                    img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    image_list.append(filename)
+            images_str = ','.join(image_list)
 
-        # Save multiple videos
-        multiple_videos = request.files.getlist('videos')
-        video_list = []
-        for vid in multiple_videos:
-            if vid and vid.filename:
-                filename = secure_filename(vid.filename)
-                vid.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                video_list.append(filename)
-        videos_str = ','.join(video_list)
+            # Save multiple videos
+            multiple_videos = request.files.getlist('videos')
+            video_list = []
+            for vid in multiple_videos:
+                if vid and vid.filename:
+                    filename = secure_filename(vid.filename)
+                    vid.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    video_list.append(filename)
+            videos_str = ','.join(video_list)
 
-        # Save to database
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute('''
-            INSERT INTO properties (title, location, image, video, description, images, videos)
-            VALUES (?, ?, ?, ?, ?, ?, ?)
-        ''', (title, location, image_filename, video_filename, description, images_str, videos_str))
-        conn.commit()
-        conn.close()
+            # Save to database
+            conn = sqlite3.connect('database.db')
+            cursor = conn.cursor()
+            cursor.execute('''
+                INSERT INTO properties (title, location, image, video, description, images, videos)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
+            ''', (title, location, image_filename, video_filename, description, images_str, videos_str))
+            conn.commit()
+            conn.close()
 
-        flash('Property uploaded successfully!')
-        return redirect(url_for('admin_dashboard'))
+            flash('Property uploaded successfully!')
+            return redirect(url_for('admin_dashboard'))
+
+        except Exception as e:
+            print("❌ Upload error:", e)
+            return "Upload failed. Check logs.", 500
+
+    return render_template('add-property.html')
+
+
 
     return render_template('add-property.html')
 # ========== Admin Login ==========
