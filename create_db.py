@@ -9,8 +9,8 @@ CREATE TABLE IF NOT EXISTS properties (
     title TEXT,
     location TEXT,
     description TEXT,
-    images TEXT,
-    videos TEXT,
+    image TEXT,
+    video TEXT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 )
 ''')

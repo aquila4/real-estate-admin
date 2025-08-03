@@ -3,6 +3,8 @@ import os
 import sqlite3
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import traceback
+
 
 app = Flask(__name__)
 app.secret_key = 'your_secret_key'
@@ -51,8 +53,7 @@ def sitemap():
 
 
 # ========== Upload Route ==========
-import traceback  # at the top of your file
-
+# @app.route('/upload', methods=['GET', 'POST'])
 @app.route('/upload', methods=['GET', 'POST'])
 def upload():
     if not session.get('admin_logged_in'):
@@ -60,50 +61,36 @@ def upload():
 
     if request.method == 'POST':
         try:
-            title = request.form['title']
-            location = request.form['location']
-            description = request.form['description']
+            title = request.form.get('title')
+            location = request.form.get('location')
+            description = request.form.get('description')
+
+            if not title or not location or not description:
+                flash('Title, location, and description are required.')
+                return redirect(request.url)
 
             image_filename = ''
             video_filename = ''
 
-            # Save main image
+            # Handle main image
             image_file = request.files.get('image')
             if image_file and image_file.filename:
                 image_filename = secure_filename(image_file.filename)
                 image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
 
-            # Save main video
+            # Handle main video
             video_file = request.files.get('video')
             if video_file and video_file.filename:
                 video_filename = secure_filename(video_file.filename)
                 video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
 
-            # Save additional images
-            image_list = []
-            for img in request.files.getlist('images'):
-                if img and img.filename:
-                    filename = secure_filename(img.filename)
-                    img.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    image_list.append(filename)
-            images_str = ','.join(image_list)
-
-            # Save additional videos
-            video_list = []
-            for vid in request.files.getlist('videos'):
-                if vid and vid.filename:
-                    filename = secure_filename(vid.filename)
-                    vid.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-                    video_list.append(filename)
-            videos_str = ','.join(video_list)
-
-            # Save to DB
+            # Save to database (no multiple images/videos)
             conn = sqlite3.connect('database.db')
             cursor = conn.cursor()
             cursor.execute('''
-                INSERT INTO properties (title, location, image, video, description, images, videos)
-                VALUES (?, ?, ?, ?, ?, ?, ?)
-            ''', (title, location, image_filename, video_filename, description, images_str, videos_str))
+                INSERT INTO properties (title, location, image, video, description)
+                VALUES (?, ?, ?, ?, ?)
+            ''', (title, location, image_filename, video_filename, description))
             conn.commit()
             conn.close()
 
@@ -112,8 +99,8 @@ def upload():
 
         except Exception as e:
             print("❌ Upload error:", e)
-            traceback.print_exc()  # 🔍 This shows full error in Railway logs
-            return "Upload failed. Check logs.", 500
+            traceback.print_exc()
+            return "Upload failed. Check Railway logs.", 500
 
     return render_template('add-property.html')
 
@@ -167,47 +154,24 @@ def property():
     return render_template('property.html', properties=properties)
 
 # ========== Delete Property ==========
-@app.route('/delete/<int:property_id>', methods=['GET', 'POST'])
+@app.route('/delete-property/<int:property_id>', methods=['POST'])
 def delete_property(property_id):
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
 
-    conn = sqlite3.connect('database.db')
-    cursor = conn.cursor()
-
-    cursor.execute("SELECT image, video, images, videos FROM properties WHERE id = ?", (property_id,))
-    result = cursor.fetchone()
-
-    if result:
-        image, video, images_str, videos_str = result
-
-        if image:
-            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image.strip())
-            if os.path.exists(image_path):
-                os.remove(image_path)
-
-        if video:
-            video_path = os.path.join(app.config['UPLOAD_FOLDER'], video.strip())
-            if os.path.exists(video_path):
-                os.remove(video_path)
-
-        if images_str:
-            for img in images_str.split(','):
-                img_path = os.path.join(app.config['UPLOAD_FOLDER'], img.strip())
-                if os.path.exists(img_path):
-                    os.remove(img_path)
-
-        if videos_str:
-            for vid in videos_str.split(','):
-                vid_path = os.path.join(app.config['UPLOAD_FOLDER'], vid.strip())
-                if os.path.exists(vid_path):
-                    os.remove(vid_path)
-
+    try:
+        conn = sqlite3.connect('database.db')
+        cursor = conn.cursor()
         cursor.execute("DELETE FROM properties WHERE id = ?", (property_id,))
         conn.commit()
+        conn.close()
 
-    conn.close()
-    return redirect(url_for('admin_dashboard'))
+        flash("Property deleted successfully.")
+        return redirect(url_for('admin_dashboard'))
+
+    except Exception as e:
+        print("❌ Delete error:", e)
+        return "Delete failed", 500
 
 # ========== Template Helpers ==========
 @app.context_processor
