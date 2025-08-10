@@ -31,7 +31,7 @@
       <a href="{{ url_for('home') }}?v=2">Home</a>
       <a href="{{ url_for('about') }}?v=2">About</a>
       <a href="{{ url_for('agent') }}?v=2">Agents</a>
-      <a href="{{ url_for('property') }}?v=2">Property Listing</a>
+      <a href="{{ url_for('property_page') }}?v=2">Property Listing</a>
       <a href="{{ url_for('contact') }}">Contact</a>
 
 
@@ -44,10 +44,11 @@
   <section class="hero">
     <h2>Welcome to Great Mar-cy’s & Sons Limited</h2>
     <p>We connect you to verified and affordable land and properties across Kwara State.</p>
-    <form action="{{ url_for('property') }}?v=2" method="GET" class="search-form">
-      <input type="text" name="query" placeholder="Search properties..." required>
-      <button type="submit">Search</button>
-    </form>
+    <form action="{{ url_for('add_property') }}?v=2" method="GET" class="search-form">
+  <input type="text" name="query" placeholder="Search properties..." required>
+  <button type="submit">Search</button>
+</form>
+
   </section>
 
   <!-- Banner -->
@@ -97,7 +98,7 @@
   <footer class="footer">
     <div class="footer-content">
       <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-      <p>OLD JEBBA ROAD KULENDE AREA SANGO ILORIN, KWARA STATE, NIGERIA</p>
+      <p>KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
       <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404, +234 9028939653</p>
     </div>
   </footer>

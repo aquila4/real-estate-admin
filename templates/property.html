@@ -22,38 +22,37 @@
     <h1>Explore Our Premium Listings</h1>
     <p>Discover amazing properties from Great Mar-cy’s & Sons Ltd</p>
   </header>
-
-  <div class="container">
-    {% if properties %}
-      <div class="property-grid">
-        {% for property in properties %}
-          <div class="property-card">
-            <div class="property-media">
-              {% if property['image'] %}
-                <img src="{{ url_for('static', filename='uploads/' + property['image']) }}" alt="Property Image">
-              {% endif %}
-              {% if property['video'] %}
-                <video controls>
-                  <source src="{{ url_for('static', filename='uploads/' + property['video']) }}" type="video/mp4">
-                  Your browser does not support the video tag.
-                </video>
-              {% endif %}
-            </div>
-            <div class="property-details">
-              <p><strong>Title:</strong> {{ property['title'] }}</p>
-              <p><strong>Location:</strong> {{ property['location'] }}</p>
-              <p><strong>Description:</strong> {{ property['description'] }}</p>
+<div class="container">
+  {% if properties %}
+    <div class="property-grid">
+      {% for property in properties %}
+        <div class="property-card">
+          <div class="property-media">
+            {% if property.image_url %}
+              <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="Property Image">
+            {% endif %}
+            {% if property.video_url %}
+              <video controls>
+                <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            {% endif %}
+          </div>
+          <div class="property-details">
+            <p><strong>Title:</strong> {{ property.title }}</p>
+            <p><strong>Location:</strong> {{ property.location }}</p>
+            <p><strong>Description:</strong> {{ property.description }}</p>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% else %}
+    <div class="no-properties">
+      No properties have been uploaded yet. Please check back soon!
+    </div>
+  {% endif %}
 </div>
 
-
-        {% endfor %}
-      </div>
-    {% else %}
-      <div class="no-properties">
-        No properties have been uploaded yet. Please check back soon!
-      </div>
-    {% endif %}
-  </div>
 
   <footer>
     &copy; {{ current_year }} Great Mar-cy’s & Sons Limited. All rights reserved.

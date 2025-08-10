@@ -1,24 +1,33 @@
 from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
-import os
-import sqlite3
 from werkzeug.utils import secure_filename
 from datetime import datetime
+import os
 import traceback
+from dotenv import load_dotenv
 
+# Load environment variables
+load_dotenv()
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key'
+app.secret_key = os.environ.get("SECRET_KEY", "your_secret_key")
 
+# === PostgreSQL from Railway ===
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:lkDItYnOOeZJsoLltaiTgkTNpElDeiMY@shuttle.proxy.rlwy.net:59358/railway'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-
-UPLOAD_FOLDER = 'static/uploads'
+# === Upload folder setup (using Railway Volume) ===
+UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "/mnt/uploads")
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 
-if not os.path.exists(UPLOAD_FOLDER):
-    os.makedirs(UPLOAD_FOLDER)
+# Import the db instance from extensions.py
+from extensions import db
+db.init_app(app)
 
-# --- ROUTES ---
+# Import models *after* db.init_app
+from models import Property
 
+# === Routes ===
 @app.route('/')
 def home():
     return render_template('home.html')
@@ -27,159 +36,133 @@ def home():
 def about():
     return render_template('about.html')
 
-@app.route('/add-property')
-def add_property():
-    return render_template('add-property.html')
-
 @app.route('/agent')
 def agent():
     return render_template('agent.html')
 
-@app.route("/contact")
+@app.route('/contact')
 def contact():
-    return render_template("contact.html")
+    return render_template('contact.html')
 
 @app.route('/privacy')
 def privacy():
     return render_template('privacy.html')
 
-@app.route('/google78ddd9d79ee95af7.html')
-def google_verification():
-    return app.send_static_file('google78ddd9d79ee95af7.html')
-
 @app.route('/sitemap.xml')
 def sitemap():
     return send_from_directory('static', 'sitemap.xml')
 
+@app.route('/google78ddd9d79ee95af7.html')
+def google_verification():
+    return app.send_static_file('google78ddd9d79ee95af7.html')
 
-# ========== Upload Route ==========
-# @app.route('/upload', methods=['GET', 'POST'])
-@app.route('/upload', methods=['GET', 'POST'])
-def upload():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
-
-    if request.method == 'POST':
-        try:
-            title = request.form.get('title')
-            location = request.form.get('location')
-            description = request.form.get('description')
-
-            if not title or not location or not description:
-                flash('Title, location, and description are required.')
-                return redirect(request.url)
-
-            image_filename = ''
-            video_filename = ''
-
-            # Handle main image
-            image_file = request.files.get('image')
-            if image_file and image_file.filename:
-                image_filename = secure_filename(image_file.filename)
-                image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
-
-            # Handle main video
-            video_file = request.files.get('video')
-            if video_file and video_file.filename:
-                video_filename = secure_filename(video_file.filename)
-                video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
-
-            # Save to database (no multiple images/videos)
-            conn = sqlite3.connect('database.db')
-            cursor = conn.cursor()
-            cursor.execute('''
-                INSERT INTO properties (title, location, image, video, description)
-                VALUES (?, ?, ?, ?, ?)
-            ''', (title, location, image_filename, video_filename, description))
-            conn.commit()
-            conn.close()
-
-            flash('Property uploaded successfully!')
-            return redirect(url_for('admin_dashboard'))
-
-        except Exception as e:
-            print("❌ Upload error:", e)
-            traceback.print_exc()
-            return "Upload failed. Check Railway logs.", 500
-
-    return render_template('add-property.html')
-
-
-
-
-
-    return render_template('add-property.html')
-# ========== Admin Login ==========
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-
         if username == 'admin' and password == '12345':
             session['admin_logged_in'] = True
             return redirect(url_for('add_property'))
-
-        else:
-            flash("Invalid username or password.")
-            return redirect(url_for('admin_login'))
-
+        flash('Invalid credentials.')
     return render_template('admin-login.html')
 
-# ========== Admin Dashboard ==========
 @app.route('/admin-dashboard')
 def admin_dashboard():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
-
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM properties")
-    properties = cursor.fetchall()
-    conn.close()
-
+    properties = Property.query.order_by(Property.created_at.desc()).all()
     return render_template('admin-dashboard.html', properties=properties)
 
-# ========== Property Display ==========
-@app.route('/property')
-def property():
-    conn = sqlite3.connect('database.db')
-    conn.row_factory = sqlite3.Row
-    cursor = conn.cursor()
-    cursor.execute("SELECT * FROM properties")
-    properties = cursor.fetchall()
-    conn.close()
+@app.route('/add-property')
+def add_property():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    return render_template('add_property.html')
 
+@app.route('/uploads/<filename>')
+def serve_file(filename):
+    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
+
+@app.route('/upload', methods=['POST'])
+def upload():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    try:
+        title = request.form.get('title')
+        location = request.form.get('location')
+        description = request.form.get('description')
+
+        if not title or not location or not description:
+            flash('All fields are required.')
+            return redirect(url_for('add_property'))
+
+        image_filename = ''
+        video_filename = ''
+
+        image_file = request.files.get('image')
+        if image_file and image_file.filename:
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
+
+        video_file = request.files.get('video')
+        if video_file and video_file.filename:
+            video_filename = secure_filename(video_file.filename)
+            video_path = os.path.join(app.config['UPLOAD_FOLDER'], video_filename)
+            video_file.save(video_path)
+
+
+        new_property = Property(
+            title=title,
+            location=location,
+            description=description,
+            image_url=image_filename,
+            video_url=video_filename
+        )
+        db.session.add(new_property)
+        db.session.commit()
+
+        flash('Property uploaded successfully!')
+        return redirect(url_for('admin_dashboard'))
+
+    except Exception as e:
+        traceback.print_exc()
+        flash('Error uploading property. Check logs.')
+        return redirect(url_for('add_property'))
+ 
+@app.route('/property')
+def property_page():
+    properties = Property.query.order_by(Property.created_at.desc()).all()
     return render_template('property.html', properties=properties)
 
-# ========== Delete Property ==========
 @app.route('/delete-property/<int:property_id>', methods=['POST'])
 def delete_property(property_id):
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
 
-    try:
-        conn = sqlite3.connect('database.db')
-        cursor = conn.cursor()
-        cursor.execute("DELETE FROM properties WHERE id = ?", (property_id,))
-        conn.commit()
-        conn.close()
+    prop = Property.query.get_or_404(property_id)
 
-        flash("Property deleted successfully.")
-        return redirect(url_for('admin_dashboard'))
+    for file_field in [prop.image_url, prop.video_url]:
+        if file_field:
+            file_path = os.path.join(app.config['UPLOAD_FOLDER'], file_field)
+            if os.path.exists(file_path):
+                os.remove(file_path)
 
-    except Exception as e:
-        print("❌ Delete error:", e)
-        return "Delete failed", 500
+    db.session.delete(prop)
+    db.session.commit()
+    flash('Property deleted.')
+    return redirect(url_for('admin_dashboard'))
 
-# ========== Template Helpers ==========
+# === Add current time to templates ===
 @app.context_processor
 def inject_now():
     return {'now': datetime.now()}
 
-# ========== Run App ==========
+# === Run Server ===
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8000))  # use PORT from Railway
+    with app.app_context():
+        db.create_all()
+    port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port, debug=True)
-
