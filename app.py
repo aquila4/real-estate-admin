@@ -27,6 +27,10 @@ db.init_app(app)
 # Import models *after* db.init_app
 from models import Property
 
+# === Create tables on startup ===
+with app.app_context():
+    db.create_all()
+
 # === Routes ===
 @app.route('/')
 def home():
@@ -113,7 +117,6 @@ def upload():
             video_path = os.path.join(app.config['UPLOAD_FOLDER'], video_filename)
             video_file.save(video_path)
 
-
         new_property = Property(
             title=title,
             location=location,
@@ -131,7 +134,7 @@ def upload():
         traceback.print_exc()
         flash('Error uploading property. Check logs.')
         return redirect(url_for('add_property'))
- 
+
 @app.route('/property')
 def property_page():
     properties = Property.query.order_by(Property.created_at.desc()).all()
@@ -160,9 +163,7 @@ def delete_property(property_id):
 def inject_now():
     return {'now': datetime.now()}
 
-# === Run Server ===
+# === Local Dev Server ===
 if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
     port = int(os.environ.get('PORT', 8000))
     app.run(host='0.0.0.0', port=port, debug=True)
