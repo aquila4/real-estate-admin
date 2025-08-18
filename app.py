@@ -12,7 +12,7 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "your_secret_key")
 
 # === PostgreSQL from Railway ===
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:lkDItYnOOeZJsoLltaiTgkTNpElDeiMY@shuttle.proxy.rlwy.net:59358/railway'
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:jGNEMNdfkQiNnUlvVSlbxQamOkwTAchb@centerbeam.proxy.rlwy.net:25167/railway"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # === Upload folder setup (using Railway Volume) ===
