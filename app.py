@@ -247,19 +247,20 @@ def admin_delete_blog(post_id):
 def blog():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('blog.html', posts=posts)
-
 @app.route('/blog/<int:post_id>')
 def blog_post(post_id):
     post = BlogPost.query.get_or_404(post_id)
     return render_template('blog_post.html', post=post)
 
-
-# ✅ Logout route (fix indentation!)
+# ✅ Logout route
 @app.route('/logout')
 def logout():
     session.pop('admin_logged_in', None)
     flash("Logged out successfully.")
     return redirect(url_for('admin_login'))
+
+
+   
 
 
 
