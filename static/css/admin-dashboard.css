@@ -1,5 +1,5 @@
 /* ==============================
-   Admin Dashboard - Sidebar Layout
+   Admin Dashboard CSS (Upgraded)
    ============================== */
 
 :root {
@@ -21,94 +21,106 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background: var(--secondary);
   color: var(--text);
-  display: flex;
-  min-height: 100vh;
 }
 
-/* ===== Sidebar ===== */
-.sidebar {
-  width: 250px;
-  background: var(--primary);
-  color: var(--white);
-  display: flex;
-  flex-direction: column;
-  padding: 2rem 1rem;
-  box-shadow: var(--shadow);
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.sidebar h2 {
-  text-align: center;
-  margin-bottom: 2rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-}
-
-.sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.sidebar nav a {
-  color: var(--white);
-  text-decoration: none;
-  padding: 12px 16px;
-  border-radius: var(--radius);
-  transition: background 0.3s ease;
-  font-weight: 500;
-}
-
-.sidebar nav a:hover,
-.sidebar nav a.active {
-  background: var(--primary-light);
-}
-
-/* ===== Main Content ===== */
-.main-content {
-  margin-left: 250px;
-  padding: 2rem;
-  flex: 1;
-}
-
+/* ===== Dashboard Header ===== */
 .dashboard-header {
   background: linear-gradient(to right, var(--primary), var(--primary-light));
   color: var(--white);
-  padding: 1.5rem;
+  padding: 2rem;
+  text-align: center;
   border-radius: var(--radius);
-  margin-bottom: 2rem;
+  margin: 1.5rem auto;
+  width: 90%;
   box-shadow: var(--shadow);
 }
 
 .dashboard-header h1 {
+  font-size: 2.2rem;
   margin: 0;
-  font-size: 1.8rem;
+  font-weight: 700;
 }
 
 .dashboard-header .subtitle {
+  margin-top: 0.5rem;
   font-size: 1rem;
   font-weight: 300;
   color: #dfefff;
 }
 
-/* ===== Cards ===== */
-.card {
+/* ===== Container ===== */
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
   background: var(--white);
-  padding: 20px;
+  padding: 30px;
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  margin-bottom: 20px;
 }
 
-.card h3 {
+/* ===== Forms ===== */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+form input,
+form textarea,
+form select,
+form button {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius);
+  font-size: 16px;
+  transition: 0.3s ease;
+}
+
+form input:focus,
+form textarea:focus,
+form select:focus {
+  border-color: var(--primary-light);
+  box-shadow: 0 0 6px rgba(0, 119, 204, 0.3);
+  outline: none;
+}
+
+form textarea {
+  resize: vertical;
+  min-height: 120px;
+}
+
+form button {
+  background: var(--primary);
+  color: var(--white);
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+form button:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
+
+/* ===== Property / Blog Cards ===== */
+.property-card {
+  background: var(--white);
+  padding: 20px;
+  border-left: 5px solid var(--primary);
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+.property-card h3 {
   margin: 0 0 10px;
   color: var(--primary);
 }
 
-.card p {
+.property-card p {
+  margin: 0;
   color: #555;
 }
 
@@ -117,10 +129,6 @@ table {
   width: 100%;
   border-collapse: collapse;
   margin-top: 20px;
-  background: var(--white);
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: var(--shadow);
 }
 
 table th,
@@ -133,6 +141,7 @@ table td {
 table th {
   background: var(--primary);
   color: var(--white);
+  font-weight: bold;
 }
 
 table tr:hover {
@@ -142,11 +151,11 @@ table tr:hover {
 /* ===== Buttons ===== */
 .btn {
   display: inline-block;
-  padding: 10px 16px;
+  padding: 10px 18px;
   border-radius: var(--radius);
   font-weight: bold;
   text-decoration: none;
-  font-size: 14px;
+  font-size: 15px;
   transition: 0.3s ease;
 }
 
@@ -164,14 +173,26 @@ table tr:hover {
   color: var(--white);
 }
 
+.btn-success:hover {
+  background: #218838;
+}
+
 .btn-danger {
   background: var(--danger);
   color: var(--white);
 }
 
+.btn-danger:hover {
+  background: #b02a37;
+}
+
 .btn-warning {
   background: var(--warning);
   color: #212529;
+}
+
+.btn-warning:hover {
+  background: #e0a800;
 }
 
 /* ===== Flash Messages ===== */
@@ -197,38 +218,34 @@ table tr:hover {
   color: #856404;
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-    padding: 1rem;
-  }
-
-  .main-content {
-    margin-left: 200px;
-    padding: 1rem;
-  }
+/* ===== Home Button ===== */
+.home-link-container {
+  text-align: center;
+  margin-top: 1.5rem;
 }
 
-@media (max-width: 600px) {
-  body {
-    flex-direction: column;
-  }
+.home-button {
+  background: var(--primary);
+  color: var(--white);
+  padding: 10px 20px;
+  border-radius: var(--radius);
+  font-weight: bold;
+  text-decoration: none;
+  font-size: 16px;
+  transition: 0.3s ease, transform 0.2s ease;
+}
 
-  .sidebar {
-    position: relative;
-    width: 100%;
-    flex-direction: row;
-    justify-content: space-around;
-    padding: 1rem;
-  }
+.home-button:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+}
 
-  .sidebar h2 {
-    display: none;
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .dashboard-header h1 {
+    font-size: 1.6rem;
   }
-
-  .main-content {
-    margin-left: 0;
-    margin-top: 1rem;
+  table th, table td {
+    font-size: 0.85rem;
   }
 }
