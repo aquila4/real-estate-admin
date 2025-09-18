@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Panel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/admin_blog.css') }}">
+</head>
+<body>
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Great Marcy Admin</h2>
+    <nav>
+      <a href="{{ url_for('admin_dashboard') }}" class="active">Dashboard</a>
+      <a href="{{ url_for('add_property') }}">Properties</a>
+      <a href="{{ url_for('admin_blog') }}">Blog</a>
+      <a href="{{ url_for('logout') }}">Logout</a>
+    </nav>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="dashboard-header">
+      <h1>Welcome, Admin</h1>
+      <p class="subtitle">Manage your properties and blog posts</p>
+    </div>
+
+    {% block content %}
+    <!-- Example card -->
+    <div class="card">
+      <h3>Quick Stats</h3>
+      <p>You have {{ properties|length }} properties and {{ posts|length }} blog posts.</p>
+    </div>
+    {% endblock %}
+  </div>
+</body>
+</html>

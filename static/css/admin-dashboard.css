@@ -1,155 +1,234 @@
+/* ==============================
+   Admin Dashboard - Sidebar Layout
+   ============================== */
+
+:root {
+  --primary: #004080;
+  --primary-light: #0066cc;
+  --secondary: #f0f4f8;
+  --white: #fff;
+  --text: #333;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --radius: 10px;
+  --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
 body {
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  background: #f0f4f8;
-  color: #333;
+  background: var(--secondary);
+  color: var(--text);
+  display: flex;
+  min-height: 100vh;
 }
 
-.container {
-  max-width: 700px;
-  margin: 60px auto;
-  background: #fff;
-  padding: 40px;
-  border-radius: 16px;
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+/* ===== Sidebar ===== */
+.sidebar {
+  width: 250px;
+  background: var(--primary);
+  color: var(--white);
+  display: flex;
+  flex-direction: column;
+  padding: 2rem 1rem;
+  box-shadow: var(--shadow);
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
 }
 
-h2 {
+.sidebar h2 {
   text-align: center;
-  margin-bottom: 30px;
-  color: #004080;
-}
-
-form input,
-form textarea,
-form button {
-  width: 100%;
-  padding: 14px 18px;
-  margin-bottom: 20px;
-  border: 1px solid #ccc;
-  border-radius: 10px;
-  font-size: 16px;
-  transition: 0.3s ease;
-}
-
-form input:focus,
-form textarea:focus {
-  border-color: #0077cc;
-  box-shadow: 0 0 6px rgba(0, 119, 204, 0.3);
-  outline: none;
-}
-
-form textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-form button {
-  background-color: #004080;
-  color: white;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-form button:hover {
-  background-color: #0066cc;
-}
-
-#property-list {
-  margin-top: 40px;
-}
-
-.property-card {
-  background: #fff;
-  padding: 20px;
-  border-left: 5px solid #004080;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
-}
-
-.property-card h3 {
-  margin: 0 0 10px;
-  color: #004080;
-}
-
-.property-card p {
-  margin: 0;
-  color: #555;
-}
-
-
-
-.home-button {
-  display: inline-block;
-  background-color: #004080;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 8px;
-  font-weight: bold;
-  text-decoration: none;
-  font-size: 16px;
-  margin-bottom: 20px;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.home-button:hover {
-  background-color: #0066cc;
-  transform: translateY(-2px);
-}
-
-
-
-
-/* CSS */
-.dashboard-header {
-  background: linear-gradient(to right, #004080, #0066cc);
-  color: #fff;
-  padding: 2rem;
-  text-align: center;
-  border-radius: 10px;
   margin-bottom: 2rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar nav {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.sidebar nav a {
+  color: var(--white);
+  text-decoration: none;
+  padding: 12px 16px;
+  border-radius: var(--radius);
+  transition: background 0.3s ease;
+  font-weight: 500;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+  background: var(--primary-light);
+}
+
+/* ===== Main Content ===== */
+.main-content {
+  margin-left: 250px;
+  padding: 2rem;
+  flex: 1;
+}
+
+.dashboard-header {
+  background: linear-gradient(to right, var(--primary), var(--primary-light));
+  color: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  margin-bottom: 2rem;
+  box-shadow: var(--shadow);
 }
 
 .dashboard-header h1 {
-  font-size: 2.5rem;
   margin: 0;
-  font-weight: 700;
-  letter-spacing: 1px;
+  font-size: 1.8rem;
 }
 
 .dashboard-header .subtitle {
-  margin-top: 0.5rem;
-  font-size: 1.1rem;
+  font-size: 1rem;
   font-weight: 300;
   color: #dfefff;
 }
 
-
-
-
-
-/* CSS */
-.home-link-container {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+/* ===== Cards ===== */
+.card {
+  background: var(--white);
+  padding: 20px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
 }
 
-.home-button {
-  background-color: #004080;
-  color: white;
-  padding: 10px 20px;
-  border-radius: 5px;
-  text-decoration: none;
+.card h3 {
+  margin: 0 0 10px;
+  color: var(--primary);
+}
+
+.card p {
+  color: #555;
+}
+
+/* ===== Tables ===== */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+table th,
+table td {
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+table th {
+  background: var(--primary);
+  color: var(--white);
+}
+
+table tr:hover {
+  background: #f9f9f9;
+}
+
+/* ===== Buttons ===== */
+.btn {
+  display: inline-block;
+  padding: 10px 16px;
+  border-radius: var(--radius);
   font-weight: bold;
-  transition: background-color 0.3s ease;
+  text-decoration: none;
+  font-size: 14px;
+  transition: 0.3s ease;
 }
 
-.home-button:hover {
-  background-color: #0066cc;
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: var(--primary-light);
+}
+
+.btn-success {
+  background: var(--success);
+  color: var(--white);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: var(--white);
+}
+
+.btn-warning {
+  background: var(--warning);
+  color: #212529;
+}
+
+/* ===== Flash Messages ===== */
+.flash {
+  padding: 1rem;
+  border-radius: var(--radius);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.flash-success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.flash-danger {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.flash-warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+    padding: 1rem;
+  }
+
+  .main-content {
+    margin-left: 200px;
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 600px) {
+  body {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    position: relative;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 1rem;
+  }
+
+  .sidebar h2 {
+    display: none;
+  }
+
+  .main-content {
+    margin-left: 0;
+    margin-top: 1rem;
+  }
 }

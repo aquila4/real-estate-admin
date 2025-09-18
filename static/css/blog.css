@@ -1,0 +1,111 @@
+/* --- BLOG LIST --- */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+/* Blog Card */
+.blog-card {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.blog-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.blog-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.blog-card h3 {
+  font-size: 1.25rem;
+  margin: 1rem;
+  color: var(--primary, #0a2a5e);
+}
+
+.blog-card h3 a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.blog-card p {
+  margin: 0 1rem 1rem;
+  color: var(--text-secondary, #555);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.blog-card small {
+  display: block;
+  margin: 0 1rem 1rem;
+  color: var(--text-muted, #888);
+  font-size: 0.8rem;
+}
+
+/* --- BLOG DETAIL PAGE --- */
+.blog-detail {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  padding: 2rem;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.blog-detail img {
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+}
+
+.blog-detail h1 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  color: var(--primary, #0a2a5e);
+}
+
+.blog-detail p {
+  line-height: 1.8;
+  color: var(--text-primary, #333);
+  font-size: 1rem;
+}
+
+.blog-detail small {
+  display: block;
+  margin-bottom: 1.5rem;
+  color: var(--text-muted, #777);
+}
+
+/* --- DARK MODE --- */
+body.dark-mode .blog-card,
+body.dark-mode .blog-detail {
+  background: #1e1e1e;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+}
+
+body.dark-mode .blog-card h3,
+body.dark-mode .blog-detail h1 {
+  color: #4da6ff; /* light blue */
+}
+
+body.dark-mode .blog-card p,
+body.dark-mode .blog-detail p {
+  color: #ddd;
+}
+
+body.dark-mode .blog-card small,
+body.dark-mode .blog-detail small {
+  color: #aaa;
+}

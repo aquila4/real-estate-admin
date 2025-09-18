@@ -1,0 +1,16 @@
+{% extends "admin/base.html" %}
+{% block content %}
+<h2 class="admin-title">New Blog Post</h2>
+<form method="POST" enctype="multipart/form-data" class="admin-form">
+  <label>Title</label>
+  <input type="text" name="title" required>
+
+  <label>Content</label>
+  <textarea name="content" rows="6" required></textarea>
+
+  <label>Image</label>
+  <input type="file" name="image">
+
+  <button type="submit" class="btn btn-primary">Save</button>
+</form>
+{% endblock %}

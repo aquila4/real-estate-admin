@@ -4,6 +4,8 @@ from datetime import datetime
 import os
 import traceback
 from dotenv import load_dotenv
+from models import Property, BlogPost
+
 
 # Load environment variables
 load_dotenv()
@@ -25,7 +27,7 @@ from extensions import db
 db.init_app(app)
 
 # Import models *after* db.init_app
-from models import Property
+
 
 # === Create tables on startup ===
 with app.app_context():
@@ -157,6 +159,109 @@ def delete_property(property_id):
     db.session.commit()
     flash('Property deleted.')
     return redirect(url_for('admin_dashboard'))
+
+# ==============================
+# 📑 BLOG ROUTES (ADMIN)
+# ==============================
+
+@app.route('/admin/blog')
+def admin_blog():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    return render_template('admin/blog_list.html', posts=posts)
+
+
+@app.route('/admin/blog/new', methods=['GET', 'POST'])
+def admin_new_blog():
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    if request.method == 'POST':
+        title = request.form.get('title')
+        content = request.form.get('content')
+        image_file = request.files.get('image')
+
+        image_filename = None
+        if image_file and image_file.filename:
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
+
+        new_post = BlogPost(title=title, content=content, image_url=image_filename)
+        db.session.add(new_post)
+        db.session.commit()
+        flash('✅ Blog post created successfully!')
+        return redirect(url_for('admin_blog'))
+
+    return render_template('admin/new_blog.html')
+
+
+@app.route('/admin/blog/edit/<int:post_id>', methods=['GET', 'POST'])
+def admin_edit_blog(post_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    post = BlogPost.query.get_or_404(post_id)
+
+    if request.method == 'POST':
+        post.title = request.form.get('title')
+        post.content = request.form.get('content')
+        image_file = request.files.get('image')
+
+        if image_file and image_file.filename:
+            image_filename = secure_filename(image_file.filename)
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
+            post.image_url = image_filename
+
+        db.session.commit()
+        flash('✅ Blog post updated successfully!')
+        return redirect(url_for('admin_blog'))
+
+    return render_template('admin/edit_blog.html', post=post)
+
+
+@app.route('/admin/blog/delete/<int:post_id>', methods=['POST'])
+def admin_delete_blog(post_id):
+    if not session.get('admin_logged_in'):
+        return redirect(url_for('admin_login'))
+
+    post = BlogPost.query.get_or_404(post_id)
+    if post.image_url:
+        file_path = os.path.join(app.config['UPLOAD_FOLDER'], post.image_url)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+    db.session.delete(post)
+    db.session.commit()
+    flash('🗑️ Blog post deleted.')
+    return redirect(url_for('admin_blog'))
+
+
+# ==============================
+# 🌍 BLOG ROUTES (FRONTEND)
+# ==============================
+
+@app.route('/blog')
+def blog():
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    return render_template('blog.html', posts=posts)
+
+@app.route('/blog/<int:post_id>')
+def blog_post(post_id):
+    post = BlogPost.query.get_or_404(post_id)
+    return render_template('blog_post.html', post=post)
+
+
+# ✅ Logout route (fix indentation!)
+@app.route('/logout')
+def logout():
+    session.pop('admin_logged_in', None)
+    flash("Logged out successfully.")
+    return redirect(url_for('admin_login'))
+
+
 
 # === Add current time to templates ===
 @app.context_processor

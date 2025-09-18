@@ -12,3 +12,14 @@ class Property(db.Model):
 
     def __repr__(self):
         return f"<Property {self.title}>"
+
+
+class BlogPost(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200), nullable=False)
+    content = db.Column(db.Text, nullable=False)
+    image_url = db.Column(db.String(300))
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    def __repr__(self):
+        return f"<BlogPost {self.title}>"

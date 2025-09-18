@@ -1,0 +1,46 @@
+<!-- templates/admin/edit_blog.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Blog Post</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+    <h1>Edit Blog Post</h1>
+
+    <!-- Flash messages -->
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul>
+          {% for msg in messages %}
+            <li>{{ msg }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
+    <form method="POST" enctype="multipart/form-data">
+        <label>Title</label><br>
+        <input type="text" name="title" value="{{ post.title }}" required><br><br>
+
+        <label>Content</label><br>
+        <textarea name="content" rows="8" cols="50" required>{{ post.content }}</textarea><br><br>
+
+        <label>Current Image</label><br>
+        {% if post.image_url %}
+            <img src="{{ url_for('serve_file', filename=post.image_url) }}" 
+                 alt="Blog Image" width="200"><br>
+        {% else %}
+            <p>No image uploaded.</p>
+        {% endif %}
+
+        <br>
+        <label>Upload New Image (optional)</label><br>
+        <input type="file" name="image"><br><br>
+
+        <button type="submit">Update Post</button>
+        <a href="{{ url_for('admin_blog') }}">Cancel</a>
+    </form>
+</body>
+</html>
