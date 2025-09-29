@@ -1,4 +1,3 @@
-<!-- templates/admin/edit_blog.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,6 +25,16 @@
 
         <label>Content</label><br>
         <textarea name="content" rows="8" cols="50" required>{{ post.content }}</textarea><br><br>
+
+        <!-- SEO Fields -->
+        <label>SEO Title</label><br>
+        <input type="text" name="seo_title" value="{{ post.seo_title or '' }}"><br><br>
+
+        <label>Meta Description</label><br>
+        <textarea name="meta_description" rows="3" cols="50">{{ post.meta_description or '' }}</textarea><br><br>
+
+        <label>Keywords (comma-separated)</label><br>
+        <input type="text" name="keywords" value="{{ post.keywords or '' }}"><br><br>
 
         <label>Current Image</label><br>
         {% if post.image_url %}

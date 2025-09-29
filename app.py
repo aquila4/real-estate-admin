@@ -5,7 +5,8 @@ import os
 import traceback
 from dotenv import load_dotenv
 from models import Property, BlogPost
-
+from flask_migrate import Migrate
+from slugify import slugify
 
 # Load environment variables
 load_dotenv()
@@ -14,7 +15,10 @@ app = Flask(__name__)
 app.secret_key = os.environ.get("SECRET_KEY", "your_secret_key")
 
 # === PostgreSQL from Railway ===
-app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://postgres:jGNEMNdfkQiNnUlvVSlbxQamOkwTAchb@centerbeam.proxy.rlwy.net:25167/railway"
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    "DATABASE_URL",
+    "postgresql://postgres:jGNEMNdfkQiNnUlvVSlbxQamOkwTAchb@centerbeam.proxy.rlwy.net:25167/railway"
+)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # === Upload folder setup (using Railway Volume) ===
@@ -25,13 +29,7 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 # Import the db instance from extensions.py
 from extensions import db
 db.init_app(app)
-
-# Import models *after* db.init_app
-
-
-# === Create tables on startup ===
-with app.app_context():
-    db.create_all()
+migrate = Migrate(app, db)
 
 # === Routes ===
 @app.route('/')
@@ -67,7 +65,7 @@ def admin_login():
     if request.method == 'POST':
         username = request.form['username']
         password = request.form['password']
-        if username == 'admin' and password == '12345':
+        if username == 'Greatmarcy' and password == '5467':
             session['admin_logged_in'] = True
             return redirect(url_for('add_property'))
         flash('Invalid credentials.')
@@ -171,7 +169,6 @@ def admin_blog():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
     return render_template('admin/blog_list.html', posts=posts)
 
-
 @app.route('/admin/blog/new', methods=['GET', 'POST'])
 def admin_new_blog():
     if not session.get('admin_logged_in'):
@@ -188,14 +185,26 @@ def admin_new_blog():
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
             image_file.save(image_path)
 
-        new_post = BlogPost(title=title, content=content, image_url=image_filename)
+        # ✅ Generate SEO-friendly slug from title
+        base_slug = slugify(title)
+        slug = base_slug
+        counter = 1
+        while BlogPost.query.filter_by(slug=slug).first():
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+
+        new_post = BlogPost(
+            title=title,
+            content=content,
+            image_url=image_filename,
+            slug=slug
+        )
         db.session.add(new_post)
         db.session.commit()
         flash('✅ Blog post created successfully!')
         return redirect(url_for('admin_blog'))
 
     return render_template('admin/new_blog.html')
-
 
 @app.route('/admin/blog/edit/<int:post_id>', methods=['GET', 'POST'])
 def admin_edit_blog(post_id):
@@ -207,8 +216,20 @@ def admin_edit_blog(post_id):
     if request.method == 'POST':
         post.title = request.form.get('title')
         post.content = request.form.get('content')
-        image_file = request.files.get('image')
 
+        # ✅ Regenerate slug only if title changed
+        base_slug = slugify(post.title)
+        slug = base_slug
+        counter = 1
+        existing_post = BlogPost.query.filter_by(slug=slug).first()
+        while existing_post and existing_post.id != post.id:
+            slug = f"{base_slug}-{counter}"
+            counter += 1
+            existing_post = BlogPost.query.filter_by(slug=slug).first()
+
+        post.slug = slug
+
+        image_file = request.files.get('image')
         if image_file and image_file.filename:
             image_filename = secure_filename(image_file.filename)
             image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
@@ -220,7 +241,6 @@ def admin_edit_blog(post_id):
         return redirect(url_for('admin_blog'))
 
     return render_template('admin/edit_blog.html', post=post)
-
 
 @app.route('/admin/blog/delete/<int:post_id>', methods=['POST'])
 def admin_delete_blog(post_id):
@@ -238,7 +258,6 @@ def admin_delete_blog(post_id):
     flash('🗑️ Blog post deleted.')
     return redirect(url_for('admin_blog'))
 
-
 # ==============================
 # 🌍 BLOG ROUTES (FRONTEND)
 # ==============================
@@ -246,10 +265,13 @@ def admin_delete_blog(post_id):
 @app.route('/blog')
 def blog():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).all()
+    # Safety: only include posts with slug
+    posts = [p for p in posts if p.slug]
     return render_template('blog.html', posts=posts)
-@app.route('/blog/<int:post_id>')
-def blog_post(post_id):
-    post = BlogPost.query.get_or_404(post_id)
+
+@app.route('/blog/<string:slug>')
+def blog_post(slug):
+    post = BlogPost.query.filter_by(slug=slug).first_or_404()
     return render_template('blog_post.html', post=post)
 
 # ✅ Logout route
@@ -258,11 +280,6 @@ def logout():
     session.pop('admin_logged_in', None)
     flash("Logged out successfully.")
     return redirect(url_for('admin_login'))
-
-
-   
-
-
 
 # === Add current time to templates ===
 @app.context_processor
