@@ -1,22 +1,56 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Blog</h2>
-<div class="blog-list">
-  {% for post in posts %}
-  <div class="blog-card">
-    {% if post.image_url %}
-    <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}">
-    {% endif %}
-   <h3>
-  <a href="{{ url_for('blog_post', slug=post.slug) }}">
-    {{ post.title }}
-  </a>
-</h3>
 
-    <p>{{ post.content[:150] }}...</p>
-    <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
+<!-- Hero / Page Title -->
+<section class="blog-hero">
+  <div class="container">
+    <h1>Our Blog</h1>
+    <p class="subtitle">Read our latest updates, insights, and real estate tips</p>
   </div>
-  {% endfor %}
-</div>
-{% endblock content %}
+</section>
+
+<!-- Featured Post -->
+{% if posts|length > 0 %}
+<section class="featured-post">
+  <div class="container">
+    <div class="featured-card">
+      {% set post = posts[0] %}
+      {% if post.image_url %}
+        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}">
+      {% endif %}
+      <div class="featured-content">
+        <h2><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h2>
+        <p>{{ post.content[:250] }}{% if post.content|length > 250 %}...{% endif %}</p>
+        <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
+        <div class="read-more">
+          <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Blog Grid -->
+<section class="blog-list-section">
+  <div class="container blog-list">
+    {% for post in posts[1:] %}
+    <div class="blog-card">
+      {% if post.image_url %}
+        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}">
+      {% endif %}
+      <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+      <p>{{ post.content[:150] }}{% if post.content|length > 150 %}...{% endif %}</p>
+      <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
+      <div class="read-more">
+        <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+      </div>
+    </div>
+    {% else %}
+    <p>No posts found.</p>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

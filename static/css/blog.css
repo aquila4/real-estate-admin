@@ -1,23 +1,83 @@
-/* --- BLOG LIST --- */
-.blog-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-top: 2rem;
+/* Blog Hero */
+.blog-hero {
+  background: linear-gradient(135deg, #1e88e5, #42a5f5);
+  color: #fff;
+  text-align: center;
+  padding: 4rem 1rem;
+  border-radius: 0 0 30px 30px;
 }
 
-/* Blog Card */
-.blog-card {
-  background: var(--card-bg, #fff);
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.08);
+.blog-hero h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem;
+}
+
+.blog-hero .subtitle {
+  font-size: 1.2rem;
+  color: #e0e0e0;
+}
+
+/* Featured Post */
+.featured-post {
+  padding: 3rem 1rem;
+  background: #f7f9fc;
+}
+
+.featured-card {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
   overflow: hidden;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.3s ease;
+}
+
+.featured-card img {
+  flex: 1 1 400px;
+  max-height: 300px;
+  object-fit: cover;
+  border-radius: 15px 0 0 15px;
+}
+
+.featured-content {
+  flex: 1 1 400px;
+  padding: 1.5rem;
+}
+
+.featured-content h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.featured-content p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.featured-content small {
+  color: #888;
+}
+
+/* Blog Grid */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.blog-card {
+  background: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+  transition: transform 0.3s ease;
 }
 
 .blog-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
 }
 
 .blog-card img {
@@ -27,85 +87,52 @@
 }
 
 .blog-card h3 {
-  font-size: 1.25rem;
   margin: 1rem;
-  color: var(--primary, #0a2a5e);
-}
-
-.blog-card h3 a {
-  text-decoration: none;
-  color: inherit;
+  font-size: 1.3rem;
 }
 
 .blog-card p {
-  margin: 0 1rem 1rem;
-  color: var(--text-secondary, #555);
+  margin: 0 1rem 1rem 1rem;
+  color: #555;
   line-height: 1.6;
-  font-size: 0.95rem;
 }
 
 .blog-card small {
   display: block;
-  margin: 0 1rem 1rem;
-  color: var(--text-muted, #888);
-  font-size: 0.8rem;
+  margin: 0 1rem 1rem 1rem;
+  font-size: 0.85rem;
+  color: #888;
 }
 
-/* --- BLOG DETAIL PAGE --- */
-.blog-detail {
-  max-width: 800px;
-  margin: 2rem auto;
-  background: var(--card-bg, #fff);
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  padding: 2rem;
-  transition: background 0.3s ease, color 0.3s ease;
+.read-more a {
+  display: inline-block;
+  margin: 0 1rem 1rem 1rem;
+  padding: 0.5rem 1rem;
+  background: #1e88e5;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: background 0.3s ease;
 }
 
-.blog-detail img {
-  width: 100%;
-  max-height: 400px;
-  object-fit: cover;
-  margin-bottom: 1rem;
-  border-radius: 10px;
+.read-more a:hover {
+  background: #1565c0;
 }
 
-.blog-detail h1 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
-  color: var(--primary, #0a2a5e);
+/* Container for alignment */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.blog-detail p {
-  line-height: 1.8;
-  color: var(--text-primary, #333);
-  font-size: 1rem;
-}
-
-.blog-detail small {
-  display: block;
-  margin-bottom: 1.5rem;
-  color: var(--text-muted, #777);
-}
-
-/* --- DARK MODE --- */
-body.dark-mode .blog-card,
-body.dark-mode .blog-detail {
-  background: #1e1e1e;
-  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
-}
-
-body.dark-mode .blog-card h3,
-body.dark-mode .blog-detail h1 {
-  color: #4da6ff; /* light blue */
-}
-
-body.dark-mode .blog-card p,
-body.dark-mode .blog-detail p {
-  color: #ddd;
-}
-
-body.dark-mode .blog-card small,
-body.dark-mode .blog-detail small {
-  color: #aaa;
+/* Responsive */
+@media (max-width: 768px) {
+  .featured-card {
+    flex-direction: column;
+  }
+  .featured-card img {
+    border-radius: 15px 15px 0 0;
+    max-height: 250px;
+  }
 }

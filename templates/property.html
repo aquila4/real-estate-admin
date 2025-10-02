@@ -2,19 +2,17 @@
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17421133724');
+  </script>
 
-  gtag('config', 'AW-17421133724');
-</script>
   <meta charset="UTF-8">
   <title>Our Properties - Great Mar-cy</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css') }}">
-  
 </head>
 <body>
 
@@ -22,40 +20,33 @@
     <h1>Explore Our Premium Listings</h1>
     <p>Discover amazing properties from Great Mar-cy’s & Sons Ltd</p>
   </header>
-<div class="container">
-  {% if properties %}
-    <div class="property-grid">
-      {% for property in properties %}
-        <div class="property-card">
-          <div class="property-media">
-            {% if property.image_url %}
-              <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="Property Image">
-            {% endif %}
-            {% if property.video_url %}
-              <video controls>
-                <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
-                Your browser does not support the video tag.
-              </video>
-            {% endif %}
-          </div>
-          <div class="property-details">
-            <p><strong>Title:</strong> {{ property.title }}</p>
-            <p><strong>Location:</strong> {{ property.location }}</p>
-            <p><strong>Description:</strong> {{ property.description }}</p>
-          </div>
+<div class="property-grid">
+  {% for property in properties %}
+    <div class="property-card">
+      <a href="{{ url_for('property_detail', slug=property.slug) }}">
+        <div class="property-media">
+          {% if property.image_url %}
+            <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="{{ property.title }}">
+          {% endif %}
+          {% if property.video_url %}
+            <video controls>
+              <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
+              Your browser does not support the video tag.
+            </video>
+          {% endif %}
         </div>
-      {% endfor %}
+        <div class="property-details">
+          <p><strong>Title:</strong> {{ property.title }}</p>
+          <p><strong>Location:</strong> {{ property.location }}</p>
+          <p><strong>Description:</strong> {{ property.description[:100] }}...</p>
+        </div>
+      </a>
     </div>
-  {% else %}
-    <div class="no-properties">
-      No properties have been uploaded yet. Please check back soon!
-    </div>
-  {% endif %}
+  {% endfor %}
 </div>
 
-
   <footer>
-    &copy; {{ current_year }} Great Mar-cy’s & Sons Limited. All rights reserved.
+    &copy; {{ now.year }} Great Mar-cy’s & Sons Limited. All rights reserved.
   </footer>
 
 </body>

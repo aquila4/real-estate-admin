@@ -1,145 +1,757 @@
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
   <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'AW-17421133724');
-</script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17421133724');
+  </script>
+
   <meta charset="UTF-8">
-  <title>Great Mar-cy’s Estate</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}?v=2">
+  <title>{{ "Great Mar-cy’s & Sons Limited" }}</title>
+  <meta name="description" content="Looking for land or property in Ilorin, Kwara? Great Mar-cy’s & Sons Limited offers verified estates and properties at the best prices in Ilorin and across Kwara State.">
+
+  <!-- Open Graph / Social Sharing -->
+
+  <meta property="og:title" content="Great Mar-cy’s & Sons Limited | Real Estate in Ilorin, Kwara">
+  <meta property="og:description" content="Verified land and property listings in Ilorin, Kwara State. Find your dream property with Great Mar-cy’s & Sons Limited.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greatmarcysonslimited.com/">
+  <meta property="og:image" content="{{ url_for('static', filename='image/logo.jpg') }}">
+
+  <!-- CSS -->
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}?v=4">
+  
+  
+
+  <!-- Structured Data -->
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "url": "https://greatmarcysonslimited.com",
+    "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "sameAs": [
+      "https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr",
+      "https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara",
+      "postalCode": "240101",
+      "addressCountry": "NG"
+    },
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+2349139070404",
+      "contactType": "Customer Service"
+    }
+  }
+  </script>
+
+  <style>
+    /* ===== GLOBAL STYLES ===== */
+    body { font-family: 'Poppins', sans-serif; margin:0; padding:0; background:#fff; color:#000; }
+    header { background:#004080; color:#fff; padding:10px 20px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; z-index:1000; position:relative; }
+    .logo { height:50px; }
+    .nav-menu { display:flex; gap:20px; }
+    .nav-menu a { color:white; text-decoration:none; padding:10px; }
+    .hamburger { display:none; flex-direction:column; cursor:pointer; gap:4px; }
+    .hamburger div, .hamburger span { width:25px; height:3px; background:white; }
+
+    @media(max-width:768px){
+      .hamburger{display:flex;}
+      .nav-menu{display:none; position:fixed; top:60px; left:0; width:100%; height:50vh; background:#004080; flex-direction:column; align-items:center; justify-content:space-evenly; z-index:999;}
+      .nav-menu.show{display:flex;}
+      .nav-menu a{font-size:18px; width:100%; text-align:center;}
+    }
+
+    /* Hero Section */
+    .hero { background:#e6f0ff; padding:50px 20px; text-align:center; }
+    .hero h1{font-size:2.5rem; margin-bottom:15px; color:#004080;}
+    .hero p{font-size:1.2rem; margin-bottom:20px;}
+    .search-form input{padding:10px; width:250px; max-width:80%; margin-right:5px; border-radius:5px; border:1px solid #ccc;}
+    .search-form button{padding:10px 15px; background:#004080; color:#fff; border:none; border-radius:5px; cursor:pointer;}
+
+    /* Banner */
+    .background-banner { position:relative; background-size:cover; background-position:center; height:400px; display:flex; align-items:center; justify-content:center; }
+    .banner-overlay { background: rgba(0,0,0,0.4); padding:40px; color:#fff; text-align:center; border-radius:8px; }
+    .banner-overlay h2 { font-size:32px; margin-bottom:10px; }
+    .banner-overlay p { font-size:18px; }
+
+    /* Featured Properties */
+    .featured { padding:50px 20px; background:#f9f9f9; text-align:center; }
+    .estate-name{font-size:2rem; color:#004080; margin-bottom:20px;}
+    .property-card{display:flex; flex-wrap:wrap; justify-content:center; gap:15px;}
+    .estate-card{display:block; text-decoration:none; color:#000; transition:transform 0.3s ease;}
+    .estate-card img{width:200px; height:150px; object-fit:cover; border-radius:8px;}
+    .estate-card:hover{transform:scale(1.05);}
+    .estate-card h3{margin:10px 0 0; color:#004080;}
+
+    /* Block Section */
+    .block-section { text-align:center; padding:50px 20px; background:linear-gradient(to right,#e6f0ff,#fff); border-top:2px solid #004080; }
+    .cta-btn { display:inline-block; background:#004080; color:#fff; padding:12px 20px; border-radius:6px; text-decoration:none; font-weight:bold; margin-top:20px; box-shadow:2px 2px 10px rgba(0,0,0,0.2); transition:0.3s; }
+    .cta-btn:hover{background:#002d5c;}
+
+    /* About */
+    .about-preview{padding:50px 20px;text-align:center;}
+    .about-preview h2{font-size:2rem;color:#004080;margin-bottom:15px;}
+    .about-preview p{font-size:1.1rem;}
+
+    /* Footer */
+    footer{background:#004080;color:#fff;padding:40px 20px;text-align:center;}
+    footer p{margin:5px 0;}
+    .social-links{display:flex; justify-content:center; gap:15px; margin-top:10px;}
+    .social-links img{width:32px;height:32px;transition:transform 0.3s;}
+    .social-links img:hover{transform:scale(1.2);}
+
+    /* WhatsApp Button */
+    .whatsapp-button{position:fixed; bottom:20px; right:20px; z-index:9999; background:#25D366; padding:10px; border-radius:50%; box-shadow:0 4px 12px rgba(0,0,0,0.25); transition:transform 0.3s;}
+    .whatsapp-button:hover{transform:scale(1.1);}
+    .whatsapp-button img{width:40px;height:40px;}
+
+    /* Enquiry & Newsletter Sections */
+    .enquiry-section, .newsletter-section { position:relative; overflow:hidden; padding:80px 20px; border-radius:15px; background:#f8f9fb; margin:50px 0; }
+    .floating-bg { position:absolute; top:-50%; left:-50%; width:200%; height:200%; background:radial-gradient(circle at center, rgba(0,64,128,0.1), transparent 70%); z-index:0; pointer-events:none; animation:floatBg 20s linear infinite; }
+    .enquiry-section .container, .newsletter-section .container { position:relative; z-index:1; max-width:600px; margin:0 auto; text-align:center; }
+    .enquiry-section h2, .newsletter-section h2 { font-size:2rem; margin-bottom:15px; color:#004080; }
+    .enquiry-form input, .enquiry-form textarea, .newsletter-form input { width:100%; padding:10px; margin:10px 0; border-radius:5px; border:1px solid #ccc; }
+    .enquiry-form button, .newsletter-form button { background:#004080; color:#fff; border:none; border-radius:5px; padding:12px 20px; cursor:pointer; transition:0.3s; }
+    .enquiry-form button:hover, .newsletter-form button:hover{background:#002d5c;}
+
+    @keyframes floatBg {
+      0% { transform: translate(0,0) rotate(0deg);}
+      50% { transform: translate(30px,20px) rotate(45deg);}
+      100% { transform: translate(0,0) rotate(0deg);}
+    }
+
+    /* Scroll Animation */
+    .animate-on-scroll { opacity:0; transform:translateY(50px); transition:all 0.8s ease-out; }
+    .animate-on-scroll.visible{opacity:1; transform:translateY(0);}
+  </style>
+
 </head>
+
 <body>
+  <!-- ===== HEADER ===== -->
+<header>
+  <img src="{{ url_for('static', filename=logogmc_path) }}" alt="Logo" class="logo">
+  <div class="hamburger" id="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+  <nav class="nav-menu" id="navMenu">
+    {% for link in nav_links %}
+      <a href="{{ url_for(link.endpoint) }}">{{ link.name }}</a>
+    {% endfor %}
+  </nav>
+</header>
 
-  <!-- Header -->
-  <header>
-    <img src="{{ url_for('static', filename='image/logo.jpg') }}?v=2" alt="Great Marcy Logo" class="logo">
 
-    <!-- Hamburger -->
-    <div class="hamburger" id="hamburger">
-      <span></span><span></span><span></span>
+<!-- HERO + BANNER + ABOUT (Shared Background) -->
+
+<!-- BANNER SECTION -->
+<section class="bg-shared">
+  <div class="hero-about-container">
+    <!-- HERO PREVIEW -->
+    <div class="about-preview hero-preview" id="hero-preview">
+      <h1>Find Your Property in Ilorin</h1>
+      <p>Search through our listings of land, houses, and commercial properties.</p>
+      <form>
+        <input type="text" placeholder="Search property..." />
+        <button type="submit">Search</button>
+      </form>
     </div>
 
-    <!-- Navigation -->
-    <nav class="nav-menu" id="navMenu">
-      <a href="{{ url_for('home') }}?v=2">Home</a>
-      <a href="{{ url_for('about') }}?v=2">About</a>
-      <a href="{{ url_for('agent') }}?v=2">Agents</a>
-      <a href="{{ url_for('property_page') }}?v=2">Property Listing</a>
-      <a href="{{ url_for('contact') }}">Contact</a>
-
-       <a href="{{ url_for('blog') }}">Blog</a>
-      <a href="{{ url_for('admin_login') }}?v=2">Admin Login</a>
-      <a href="{{ url_for('admin_dashboard') }}" class="admin-link">Admin Dashboard</a>
-    </nav>
-  </header>
-
-  <!-- Hero Section -->
-  <section class="hero">
-    <h2>Welcome to Great Mar-cy’s & Sons Limited</h2>
-    <p>We connect you to verified and affordable land and properties across Kwara State.</p>
-    <form action="{{ url_for('add_property') }}?v=2" method="GET" class="search-form">
-  <input type="text" name="query" placeholder="Search properties..." required>
-  <button type="submit">Search</button>
-</form>
-
-  </section>
-
-  <!-- Banner -->
-  <section class="background-banner">
-    <div class="banner-overlay">
-      <h2>Welcome Home</h2>
-      <p>Experience comfort and class with Great Mar-cy’s properties.</p>
+    <!-- ABOUT PREVIEW -->
+    <div class="about-preview about-info" id="about-info">
+      <h2>About Us</h2>
+      <p>
+        Great Mar-cy’s & Sons Limited is your trusted partner for real estate investment in Ilorin.
+        <a href="{{ url_for('about') }}">Read more →</a>
+      </p>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Featured Properties -->
-  <section class="featured">
-  <h3 class="estate-name">SUCCESS CITY ESTATE</h3>
+<!-- Featured Estates -->
+<section class="featured animate-on-scroll featured-bg">
+  <h2 class="estate-name">Our Featured Estates</h2>
+  <div class="property-card row">
+    <a href="/estate/success-city-estate" class="estate-card">
+      <img src="{{ url_for('static', filename='image/success.png') }}" alt="Success City Estate">
+      <h3>Success City Estate</h3>
+    </a>
+    <a href="/estate/his-grace-city-estate phase 1" class="estate-card">
+      <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace City Estate Phase 1">
+      <h3>His Grace City Estate Phase 1</h3>
+    </a>
+    <a href="/estate/his-grace-city-estate phase 2" class="estate-card">
+      <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace City Estate Phase 2">
+      <h3>His Grace City Estate Phase 2</h3>
+    </a>
+    </a>
+  </div>
+</section>
 
-    <div class="property-card row">
-      <img src="{{ url_for('static', filename='image/pic5.jpg') }}?v=2" alt="property">
-      <img src="{{ url_for('static', filename='image/pic1.jpg') }}?v=2" alt="Property 1">
-      <img src="{{ url_for('static', filename='image/pic2.jpg') }}?v=2" alt="Property 2">
-      <img src="{{ url_for('static', filename='image/pic3.jpg') }}?v=2" alt="Property 3">
-      <img src="{{ url_for('static', filename='image/pic4.jpg') }}?v=2" alt="Property 4">
-      <img src="{{ url_for('static', filename='image/pic3.jpg') }}?v=2" alt="Property 5">
+
+
+
+<!-- Our Vision & Company Overview Section with Parallax and Interactive Hover -->
+<section id="about" class="company-overview">
+  
+  <!-- Parallax Background Image -->
+  <div class="parallax-bg"></div>
+
+  <!-- Floating Shapes -->
+  <div class="background-shapes">
+    <span class="shape shape1"></span>
+    <span class="shape shape2"></span>
+    <span class="shape shape3"></span>
+  </div>
+
+  <div class="container">
+
+ <!-- inro -->
+    <div class="vision animate-up hover-effect">
+      <h2>Intro</h2>
+      <p>
+        At <strong>Great Mar-cy’s & Sons Limited</strong>, We don’t just sell properties — we build trust, stability, and a shared future for every client.
+      </p>
     </div>
-  </section>
 
-  <!-- Block Section -->
-  <div class="block-section">
-    <h2>SUCCESS CITY ESTATE - HIS GRACE CITY ESTATE</h2>
-    
-    <a href="https://wa.me/2349139070404" target="_blank" class="cta-btn"
-   onclick="gtag('event', 'whatsapp_click', {
-     'event_category': 'contact',
-     'event_label': 'WhatsApp Button - Inspection'
-   });">
-  Contact for Inspection</a>
+
+    <!-- Our Vision -->
+    <div class="vision animate-up hover-effect">
+      <h2>Our Vision</h2>
+      <p>
+        At <strong>Great Mar-cy’s & Sons Limited</strong>, our vision is to be the premier real estate company in Ilorin and beyond, recognized for integrity, innovation, and excellence. We aim to transform communities by providing high-quality properties, reliable services, and smart investment opportunities that create lasting value for our clients, partners, and the society at large.
+      </p>
     </div>
-  </section>
 
-  <!-- About Preview -->
-  <section class="about-preview">
-    <h3>About Us</h3>
-    <p>Great Mar-cy’s & Sons Limited is your trusted partner for real estate investment in Ilorin.
-      <a href="{{ url_for('about') }}?v=2">Read more →</a>
+    <!-- Who We Are -->
+    <div class="who-we-are animate-left hover-effect">
+      <h2>Who We Are</h2>
+      <p>
+        <strong>Who We Are
+
+    <p>At Great Marcy & Sons, we are setting a new benchmark in real estate by making property ownership secure, reliable, and accessible. For us, real estate is not merely a transaction — it is the foundation of trust, future stability, and innovation. Guided by a customer-centric approach and uncompromising transparency, we deliver solutions that inspire confidence, create enduring value, and redefine what it means to own property.</p>
+    </div>
+
+    <!-- What We Do -->
+    <div class="what-we-do animate-right hover-effect">
+      <h2>What We Do</h2>
+      <ul>
+        <li><strong>Buying & Selling Properties:</strong> We connect buyers and sellers of land, houses, and commercial spaces, ensuring transparent and smooth transactions every step of the way.</li>
+        <li><strong>Property Management:</strong> Our expert team manages and maintains properties, protecting and enhancing their value while offering owners peace of mind.</li>
+        <li><strong>Real Estate Development:</strong> We develop modern estates and housing projects that meet contemporary living standards, combining comfort, safety, and sustainability.</li>
+        <li><strong>Consultancy & Advisory Services:</strong> We provide professional guidance on property investment, valuation, and market trends, empowering clients to make informed and profitable decisions.</li>
+      </ul>
+    </div>
+
+    <!-- Our Commitment -->
+    <div class="commitment animate-up hover-effect">
+      <h2>Our Commitment</h2>
+      <p>
+        At <strong>Great Mar-cy’s & Sons Limited</strong>, we believe in building lasting relationships through trust, transparency, and excellence. Every property, project, and service we deliver is backed by our commitment to quality, professionalism, and client satisfaction. Our goal is not just to facilitate property transactions but to create thriving communities where people love to live, work, and invest.
+      </p>
+
+      
+    <!-- Our Core Values -->
+    <div class="core-values animate-up hover-effect">
+      <h2>Our Core Values</h2>
+      <div class="values-grid">
+        
+        <div class="value-box">
+          <h3>Trust</h3>
+          <p>
+            Trust is the foundation of everything we do. At <strong>Great Mar-cy’s & Sons Limited</strong>, we honor our word, keep our promises, and build relationships that stand the test of time. For our clients, trust means confidence that their investment is secure and their future is protected.
+          </p>
+        </div>
+        
+        <div class="value-box">
+          <h3>Customer-Centricity</h3>
+          <p>
+            Our clients are at the center of every decision we make. We take time to understand their needs, anticipate challenges, and deliver solutions tailored to their goals. Every client is treated with care, respect, and unwavering dedication.
+          </p>
+        </div>
+        
+        <div class="value-box">
+          <h3>Innovation</h3>
+          <p>
+            We believe in redefining what’s possible in real estate. Through innovative practices, creative solutions, and forward-looking strategies, we simplify property ownership and open new doors of opportunity for our clients. Innovation is not an option — it is our standard.
+          </p>
+        </div>
+        
+        <div class="value-box">
+          <h3>Excellence</h3>
+          <p>
+            We are committed to delivering only the best. From research to execution, every process is handled with precision, professionalism, and a pursuit of excellence. For us, excellence means going beyond expectations to create lasting value for our clients.
+          </p>
+        </div>
+        
+        <div class="value-box">
+          <h3>Transparency</h3>
+          <p>
+            We operate with openness and honesty in every transaction. By providing clear communication, accurate information, and accountable practices, we ensure that our clients make informed decisions with complete confidence. Transparency builds trust — and trust builds loyalty.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  <!-- why chose us -->
+    <div class="commitment animate-up hover-effect">
+  <h2>Why Choose Us</h2>
+  <div class="trust-grid">
+    <div class="trust-item">
+      <span class="icon">✅</span>
+      <h3>Verified Properties</h3>
+      <p>Every listing is inspected and 100% authentic.</p>
+    </div>
+
+    <div class="trust-item">
+      <span class="icon">✅</span>
+      <h3>Trusted Expertise</h3>
+      <p>Years of experience in Kwara State’s real estate market.</p>
+    </div>
+
+    <div class="trust-item">
+      <span class="icon">✅</span>
+      <h3>Flexible Payment Plans</h3>
+      <p>We make property ownership affordable and achievable.</p>
+    </div>
+
+    <div class="trust-item">
+      <span class="icon">✅</span>
+      <h3>Customer-First Service</h3>
+      <p>We guide you through every step of the process.</p>
+    </div>
+  </div>
+</div>
+
+      </p>
+
+
+  </div>
+</section>
+
+
+<!-- Motto -->
+    <div class="commitment animate-up hover-effect">
+      <h2>MOTTO</h2>
+      <p>
+        At <strong>Redefining Real Estate with Trust, Innovation, and a Future You Can Count On</strong>
+      </p>
+
+
+  </div>
+</section>
+
+
+<section id="enquiry" class="enquiry-section">
+  <div class="enquiry-container animate-up">
+    <h2>Send Us an Enquiry</h2>
+    <p>
+      Have questions about our properties, investment opportunities, or services?  
+      Fill out the form below and our team will get back to you shortly.
     </p>
-  </section>
+
+    <form class="enquiry-form" action="{{ url_for('enquiry') }}" method="POST">
+      <div class="form-group">
+        <input type="text" name="name" placeholder="Your Full Name" required>
+      </div>
+
+      <div class="form-group">
+        <input type="email" name="email" placeholder="Your Email Address" required>
+      </div>
+
+      <div class="form-group">
+        <input type="text" name="subject" placeholder="Subject" required>
+      </div>
+
+      <div class="form-group">
+        <textarea name="message" rows="5" placeholder="Write your message here..." required></textarea>
+      </div>
+
+      <button type="submit" class="enquiry-btn">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+
+
+
+<!-- ===== TESTIMONIALS ===== -->
+<section id="testimonials" class="testimonials-section block-section">
+  <div class="container">
+    <h2 class="section-title">What our clients say</h2>
+
+    <!-- If you pass a 'testimonials' list from Flask, it will render. Otherwise the static fallback is used. -->
+    {% if testimonials %}
+    <div class="testimonials-wrap" id="testimonialsWrap">
+      {% for t in testimonials %}
+      <article class="testimonial-card" aria-label="Testimonial from {{ t.name }}">
+        {% if t.avatar %}
+        <img class="testimonial-avatar" src="{{ url_for('static', filename=t.avatar) }}" alt="{{ t.name }} avatar">
+        {% endif %}
+        <p class="testimonial-text">“{{ t.text }}”</p>
+        <p class="testimonial-author">{{ t.name }}<span class="testimonial-role"> — {{ t.role }}</span></p>
+      </article>
+      {% endfor %}
+    </div>
+    {% else %}
+    <!-- static sample -->
+    <div class="testimonials-wrap" id="testimonialsWrap">
+      <article class="testimonial-card">
+        <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial1.jpg') }}" alt="Mrs A. avatar">
+        <p class="testimonial-text">“Great Mar-cy’s & Sons made my purchase painless — professional and transparent from start to finish.”</p>
+        <p class="testimonial-author">Mrs Adeniyi. <span class="testimonial-role">— Homeowner, Ilorin</span></p>
+      </article>
+      <article class="testimonial-card">
+        <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial2.jpg') }}" alt="Mr B. avatar">
+        <p class="testimonial-text">“Excellent estates and fast process. Highly recommended.”</p>
+        <p class="testimonial-author">Mr Amasa. <span class="testimonial-role">— Investor</span></p>
+      </article>
+      <article class="testimonial-card">
+        <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial3.jpg') }}" alt="Ms C. avatar">
+        <p class="testimonial-text">“Professional team, lovely estates and great post-sale support.”</p>
+        <p class="testimonial-author">Ms Taiwo. <span class="testimonial-role">— Land Buyer</span></p>
+      </article>
+    </div>
+    {% endif %}
+
+    <!-- carousel controls (for smaller screens) -->
+    <div class="testimonials-controls" aria-hidden="false">
+      <button class="test-prev" aria-label="Previous testimonial">&larr;</button>
+      <div class="test-dots" id="testDots" aria-hidden="false"></div>
+      <button class="test-next" aria-label="Next testimonial">&rarr;</button>
+    </div>
+  </div>
+</section>
+
+<section id="newsletter" class="newsletter-section">
+  <div class="newsletter-container animate-up">
+    <h2>Stay Updated</h2>
+    <p>
+      Subscribe to our newsletter and be the first to receive updates on new properties, 
+      investment opportunities, and real estate tips from 
+      <strong>Great Mar-cy’s & Sons Limited</strong>.
+    </p>
+
+    <form id="newsletterForm" class="newsletter-form">
+      <input type="email" name="email" placeholder="Enter your email address" required />
+      <button type="submit">Subscribe</button>
+    </form>
+
+    <!-- Place to show messages -->
+    <div id="newsletterMsg"></div>
+  </div>
+</section>
+
+
+
+    <p class="privacy-note">
+      We respect your privacy. Your email will never be shared.
+    </p>
+  </div>
+</section>
+
+
+
+
+      <div class="cta-wrapper">
+        <a href="#contact" class="cta-btn">Contact Us Today</a>
+        <a href="tel:+2349139070404" class="phone-number">+234 913 907 0404</a>
+        <a href="https://wa.me/2349139070404" target="_blank" class="phone-number whatsapp-link">Chat on WhatsApp</a>
+      </div>
+    </div>
+
+
+<!-- CSS -->
+<style>
+  body {
+    font-family: 'Poppins', sans-serif;
+    color: #111;
+    line-height: 1.8;
+    margin: 0;
+    padding: 0;
+  }
+
+  .company-overview {
+    position: relative;
+    overflow: hidden;
+    padding: 100px 20px;
+    color: #fff;
+  }
+/* Static Background with Overlay */
+.parallax-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)),
+        url('static/image/vision.png') no-repeat center center;
+    background-size: cover;
+    background-attachment: scroll; /* static */
+    z-index: 0;
+    filter: brightness(0.6);
+}
+
+
+  .company-overview .container {
+    max-width: 1000px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  h2 {
+    font-size: 2.5rem;
+    color: #fefefe;
+    margin-bottom: 20px;
+    position: relative;
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+
+  h2::after {
+    content: '';
+    width: 60px;
+    height: 4px;
+    background: #f95738;
+    display: block;
+    margin-top: 8px;
+    border-radius: 2px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    margin-bottom: 25px;
+    transition: transform 0.3s ease;
+  }
+
+  ul {
+    list-style: disc inside;
+    margin-bottom: 25px;
+  }
+
+  ul li {
+    margin-bottom: 15px;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    background: #f95738;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 6px;
+    text-decoration: none;
+    transition: transform 0.3s ease, background 0.3s ease;
+  }
+
+  .cta-btn:hover {
+    transform: scale(1.05);
+    background: #0d3b66;
+  }
+
+  /* Animation */
+  .animate-up, .animate-left, .animate-right {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 0.8s ease-out;
+  }
+
+  .animate-left {
+    transform: translateX(-60px);
+  }
+
+  .animate-right {
+    transform: translateX(60px);
+  }
+
+  .animate-up.visible,
+  .animate-left.visible,
+  .animate-right.visible {
+    opacity: 1;
+    transform: translateX(0) translateY(0);
+  }
+
+  /* Hover Effects */
+  .hover-effect:hover h2 {
+    transform: translateY(-5px);
+    color: #fbb13c;
+  }
+
+  .hover-effect:hover p {
+    transform: translateY(-3px);
+  }
+
+  /* Moving Background Shapes */
+  .background-shapes {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    overflow: hidden;
+  }
+
+  .shape {
+    position: absolute;
+    border-radius: 50%;
+    opacity: 0.2;
+    animation: float 15s infinite linear;
+    transition: transform 0.2s ease;
+  }
+
+  .shape1 { width: 150px; height: 150px; background: #f95738; top: 10%; left: 5%; animation-delay: 0s; }
+  .shape2 { width: 200px; height: 200px; background: #0d3b66; top: 40%; left: 80%; animation-delay: 5s; }
+  .shape3 { width: 100px; height: 100px; background: #fbb13c; top: 70%; left: 50%; animation-delay: 10s; }
+
+  @keyframes float {
+    0% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-40px) translateX(20px); }
+    100% { transform: translateY(0) translateX(0); }
+  }
+
+  @media(max-width: 768px){
+    h2 { font-size: 2rem; }
+    p, ul li { font-size: 1rem; }
+  }
+
+
+
+.newsletter-section {
+  background: rgba(0,0,0,0.7);
+  padding: 80px 20px;
+  text-align: center;
+  color: #fff;
+  position: relative;
+}
+
+.newsletter-container {
+  max-width: 700px;
+  margin: auto;
+}
+
+.newsletter-section h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  color: #fbb13c;
+}
+
+.newsletter-section p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  margin-bottom: 25px;
+}
+
+.newsletter-form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 15px;
+}
+
+.newsletter-form input {
+  padding: 12px 15px;
+  width: 60%;
+  min-width: 250px;
+  border: none;
+  border-radius: 6px;
+  outline: none;
+  font-size: 1rem;
+}
+
+.newsletter-form button {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 6px;
+  background: #fbb13c;
+  color: #000;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  background: #e69a1f;
+}
+
+.privacy-note {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+</style>
+
+<!-- JS for scroll animation and shape hover interaction -->
+<script>
+  // Scroll animation
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.animate-up, .animate-left, .animate-right').forEach(el => {
+    observer.observe(el);
+  });
+
+  // Shape hover interaction
+  const shapes = document.querySelectorAll('.shape');
+  document.addEventListener('mousemove', e => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    shapes.forEach((shape, i) => {
+      const moveX = (x - 0.5) * (10 + i*5);
+      const moveY = (y - 0.5) * (10 + i*5);
+      shape.style.transform = `translate(${moveX}px, ${moveY}px)`;
+    });
+  });
+</script>
+
+
 
   <!-- Footer -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-      <p>KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
-      <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404, +234 9028939653</p>
+  <footer>
+    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+    <p>KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
+    <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404, +234 9028939653</p>
+    <div class="social-links">
+      <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook">
+      </a>
+      <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
+        <img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram">
+      </a>
     </div>
   </footer>
 
-  <!-- Cookie Banner -->
-  <div class="cookie-banner" id="cookie-banner">
-    <p>This website uses cookies to ensure you get the best experience.
-      <a href="{{ url_for('privacy') }}?v=2" target="_blank" style="color: #fff; text-decoration: underline;">Learn More</a>
-    </p>
-    <button id="accept-cookies">Accept</button>
-  </div>
+  <!-- WhatsApp Button -->
 
-  <!-- Cookie Banner Style -->
-  <style>
-    .cookie-banner {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      width: 100%;
-      background: #004080;
-      color: #fff;
-      padding: 15px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 10000;
-    }
-    .cookie-banner button {
-      background: #fff;
-      color: #004080;
-      border: none;
-      padding: 10px 20px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-  </style>
+  <a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy’s%20&%20Sons%20Limited!" class="whatsapp-button" target="_blank">
+    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
+  </a>
 
-  <!-- Scripts -->
-  <script src="{{ url_for('static', filename='js/script.js') }}?v=2"></script>
   <script>
-    // Set current year
+    // Current year
     document.getElementById("year").textContent = new Date().getFullYear();
 
     // Hamburger toggle
@@ -151,47 +763,151 @@
       document.body.classList.toggle('lock-scroll');
     });
 
-    // Cookie acceptance
-    document.getElementById("accept-cookies").onclick = () => {
-      document.getElementById("cookie-banner").style.display = "none";
-      localStorage.setItem("cookieAccepted", "yes");
+    // Scroll animation
+    const scrollElements = document.querySelectorAll(".animate-on-scroll");
+    const elementInView = (el, dividend = 1) => el.getBoundingClientRect().top <= window.innerHeight / dividend;
+    const displayScrollElement = (el) => el.classList.add("visible");
+    const hideScrollElement = (el) => el.classList.remove("visible");
+    const handleScrollAnimation = () => {
+      scrollElements.forEach(el => elementInView(el,1.25)?displayScrollElement(el):hideScrollElement(el));
     };
-
-    window.onload = () => {
-      if (localStorage.getItem("cookieAccepted") === "yes") {
-        document.getElementById("cookie-banner").style.display = "none";
-      }
-    };
+    window.addEventListener("scroll", handleScrollAnimation);
+    window.addEventListener("load", handleScrollAnimation);
   </script>
 
-  <!-- WhatsApp Chat Button -->
-<a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy’s%20&%20Sons%20Limited!%20I'm%20interested%20in%20your%20property."
-   class="whatsapp-button" 
-   target="_blank" 
-   title="Chat with us on WhatsApp">
-   <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
-</a>
+<script>
+  const hero = document.getElementById("hero-preview");
+  const about = document.getElementById("about-info");
 
-<style>
-.whatsapp-button {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    z-index: 9999;
-    background-color: #25D366;
-    padding: 10px;
-    border-radius: 50%;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.25);
-    transition: transform 0.3s ease;
-}
-.whatsapp-button:hover {
-    transform: scale(1.1);
-}
-.whatsapp-button img {
-    width: 40px;
-    height: 40px;
-}
-</style>
+  document.addEventListener("mousemove", (e) => {
+    const x = (window.innerWidth / 2 - e.pageX) / 25;
+    const y = (window.innerHeight / 2 - e.pageY) / 25;
+
+    // Rotate hero and about sections in opposite directions for depth
+    hero.style.transform = `rotateY(${x}deg) rotateX(${y}deg) translateZ(10px)`;
+    about.style.transform = `rotateY(${-x}deg) rotateX(${-y}deg) translateZ(10px)`;
+  });
+
+  // Reset transform when mouse leaves the window
+  document.addEventListener("mouseleave", () => {
+    hero.style.transform = `rotateY(0deg) rotateX(0deg) translateZ(0px)`;
+    about.style.transform = `rotateY(0deg) rotateX(0deg) translateZ(0px)`;
+  });
+</script>
+
+
+<script>
+(function(){
+  const wrap = document.getElementById('testimonialsWrap');
+  const prevBtn = document.querySelector('.test-prev');
+  const nextBtn = document.querySelector('.test-next');
+  const dotsContainer = document.getElementById('testDots');
+  if(!wrap) return; // nothing to do
+
+  const cards = Array.from(wrap.querySelectorAll('.testimonial-card'));
+  let currentIndex = 0;
+  const total = cards.length;
+  let timer = null;
+  const AUTO_MS = 6000;
+
+  // create dots
+  function buildDots(){
+    dotsContainer.innerHTML = '';
+    for(let i=0;i<total;i++){
+      const d = document.createElement('button');
+      d.className = 'test-dot';
+      d.setAttribute('aria-label','Show testimonial '+(i+1));
+      d.addEventListener('click', ()=> goTo(i));
+      dotsContainer.appendChild(d);
+    }
+    updateDots();
+  }
+
+  function updateDots(){
+    Array.from(dotsContainer.children).forEach((dot,i)=>{
+      dot.classList.toggle('active', i===currentIndex);
+    });
+  }
+
+  function goTo(index){
+    currentIndex = (index + total) % total;
+    // On narrow screens we scroll the wrap to the appropriate card
+    const card = cards[currentIndex];
+    if(card && wrap.scrollTo){
+      const left = card.offsetLeft - wrap.offsetLeft - (wrap.clientWidth - card.clientWidth)/2;
+      wrap.scrollTo({ left, behavior: 'smooth' });
+    } else {
+      // fallback: toggle visibility or transform (desktop will show grid)
+      cards.forEach((c,i)=> c.style.display = (i===currentIndex ? '' : 'none'));
+    }
+    updateDots();
+    resetTimer();
+  }
+
+  function prev(){ goTo(currentIndex-1); }
+  function next(){ goTo(currentIndex+1); }
+
+  function resetTimer(){
+    if(timer) clearInterval(timer);
+    timer = setInterval(()=> next(), AUTO_MS);
+  }
+
+  // pause on hover / focus
+  [wrap, prevBtn, nextBtn, dotsContainer].forEach(el=>{
+    if(!el) return;
+    el.addEventListener('mouseenter', ()=> { if(timer) clearInterval(timer); });
+    el.addEventListener('mouseleave', ()=> resetTimer());
+    el.addEventListener('focusin', ()=> { if(timer) clearInterval(timer); });
+    el.addEventListener('focusout', ()=> resetTimer());
+  });
+
+  // attach buttons
+  if(prevBtn) prevBtn.addEventListener('click', prev);
+  if(nextBtn) nextBtn.addEventListener('click', next);
+
+  // swipe support (basic)
+  let startX = 0;
+  wrap.addEventListener('touchstart', (e)=> { startX = e.touches[0].clientX; });
+  wrap.addEventListener('touchend', (e)=> {
+    const dx = (e.changedTouches[0].clientX - startX);
+    if(Math.abs(dx) > 40){
+      if(dx > 0) prev(); else next();
+    }
+  });
+
+  // initialize
+  buildDots();
+  // center the first item for small screens
+  window.addEventListener('load', ()=> goTo(0));
+  // also adjust on resize to keep current card centered
+  window.addEventListener('resize', ()=> goTo(currentIndex));
+})();
+</script>
+
+
+
+
+<script>
+document.getElementById("newsletterForm").addEventListener("submit", async function(e) {
+    e.preventDefault(); // Stop normal form submit
+    
+    let formData = new FormData(this);
+    
+    let response = await fetch("/subscribe", {
+        method: "POST",
+        body: formData
+    });
+    
+    let text = await response.text(); // get server response
+    
+    // Show success/error message
+    let msgBox = document.getElementById("newsletterMsg");
+    msgBox.innerHTML = "✅ Thank you for subscribing!";
+    msgBox.style.color = "green";
+
+    this.reset(); // clear form
+});
+</script>
 
 
 </body>
