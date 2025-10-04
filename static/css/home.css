@@ -389,52 +389,104 @@ header {
 
 /* final safeguard to force transparency when other CSS conflicts */
 body > header, body > .header, body > .navbar { background: transparent !important; }
-
-/* ---------- HERO / SHARED BACKGROUND (.bg-shared) ---------- */
+/* Hero video background */
 .bg-shared {
   position: relative;
-  background-image: url("../image/homepic.png");
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-color: transparent;
-  min-height: 100vh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 140px 20px 80px; /* space for absolute header */
-  color: var(--white);
-  z-index:0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
 }
-.bg-shared::before {
-  content: "";
-  position:absolute; inset:0;
-  background: var(--overlay-dark);
-  z-index:0;
+
+/* Background video */
+.hero-video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
-.bg-shared > * { position: relative; z-index:1; }
 
-/* hero content */
-.hero-preview { max-width:920px; text-align:center; margin:0 auto; }
-.hero-preview h1 { font-size:3rem; color:var(--white); margin-bottom:12px; text-shadow: 0 6px 20px rgba(0,0,0,0.45); }
-.hero-preview p { color: rgba(255,255,255,0.92); margin-bottom:18px; font-size:1.1rem; }
+/* Dark overlay */
+.hero-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.55);
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-/* small hero search */
-.hero-preview form { display:inline-flex; gap:8px; flex-wrap:wrap; justify-content:center; }
-.hero-preview input[type="text"]{
-  padding:12px 14px;
-  border-radius:8px;
+/* Hero text container */
+.hero-about-container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.hero-preview h1 {
+  font-size: 2.8rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.hero-preview p {
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Search form styling */
+.search-form {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.search-form input {
+  padding: 0.8rem 1rem;
   border: none;
-  min-width:220px;
-  max-width:60vw;
+  border-radius: 8px;
+  width: 250px;
 }
-.hero-preview button{
-  padding:12px 16px;
-  border-radius:8px;
-  border:none;
-  background: var(--brand-blue);
-  color: var(--white);
-  cursor:pointer;
+
+.search-form button {
+  background-color: #0056b3;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 1.2rem;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.search-form button:hover {
+  background-color: #003d82;
+}
+
+/* Fullscreen message */
+.fullscreen-message-container {
+  margin-top: 1.5rem;
+}
+
+.fullscreen-message {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #ddd;
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 /* ---------- COMPANY OVERVIEW (vision.png background) ---------- */

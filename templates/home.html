@@ -99,26 +99,32 @@
 <!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
-  <!-- HERO / SHARED BANNER -->
-  <section class="bg-shared" aria-labelledby="hero-title">
-   <div class="hero-about-container">
-  <div class="about-preview hero-preview" id="hero-preview">
-    <h1 id="hero-title">Find Your Property in Nigeria</h1>
-    <p>Search through our listings of land, houses, and commercial properties.</p>
-    <form class="search-form" action="{{ url_for('property_page') }}" method="GET" role="search">
-      <input name="q" type="text" placeholder="Search property..." />
-      <button type="submit">Search</button>
-    </form>
-  </div>
-<div class="fullscreen-message-container">
-  <div class="fullscreen-message">
-    Great Marcy & Sons, we don’t just sell properties — we build trust, stability, and a shared future for every client.
-  </div>
-</div>
+<!-- HERO / SHARED BANNER -->
+<section class="bg-shared" aria-labelledby="hero-title">
+  <video autoplay muted loop playsinline class="hero-video">
+    <source src="{{ url_for('static', filename='image/hero-background.mp4') }}" type="video/mp4">
+  </video>
 
+  <div class="hero-overlay">
+    <div class="hero-about-container">
+      <div class="about-preview hero-preview" id="hero-preview">
+        <h1 id="hero-title">Welcome to Great Marcy’s & Sons Limited</h1>
+        <p>Search through our listings of land, houses, and commercial properties.</p>
+        <form class="search-form" action="{{ url_for('property_page') }}" method="GET" role="search">
+          <input name="q" type="text" placeholder="Search property..." />
+          <button type="submit">Search</button>
+        </form>
+      </div>
 
+      <div class="fullscreen-message-container">
+        <div class="fullscreen-message">
+          Great Marcy & Sons — we don’t just sell properties, we build trust, stability, and a shared future for every client.
+        </div>
+      </div>
     </div>
-  </section>
+  </div>
+</section>
+
 
   <!-- FEATURED -->
   <section class="featured animate-on-scroll featured-bg" aria-labelledby="featured-title">
