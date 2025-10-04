@@ -1,13 +1,66 @@
 {% extends "base.html" %}
 
+{% block head %}
+  <title>{{ post.title }} | Great Mar-cy’s & Sons Limited Blog</title>
+  <meta name="description" content="{{ post.content[:150] | striptags }}">
+  <link rel="canonical" href="{{ request.url }}">
+
+  <!-- Open Graph / Social -->
+  <meta property="og:title" content="{{ post.title }} | Great Mar-cy’s & Sons Limited Blog">
+  <meta property="og:description" content="{{ post.content[:150] | striptags }}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:image" content="{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ post.title }} | Great Mar-cy’s & Sons Limited Blog">
+  <meta name="twitter:description" content="{{ post.content[:150] | striptags }}">
+  <meta name="twitter:image" content="{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}">
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "{{ post.title }}",
+    "description": "{{ post.content[:150] | striptags }}",
+    "image": "{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}",
+    "author": {
+      "@type": "Organization",
+      "name": "Great Mar-cy’s & Sons Limited"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Great Mar-cy’s & Sons Limited",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://greatmarcysonslimited.com/static/image/logo.jpg"
+      }
+    },
+    "datePublished": "{{ post.created_at.isoformat() }}",
+    "mainEntityOfPage": "{{ request.url }}"
+  }
+  </script>
+{% endblock %}
+
 {% block content %}
 <div class="blog_post">
-    <h1>{{ post.title }}</h1>
-    <p><em>Published on {{ post.created_at.strftime('%B %d, %Y') }}</em></p>
-    <div class="content">
-        {{ post.content | safe }}
-    </div>
-    <br>
-    <a href="{{ url_for('blog') }}">← Back to Blog</a>
+  <h1>{{ post.title }}</h1>
+  <p><em>Published on {{ post.created_at.strftime('%B %d, %Y') }}</em></p>
+
+  {% if post.image_url %}
+    <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" class="post-image">
+  {% endif %}
+
+  <div class="content">
+    {{ post.content | safe }}
+  </div>
+
+  <br>
+  <a href="{{ url_for('blog') }}" 
+     onclick="gtag('event', 'back_to_blog', {'event_category': 'navigation', 'event_label': 'Blog Post - Back Button'});">
+     ← Back to Blog
+  </a>
 </div>
 {% endblock %}

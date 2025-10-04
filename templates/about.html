@@ -1,20 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
- <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17421133724');
+  </script>
 
-  gtag('config', 'AW-17421133724');
-</script>
+  <!-- Basic SEO -->
   <meta charset="UTF-8">
-  <title>About Us - Great Mar-cy’s & Sons Limited</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Great Mar-cy’s & Sons Limited | Real Estate Company in Ilorin, Kwara</title>
+  <meta name="description" content="Learn about Great Mar-cy’s & Sons Limited — a trusted real estate company in Ilorin, Kwara State. We make property ownership secure, reliable, and accessible for everyone.">
+  <meta name="keywords" content="real estate Ilorin, property for sale Ilorin, Great Marcy and Sons, land for sale Kwara, real estate company Kwara, buy land in Ilorin, property developer Nigeria">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="About Great Mar-cy’s & Sons Limited">
+  <meta property="og:description" content="We are Ilorin’s trusted real estate partner — redefining property ownership with transparency and value.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greatmarcysonslimited.com/about">
+  <meta property="og:image" content="{{ url_for('static', filename='image/abopic1.jpg') }}">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="About Great Mar-cy’s & Sons Limited">
+  <meta name="twitter:description" content="Your trusted real estate partner in Ilorin, Kwara State.">
+  <meta name="twitter:image" content="{{ url_for('static', filename='image/abopic1.jpg') }}">
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "image": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "url": "https://greatmarcysonslimited.com/about",
+    "telephone": "+2349139070404",
+    "email": "info@greatmarcysonslimited.com",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
+      "postalCode": "240101",
+      "addressCountry": "NG"
+    }
+  }
+  </script>
+
+  <!-- Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}?v=2">
 </head>
+
 <body>
 
   <section class="about-hero">
@@ -25,57 +65,70 @@
   <section class="about-content">
     <div class="about-text">
       <h2>Who We Are</h2>
-      <p>Who We Are At Great Mar-c'y & Sons, we are setting a new benchmark in real estate by making property ownership secure, reliable, and accessible. For us, real estate is not merely a transaction it is the foundation of trust, future stability, and innovation. Guided by a customer-centric approach and uncompromising transparency, we deliver solutions that inspire confidence, create enduring value, and redefine what it means to own property.</p>
+      <p>At <strong>Great Mar-cy’s & Sons Limited</strong>, we are setting a new benchmark in real estate by making property ownership secure, reliable, and accessible. For us, real estate is not merely a transaction — it is the foundation of trust, future stability, and innovation. Guided by a customer-centric approach and uncompromising transparency, we deliver solutions that inspire confidence, create enduring value, and redefine what it means to own property.</p>
     </div>
 
     <div class="about-images">
-      <img src="{{ url_for('static', filename='image/abopic1.jpg') }}?v=2" alt="Office View 2">
-      <img src="{{ url_for('static', filename='image/abopic2.jpg') }}?v=2" alt="Office View 3">
+      <img src="{{ url_for('static', filename='image/abopic1.jpg') }}?v=2" alt="Office View 1">
+      <img src="{{ url_for('static', filename='image/abopic2.jpg') }}?v=2" alt="Office View 2">
     </div>
 
     <div class="about-video">
       <h3>Watch Our Company Tour</h3>
       <video controls width="100%" poster="{{ url_for('static', filename='image/about4.png') }}?v=2">
-  <source src="{{ url_for('static', filename='image/office vid.mp4') }}?v=2" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+        <source src="{{ url_for('static', filename='image/office vid.mp4') }}?v=2" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
     </div>
 
     <div class="about-address">
       <h3>Visit Us</h3>
       <style>
-.map-container {
-    position: relative;
-    padding-bottom: 56.25%; /* 16:9 aspect ratio */
-    height: 0;
-    overflow: hidden;
-}
-.map-container iframe {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-</style>
+      .map-container {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+      }
+      .map-container iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+      }
+      </style>
 
-<h2>Our Office Location</h2>
-<div class="map-container">
-    <iframe 
-        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.835031714498!2d4.587127173831407!3d8.515392991526838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10364da03dd43ee5%3A0x6f9b6ea3b61bbf23!2sGreat%20Mar-cy%E2%80%99s%20%26%20Sons%20Limited!5e0!3m2!1sen!2sng!4v1754774179579!5m2!1sen!2sng" 
-        style="border:0;" 
-        allowfullscreen="" 
-        loading="lazy" 
-        referrerpolicy="no-referrer-when-downgrade">
-    </iframe>
-</div>
+      <h2>Our Office Location</h2>
+      <div class="map-container">
+        <iframe 
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.835031714498!2d4.587127173831407!3d8.515392991526838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10364da03dd43ee5%3A0x6f9b6ea3b61bbf23!2sGreat%20Mar-cy%E2%80%99s%20%26%20Sons%20Limited!5e0!3m2!1sen!2sng!4v1754774179579!5m2!1sen!2sng" 
+          style="border:0;" 
+          allowfullscreen="" 
+          loading="lazy" 
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
 
-      <p>Great Mar-cy’s & Sons Limited</p>
-      <p>KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
-      <p>Email: info@greatmarcysonslimited.com</p>
-      <p>Phone: +234 9139070404, +234 9028939653</p>
+      <p><strong>Address:</strong> KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara State</p>
+      <p><strong>Email:</strong> info@greatmarcysonslimited.com</p>
+      <p><strong>Phone:</strong> +234 9139070404, +234 9028939653</p>
+
+      <p class="links">
+        <a href="/property">View Available Properties</a> |
+        <a href="/contact">Contact Us</a> |
+        <a href="/">Back to Home</a>
+      </p>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+      <p>Olooru, Old Jebba Road Kulende Area, Sango Ilorin, Kwara State</p>
+      <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404</p>
+    </div>
+  </footer>
 
 </body>
 </html>

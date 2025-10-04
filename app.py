@@ -47,39 +47,30 @@ mail = Mail(app)
 # ==============================
 # 🔹 ROUTES
 # ==============================
-
 @app.route('/')
 def home():
-    hero_content = {
-        "title": "Find Your Dream Property in ilorin",
-        "subtitle": "Explore verified estates and homes across Kwara State"
+    properties = Property.query.all()
+
+    seo = {
+        "title": "Great Mar-cy’s & Sons Limited - Real Estate in Ilorin",
+        "description": "Find and buy land or property in Ilorin with Great Mar-cy’s & Sons Limited. Trusted estate company in Kwara State.",
+        "keywords": "Ilorin real estate, buy land Ilorin, Great Marcy Sons Limited, property for sale, estate management",
+        "image": url_for('static', filename='image/logo.png')
     }
-    banner_content = {
-        "background_image": "image/home-back.png",
-        "heading": "Welcome to Great Mar-cy’s & Sons Limited",
-        "text": "We provide trusted and verified real estate listings in Nigeria"
-    }
-    about_content = {
-        "title": "About Us",
-        "summary": "Great Mar-cy’s & Sons Limited is your trusted partner for real estate investment in Ilorin..."
-    }
+
+    logogmc_path = "image/logogmc.png"  # ✅ make sure this matches your folder path
+
     nav_links = [
-        {"name": "Home", "endpoint": "home"},
-        {"name": "About", "endpoint": "about"},
-        {"name": "Properties", "endpoint": "property_page"},
-        {"name": "Blog", "endpoint": "blog"},
-        {"name": "Contact", "endpoint": "contact"},
-        {"name": "Admin Login", "endpoint": "admin_login"}
-    ]
-    logogmc_path = "image/logogmc.png"
-    return render_template(
-        'home.html',
-        hero_content=hero_content,
-        banner_content=banner_content,
-        about_content=about_content,
-        nav_links=nav_links,
-        logogmc_path=logogmc_path
-    )
+    {"name": "Home", "endpoint": "home"},
+    {"name": "About", "endpoint": "about"},
+    {"name": "Properties", "endpoint": "property_page"},  # ✅ fixed
+    {"name": "Contact", "endpoint": "contact"},
+    {"name": "Admin", "endpoint": "admin_dashboard"}
+]
+
+
+    return render_template("home.html", properties=properties, seo=seo, logogmc_path=logogmc_path, nav_links=nav_links)
+
 
 @app.route('/about')
 def about():

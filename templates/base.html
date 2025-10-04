@@ -1,31 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}{{ seo.title if seo else "Great Mar-cy’s & Sons Limited" }}{% endblock %}</title>
-    <meta name="description" content="{{ seo.description if seo else 'Verified real estate listings in Ilorin, Kwara State.' }}">
-    {% if seo.keywords %}
-    <meta name="keywords" content="{{ seo.keywords }}">
-    {% endif %}
-<link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+  <title>
+    {% block title %}
+      {{ seo.title if seo and seo.title else "Great Mar-cy’s & Sons Limited | Real Estate in Ilorin, Kwara" }}
+    {% endblock %}
+  </title>
+
+  <meta name="description" content="{{ seo.description if seo and seo.description else 'Explore verified real estate listings, land sales, and property investment opportunities in Ilorin, Kwara State with Great Mar-cy’s & Sons Limited.' }}">
+  <meta name="keywords" content="{{ seo.keywords if seo and seo.keywords else 'real estate Ilorin, buy land Kwara, property for sale, Great Marcy Sons Limited' }}">
+  <link rel="canonical" href="{{ request.url }}">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="{{ seo.title if seo and seo.title else 'Great Mar-cy’s & Sons Limited | Real Estate in Ilorin, Kwara' }}">
+  <meta property="og:description" content="{{ seo.description if seo and seo.description else 'Verified property listings and real estate opportunities in Ilorin, Kwara State.' }}">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
+  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ seo.title if seo and seo.title else 'Great Mar-cy’s & Sons Limited | Real Estate in Ilorin, Kwara' }}">
+  <meta name="twitter:description" content="{{ seo.description if seo and seo.description else 'Discover trusted property deals and verified listings in Ilorin, Kwara.' }}">
+  <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
+
+  <!-- Structured Data for Company -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "url": "https://greatmarcysonslimited.com/",
+    "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "telephone": ["+2349139070404", "+2349028939653"],
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
+      "addressCountry": "NG"
+    },
+    "sameAs": [
+      "https://www.facebook.com/greatmarcysonslimited",
+      "https://www.instagram.com/greatmarcysonslimited",
+      "https://www.linkedin.com/company/greatmarcysonslimited"
+    ]
+  }
+  </script>
+
+  <!-- Google Analytics Tag -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17421133724');
+  </script>
+
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
 </head>
+
 <body>
-    <header>
-        <nav>
-            <a href="{{ url_for('home') }}">Home</a> |
-            <a href="{{ url_for('blog') }}">Blog</a>
-        </nav>
-    </header>
+  <header>
+    <nav>
+      <a href="{{ url_for('home') }}">Home</a> |
+      <a href="{{ url_for('blog') }}">Blog</a>
+    </nav>
+  </header>
 
-    <main>
-        {% block content %}
-        {% endblock %}
-    </main>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
 
-    <footer>
-        &copy; {{ now.year }} Great Mar-cy’s & Sons Limited
-    </footer>
+  <footer>
+    &copy; {{ now.year }} Great Mar-cy’s & Sons Limited
+  </footer>
 </body>
 </html>

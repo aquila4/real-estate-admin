@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -10,51 +10,73 @@
     gtag('config', 'AW-17421133724');
   </script>
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>{{ "Great Mar-cy’s & Sons Limited" }}</title>
-  <meta name="description" content="Looking for land or property in Ilorin, Kwara? Great Mar-cy’s & Sons Limited offers verified estates and properties at the best prices in Ilorin and across Kwara State.">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="Great Mar-cy’s & Sons Limited | Real Estate in Ilorin, Kwara">
-  <meta property="og:description" content="Verified land and property listings in Ilorin, Kwara State. Find your dream property with Great Mar-cy’s & Sons Limited.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://greatmarcysonslimited.com/">
-  <meta property="og:image" content="{{ url_for('static', filename='image/logo.jpg') }}">
+  <!-- Dynamic SEO -->
+  <title>{{ seo.title | default("Great Mar-cy’s & Sons Limited - Real Estate Company in Ilorin") }}</title>
+<meta name="description" content="{{ seo.description | default('Buy and sell land, houses, and commercial properties with Great Mar-cy’s & Sons Limited in Ilorin, Kwara State.') }}">
+<meta name="keywords" content="{{ seo.keywords | default('Ilorin real estate, land for sale, Great Marcy Sons Limited, buy land Ilorin, property management') }}">
+<meta name="author" content="Great Mar-cy’s & Sons Limited">
+<meta name="robots" content="index, follow">
 
-  <!-- LINK TO EXTERNAL CSS (put all your CSS here) -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}?v=4">
+<!-- Social Sharing -->
+<meta property="og:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+<meta property="og:description" content="{{ seo.description | default('Find affordable land and properties in Ilorin.') }}">
+<meta property="og:image" content="{{ seo.image | default(url_for('static', filename='images/logo.png')) }}">
+<meta property="og:type" content="website">
+<meta property="og:url" content="{{ request.url }}">
 
-  <!-- Structured Data -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+<meta name="twitter:description" content="{{ seo.description | default('Buy, sell, and manage real estate properties in Ilorin.') }}">
+<meta name="twitter:image" content="{{ seo.image | default(url_for('static', filename='images/logo.png')) }}">
+
+  <!-- Structured Data: Property -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SingleFamilyResidence",
+    "name": "{{ seo.title if seo.title else property.title }}",
+    "description": "{{ seo.description if seo.description else property.description[:150] }}",
+    "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=seo.image) if seo.image else url_for('static', filename='image/logo.jpg') }}",
+    "address": {
+      "@type": "PostalAddress",
+      "addressLocality": "{{ properties[0].location if properties|length > 0 else 'Ilorin, Kwara State' }}",
+
+      "addressRegion": "Kwara",
+      "addressCountry": "NG"
+    },
+    "url": "{{ request.url }}"
+  }
+  </script>
+
+  <!-- Structured Data: Company -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
     "name": "Great Mar-cy’s & Sons Limited",
-    "url": "https://greatmarcysonslimited.com",
+    "url": "https://greatmarcysonslimited.com/",
     "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
-    "sameAs": [
-      "https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr",
-      "https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr"
-    ],
+    "telephone": ["+2349139070404", "+2349028939653"],
     "address": {
       "@type": "PostalAddress",
-      "streetAddress": "KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd",
       "addressLocality": "Ilorin",
-      "addressRegion": "Kwara",
-      "postalCode": "240101",
+      "addressRegion": "Kwara State",
       "addressCountry": "NG"
     },
-    "contactPoint": {
-      "@type": "ContactPoint",
-      "telephone": "+2349139070404",
-      "contactType": "Customer Service"
-    }
+    "sameAs": [
+      "https://www.facebook.com/greatmarcysonslimited",
+      "https://www.instagram.com/greatmarcysonslimited",
+      "https://www.linkedin.com/company/greatmarcysonslimited"
+    ]
   }
   </script>
 </head>
 
-
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+</head>
 
 
 

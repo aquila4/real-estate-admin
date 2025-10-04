@@ -1,7 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>Properties for Sale in Ilorin, Kwara | Great Mar-cy’s & Sons Limited</title>
+  <meta name="description" content="Explore verified real estate listings in Ilorin, Kwara State — houses, lands, and commercial properties from Great Mar-cy’s & Sons Limited.">
+
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://greatmarcysonslimited.com/properties" />
+
+  <!-- Open Graph / Social Sharing -->
+  <meta property="og:title" content="Properties for Sale in Ilorin, Kwara | Great Mar-cy’s & Sons Limited" />
+  <meta property="og:description" content="Verified real estate listings — houses, lands, and commercial properties for sale in Ilorin, Kwara State." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://greatmarcysonslimited.com/properties" />
+  <meta property="og:image" content="{{ url_for('static', filename='image/og-property.jpg') }}" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Properties for Sale in Ilorin | Great Mar-cy’s & Sons Limited" />
+  <meta name="twitter:description" content="Browse verified properties — houses, lands, and commercial spaces in Ilorin, Kwara State." />
+  <meta name="twitter:image" content="{{ url_for('static', filename='image/og-property.jpg') }}" />
+
+  <!-- Google Tag (gtag.js) -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -10,44 +32,73 @@
     gtag('config', 'AW-17421133724');
   </script>
 
-  <meta charset="UTF-8">
-  <title>Our Properties - Great Mar-cy</title>
+  <!-- Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css') }}">
 </head>
 <body>
 
   <header>
     <h1>Explore Our Premium Listings</h1>
-    <p>Discover amazing properties from Great Mar-cy’s & Sons Ltd</p>
+    <p>Discover amazing verified properties from Great Mar-cy’s & Sons Limited</p>
   </header>
-<div class="property-grid">
-  {% for property in properties %}
-    <div class="property-card">
-      <a href="{{ url_for('property_detail', slug=property.slug) }}">
-        <div class="property-media">
-          {% if property.image_url %}
-            <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="{{ property.title }}">
-          {% endif %}
-          {% if property.video_url %}
-            <video controls>
-              <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          {% endif %}
-        </div>
-        <div class="property-details">
-          <p><strong>Title:</strong> {{ property.title }}</p>
-          <p><strong>Location:</strong> {{ property.location }}</p>
-          <p><strong>Description:</strong> {{ property.description[:100] }}...</p>
-        </div>
-      </a>
-    </div>
-  {% endfor %}
-</div>
+
+  <div class="property-grid">
+    {% for property in properties %}
+      <div class="property-card">
+        <a href="{{ url_for('property_detail', slug=property.slug) }}" 
+           onclick="gtag('event', 'view_property', {'event_category': 'property', 'event_label': '{{ property.title }}'});">
+
+          <div class="property-media">
+            {% if property.image_url %}
+              <img src="{{ url_for('serve_file', filename=property.image_url) }}" 
+                   alt="Property for sale in {{ property.location }} - {{ property.title }}">
+            {% endif %}
+            {% if property.video_url %}
+              <video controls>
+                <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+            {% endif %}
+          </div>
+
+          <div class="property-details">
+            <p><strong>Title:</strong> {{ property.title }}</p>
+            <p><strong>Location:</strong> {{ property.location }}</p>
+            <p><strong>Description:</strong> {{ property.description[:100] }}...</p>
+          </div>
+        </a>
+      </div>
+    {% else %}
+      <p>No properties available at the moment. Please check back later.</p>
+    {% endfor %}
+  </div>
 
   <footer>
-    &copy; {{ now.year }} Great Mar-cy’s & Sons Limited. All rights reserved.
+    <div class="footer-links">
+      <a href="/">Home</a> |
+      <a href="/about">About Us</a> |
+      <a href="/contact">Contact</a> |
+      <a href="/blog">Blog</a>
+    </div>
+    <p>&copy; {{ now.year }} Great Mar-cy’s & Sons Limited. All rights reserved.</p>
   </footer>
+
+  <!-- Schema Markup -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "url": "https://greatmarcysonslimited.com/properties",
+    "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "areaServed": "Ilorin, Kwara State, Nigeria",
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+2349139070404",
+      "contactType": "sales"
+    }
+  }
+  </script>
 
 </body>
 </html>

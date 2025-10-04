@@ -1,18 +1,79 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17421133724');
-</script>
   <meta charset="UTF-8">
-  <title>Our Agents - Great Mar-cy’s & Sons Limited</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Our Agents | Great Mar-cy’s & Sons Limited</title>
+  <meta name="description" content="Meet our trusted real estate agents at Great Mar-cy’s & Sons Limited — dedicated professionals helping you find verified properties and land in Ilorin, Kwara State.">
+  <meta name="keywords" content="real estate agents Ilorin, property consultants Kwara, Great Marcy Sons Limited, land for sale Nigeria, real estate experts Ilorin">
+  <link rel="canonical" href="{{ request.url }}">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Our Agents | Great Mar-cy’s & Sons Limited">
+  <meta property="og:description" content="Meet our trusted real estate agents and consultants at Great Mar-cy’s & Sons Limited.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="{{ request.url }}">
+  <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
+  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Our Agents | Great Mar-cy’s & Sons Limited">
+  <meta name="twitter:description" content="Meet our professional real estate agents in Ilorin, Kwara State. Trusted experts to help you buy, sell, or invest in properties.">
+  <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
+
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'AW-17421133724');
+  </script>
+
+  <!-- Structured Data: Organization & Agents -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "RealEstateAgent",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "url": "https://greatmarcysonslimited.com/",
+    "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "telephone": "+2349139070404",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Olooru, Old Jebba Road Kulende Area Sango",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
+      "addressCountry": "NG"
+    },
+    "employee": [
+      {
+        "@type": "Person",
+        "name": "Paul Abimbola",
+        "jobTitle": "Lead Property Consultant",
+        "telephone": "+2349139070404",
+        "email": "info@greatmarcysonslimited.com"
+      },
+      {
+        "@type": "Person",
+        "name": "Wasiu Lawal",
+        "jobTitle": "Land Sales Consultant",
+        "telephone": "+2349038360378",
+        "email": "info@greatmarcysonslimited.com"
+      },
+      {
+        "@type": "Person",
+        "name": "Bimpe Akinsulie",
+        "jobTitle": "Client Relations Manager",
+        "telephone": "+2348038903854",
+        "email": "info@greatmarcysonslimited.com"
+      }
+    ]
+  }
+  </script>
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/agent.css') }}?v=2">
 </head>
 <body>
@@ -24,27 +85,27 @@
 
   <section class="agent-section">
     <div class="agent-card">
-      <img src="{{ url_for('static', filename='image/pic9.jpg') }}"?v=2 alt="Agent 1">
+      <img src="{{ url_for('static', filename='image/pic9.jpg') }}?v=2" alt="Paul Abimbola - Lead Property Consultant at Great Mar-cy’s & Sons Limited">
       <h3>Paul Abimbola</h3>
       <p>Lead Property Consultant</p>
-      <p>Email: info@greatmarcysonslimited.com</p>
-      <p>Phone:  +234 9139070404</p>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
     </div>
 
     <div class="agent-card">
-      <img src="{{ url_for('static', filename='image/pic10.jpg') }}?v=2" alt="Agent 2">
+      <img src="{{ url_for('static', filename='image/pic10.jpg') }}?v=2" alt="Wasiu Lawal - Land Sales Consultant at Great Mar-cy’s & Sons Limited">
       <h3>Wasiu Lawal</h3>
       <p>Land Sales Consultant</p>
-      <p>Email: info@greatmarcysonslimited.com</p>
-      <p>Phone: +234 9038360378</p>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2349038360378">+234 903 836 0378</a></p>
     </div>
 
     <div class="agent-card">
-      <img src="{{ url_for('static', filename='image/pic8.jpg') }}?v=2" alt="Agent 3">
+      <img src="{{ url_for('static', filename='image/pic8.jpg') }}?v=2" alt="Bimpe Akinsulie - Client Relations Manager at Great Mar-cy’s & Sons Limited">
       <h3>Bimpe Akinsulie</h3>
       <p>Client Relations Manager</p>
-      <p>Email: info@greatmarcysonslimited.com</p>
-      <p>Phone: +234 8038903854</p>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2348038903854">+234 803 890 3854</a></p>
     </div>
   </section>
 
@@ -52,8 +113,9 @@
   <footer class="footer">
     <div class="footer-content">
       <p>&copy; 2025 Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-      <p>Olooru, Old Jebba Road Kulende Area Sango Ilorin, Kwara State</p>
-      <p>Email: info@greatmarcysonslimited.com| Phone: +234 9139070404</p>
+      <p>Olooru, Old Jebba Road Kulende Area, Sango Ilorin, Kwara State</p>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a> |
+         Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
     </div>
   </footer>
 
