@@ -14,7 +14,7 @@ body {
 }
 
 /* Header Styling */
-header {
+.gallery-page header {
   background-color: #004080;
   padding: 15px 30px;
   color: white;
@@ -78,6 +78,45 @@ nav a:hover {
 .gallery-grid video:hover {
   transform: scale(1.02);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+}
+
+/* ---------- FEATURED PROPERTY SECTION (Gallery Page) ---------- */
+.featured-property-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 20px;
+  background: #f5f8ff;
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.featured-property-title {
+  font-size: 2rem;
+  color: #004080;
+  margin-bottom: 18px;
+  font-weight: 700;
+}
+
+.featured-property-image {
+  display: block;
+  margin: 0 auto 24px auto;
+  max-width: 340px;
+  width: 100%;
+  height: auto;
+  border-radius: 16px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 600px) {
+  .featured-property-image {
+    max-width: 90vw;
+  }
+
+  .featured-property-title {
+    font-size: 1.4rem;
+  }
 }
 
 /* Footer */
