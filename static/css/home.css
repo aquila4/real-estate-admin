@@ -723,11 +723,211 @@ body > header, body > .header, body > .navbar { background: transparent !importa
 #newsletterMsg { margin-top:12px; font-weight:600; }
 
 /* ---------- CTA / Footer ---------- */
-.cta-wrapper { display:flex; gap:12px; justify-content:center; padding:26px 20px; flex-wrap:wrap; }
-.cta-btn { background: var(--brand-blue); color:#fff; padding:12px 20px; border-radius:8px; text-decoration:none; font-weight:700; }
-.cta-btn:hover { background: var(--brand-blue-2); transform: translateY(-2px); }
 
-footer { background: var(--brand-blue); color:#fff; text-align:center; padding:28px 20px; margin-top:40px; }
+.cta-wrapper {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border-radius: 20px;
+  padding: 25px 20px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  margin: 40px auto;
+  max-width: 700px;
+  transition: all 0.3s ease-in-out;
+}
+
+.cta-wrapper:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+}
+
+.cta-btn {
+  background: linear-gradient(135deg, #1e90ff, #007bff);
+  color: #fff;
+  text-decoration: none;
+  padding: 14px 25px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(30, 144, 255, 0.4);
+}
+
+.cta-btn:hover {
+  background: linear-gradient(135deg, #007bff, #005ecb);
+  transform: scale(1.05);
+  box-shadow: 0 6px 15px rgba(0, 123, 255, 0.5);
+}
+
+.phone-number {
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  text-decoration: none;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50px;
+  padding: 12px 22px;
+  transition: all 0.3s ease;
+}
+
+.phone-number:hover {
+  border-color: #1e90ff;
+  color: #1e90ff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.whatsapp-link {
+  border-color: #25D366;
+}
+
+.whatsapp-link:hover {
+  background: #25D366;
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+}
+
+@media (max-width: 600px) {
+  .cta-wrapper {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .cta-btn,
+  .phone-number {
+    width: 100%;
+    text-align: center;
+  }
+}
+
+
+
+.footer {
+  background: linear-gradient(135deg, #0a1a2f, #05152b);
+  color: #fff;
+  padding: 60px 20px 30px;
+  font-family: 'Poppins', sans-serif;
+  position: relative;
+  overflow: hidden;
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo img {
+  width: 70px;
+  margin-bottom: 10px;
+}
+
+.footer-logo h3 {
+  font-size: 1.3rem;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+.footer-logo p {
+  font-size: 0.95rem;
+  color: #cccccc;
+  line-height: 1.5;
+}
+
+.footer-links h4,
+.footer-contact h4 {
+  font-size: 1.1rem;
+  color: #fff;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.footer-links h4::after,
+.footer-contact h4::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -5px;
+  width: 40px;
+  height: 3px;
+  background: #1e90ff;
+  border-radius: 5px;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin: 8px 0;
+}
+
+.footer-links ul li a {
+  color: #cccccc;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #1e90ff;
+}
+
+.footer-contact p,
+.footer-contact a {
+  color: #cccccc;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  text-decoration: none;
+}
+
+.footer-contact a:hover {
+  color: #1e90ff;
+}
+
+.social-links {
+  margin-top: 15px;
+}
+
+.social-links a {
+  color: #fff;
+  margin-right: 10px;
+  font-size: 1.2rem;
+  display: inline-block;
+  transition: transform 0.3s ease, color 0.3s ease;
+}
+
+.social-links a:hover {
+  color: #1e90ff;
+  transform: scale(1.2);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 40px;
+  border-top: 1px solid rgba(255, 255, 255, 0.15);
+  padding-top: 20px;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+@media (max-width: 600px) {
+  .footer-container {
+    text-align: center;
+  }
+  .footer-links h4::after,
+  .footer-contact h4::after {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
 
 /* ---------- ANIMATIONS / SMALL HELPERS ---------- */
 .animate-up { opacity:0; transform: translateY(40px); transition: all 0.8s ease-out; }

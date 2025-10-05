@@ -154,7 +154,7 @@
 <div class="property-card row">
 
   <div class="estate-card">
-    <img src="{{ url_for('static', filename='image/success.png') }}" alt="Success City Estate">
+    <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
     <h3>Success City Estate</h3>
   </div>
 
@@ -362,16 +362,46 @@
     <a href="https://wa.me/2349139070404" target="_blank" class="phone-number whatsapp-link">Chat on WhatsApp</a>
   </div>
 
-  <!-- FOOTER -->
-  <footer>
-    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-    <p>KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
-    <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404, +234 9028939653</p>
-    <div class="social-links">
-      <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank"><img src="https://img.icons8.com/color/48/000000/facebook-new.png" alt="Facebook"></a>
-      <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank"><img src="https://img.icons8.com/color/48/000000/instagram-new.png" alt="Instagram"></a>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Logo" />
+      <h3>Great Mar-cy’s & Sons Limited</h3>
+      <p>Trusted Real Estate Company in Ilorin — Turning Land into Legacy.</p>
     </div>
-  </footer>
+
+    <div class="footer-links">
+      <h4>Quick Links</h4>
+      <ul>
+        <li><a href="{{ url_for('home') }}">Home</a></li>
+        <li><a href="{{ url_for('about') }}">About</a></li>
+        <li><a href="{{ url_for('property_page') }}">Properties</a></li>
+        <li><a href="{{ url_for('contact') }}">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h4>Contact</h4>
+      <p>Kulende Area, KM5 Old Jebba Road,<br>Sango Rd, Ilorin 240101, Kwara</p>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a>, <a href="tel:+2349028939653">+234 902 893 9653</a></p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank" aria-label="Instagram">
+          <i class="fab fa-instagram"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+  </div>
+</footer>
+
 
   <!-- WhatsApp Button -->
   <a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy’s%20&%20Sons%20Limited!" class="whatsapp-button" target="_blank" aria-label="Chat on WhatsApp">

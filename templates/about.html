@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- Google Tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -52,16 +52,22 @@
   </script>
 
   <!-- Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}?v=2">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/about.css') }}?v=3">
 </head>
 
 <body>
 
+  <!-- HERO SECTION -->
   <section class="about-hero">
-    <h1>About Great Mar-cy’s & Sons Limited</h1>
-    <p>Your Trusted Real Estate Partner in Ilorin, Kwara State.</p>
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>About Great Mar-cy’s & Sons Limited</h1>
+      <p>Your Trusted Real Estate Partner in Ilorin, Kwara State.</p>
+      <a href="#contact" class="hero-btn">Get in Touch</a>
+    </div>
   </section>
 
+  <!-- ABOUT CONTENT -->
   <section class="about-content">
     <div class="about-text">
       <h2>Who We Are</h2>
@@ -69,9 +75,16 @@
     </div>
 
     <div class="about-images">
-      <img src="{{ url_for('static', filename='image/abopic1.jpg') }}?v=2" alt="Office View 1">
-      <img src="{{ url_for('static', filename='image/abopic2.jpg') }}?v=2" alt="Office View 2">
-    </div>
+  <figure>
+    <img src="{{ url_for('static', filename='image/abopic1.jpg') }}" alt="Office View 1">
+    <figcaption></figcaption>
+  </figure>
+  <figure>
+    <img src="{{ url_for('static', filename='image/abopic2.jpg') }}" alt="Office View 2">
+    <figcaption></figcaption>
+  </figure>
+</div>
+
 
     <div class="about-video">
       <h3>Watch Our Company Tour</h3>
@@ -80,55 +93,72 @@
         Your browser does not support the video tag.
       </video>
     </div>
+  </section>
 
-    <div class="about-address">
-      <h3>Visit Us</h3>
-      <style>
-      .map-container {
-        position: relative;
-        padding-bottom: 56.25%; /* 16:9 aspect ratio */
-        height: 0;
-        overflow: hidden;
-      }
-      .map-container iframe {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-      }
-      </style>
-
+  <!-- OFFICE LOCATION -->
+  <section class="office-footer">
+    <div class="office-location">
       <h2>Our Office Location</h2>
       <div class="map-container">
         <iframe 
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3945.835031714498!2d4.587127173831407!3d8.515392991526838!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x10364da03dd43ee5%3A0x6f9b6ea3b61bbf23!2sGreat%20Mar-cy%E2%80%99s%20%26%20Sons%20Limited!5e0!3m2!1sen!2sng!4v1754774179579!5m2!1sen!2sng" 
-          style="border:0;" 
           allowfullscreen="" 
           loading="lazy" 
           referrerpolicy="no-referrer-when-downgrade">
         </iframe>
       </div>
 
-      <p><strong>Address:</strong> KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara State</p>
-      <p><strong>Email:</strong> info@greatmarcysonslimited.com</p>
-      <p><strong>Phone:</strong> +234 9139070404, +234 9028939653</p>
-
-      <p class="links">
-        <a href="/property">View Available Properties</a> |
-        <a href="/contact">Contact Us</a> |
-        <a href="/">Back to Home</a>
-      </p>
+      
     </div>
   </section>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-      <p>Olooru, Old Jebba Road Kulende Area, Sango Ilorin, Kwara State</p>
-      <p>Email: info@greatmarcysonslimited.com | Phone: +234 9139070404</p>
+  <!-- FOOTER -->
+  <footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-logo-section">
+      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="" class="footer-logo">
+      <p>Great Mar-cy’s & Sons Limited</p>
+      <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
     </div>
-  </footer>
+
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/property">Properties</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
+          <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
+          <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
 </body>
 </html>
