@@ -63,10 +63,12 @@ def home():
     nav_links = [
     {"name": "Home", "endpoint": "home"},
     {"name": "About", "endpoint": "about"},
-    {"name": "Properties", "endpoint": "property_page"},  # ✅ fixed
+    {"name": "Properties", "endpoint": "property_page"},
+    {"name": "Blog", "endpoint": "blog"},  # 🆕 Added blog link
     {"name": "Contact", "endpoint": "contact"},
     {"name": "Admin", "endpoint": "admin_dashboard"}
 ]
+
 
 
     return render_template("home.html", properties=properties, seo=seo, logogmc_path=logogmc_path, nav_links=nav_links)
@@ -395,20 +397,37 @@ def enquiry():
         )
         mail.send(admin_msg)
 
-        # Auto-reply to customer
+        # 📩 Auto-reply to Customer
         confirmation = Message(
-            subject="We Received Your Enquiry – Great Mar-cy’s & Sons",
+            subject="We Received Your Enquiry – Great Mar-cy’s & Sons Limited",
             sender=os.getenv("MAIL_USERNAME"),
             recipients=[email],
-            body=f"Hello {name},\n\nThank you for reaching out. We received your enquiry: \"{subject}\"."
+            body=f"""Dear {name},
+
+Thank you for reaching out to Great Mar-cy’s & Sons Limited.
+We’ve received your enquiry regarding “{subject}” and our team is already reviewing it.
+
+One of our representatives will get back to you shortly with more information.
+
+We truly appreciate your interest in our services — your satisfaction is our priority.
+
+Warm regards,
+Great Mar-cy’s & Sons Limited
+📍 Ilorin, Kwara State
+📞 +234 913 907 0404, +234 902 893 9653
+📧 greatmarcysonslimited@gmail.com
+"""
         )
         mail.send(confirmation)
-        flash("✅ Your enquiry has been submitted and we’ll get back to you soon!")
+
+        flash("✅ Your enquiry has been submitted successfully! We'll get back to you soon.")
+
     except Exception as e:
         print("❌ Email error:", str(e))
         flash("Your enquiry was saved but email notification failed.")
 
     return redirect(url_for('home'))
+
 
 # ==============================
 # 🔹 NEWSLETTER SUBSCRIPTION
@@ -431,18 +450,29 @@ def subscribe():
 
     try:
         msg = Message(
-            subject="Welcome to Great Mar-cy’s & Sons Newsletter",
+            subject="Welcome to Great Mar-cy’s & Sons Limited Newsletter",
             sender=os.getenv("MAIL_USERNAME"),
             recipients=[email],
-            body="Thank you for subscribing to our newsletter!"
+            body=f"""Hello there 👋,
+
+Thank you for subscribing to Great Mar-cy’s & Sons Limited!
+
+You’ll now receive updates about our latest property listings, estate opportunities,
+and real estate insights — straight to your inbox.
+
+If you ever have any questions, feel free to reply to this email anytime.
+
+Warm regards,
+Great Mar-cy’s & Sons Limited
+Your Trusted Real Estate Partner in Ilorin
+"""
         )
         mail.send(msg)
     except Exception as e:
         print("❌ Newsletter email failed:", str(e))
 
-    flash("✅ Thank you for subscribing!")
+    flash("✅ Thank you for subscribing! Welcome to Great Mar-cy’s & Sons community.")
     return redirect(url_for('home'))
-
 
 
 # ==============================
@@ -456,6 +486,7 @@ def inject_now():
 # ==============================
 # 🔹 RUN SERVER
 # ==============================
+
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 8000))

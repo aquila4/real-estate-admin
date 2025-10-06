@@ -74,13 +74,54 @@
   </div>
 
   <footer>
-    <div class="footer-links">
-      <a href="/">Home</a> |
-      <a href="/about">About Us</a> |
-      <a href="/contact">Contact</a> |
-      <a href="/blog">Blog</a>
+
+  <!-- FOOTER -->
+  <footer class="modern-footer">
+  <div class="footer-container">
+    <div class="footer-logo-section">
+      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="" class="footer-logo">
+      <p>Great Mar-cy’s & Sons Limited</p>
+      <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
     </div>
-    <p>&copy; {{ now.year }} Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+
+    <div class="footer-links">
+      <h3>Quick Links</h3>
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/property">Properties</a></li>
+        <li><a href="/about">About Us</a></li>
+        <li><a href="/contact">Contact</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-contact">
+      <h3>Contact Us</h3>
+      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
+      <div class="social-links">
+        <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
+          <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+        </a>
+        <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
+          <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
+  </div>
+</footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
   </footer>
 
   <!-- Schema Markup -->
