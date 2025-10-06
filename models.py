@@ -14,10 +14,17 @@ class Property(db.Model):
     image_url = db.Column(db.String(300))
     video_url = db.Column(db.String(300))
     slug = db.Column(db.String(250), unique=True, nullable=False)
+    
+    # Add SEO fields
+    seo_title = db.Column(db.String(255))
+    meta_description = db.Column(db.String(300))
+    keywords = db.Column(db.String(500))
+
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f"<Property {self.title}>"
+
 
 # ==============================
 # 🔹 BLOG POST MODEL

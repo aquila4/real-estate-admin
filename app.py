@@ -145,41 +145,55 @@ def add_property():
 @app.route('/uploads/<filename>')
 def serve_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
-
 @app.route('/upload', methods=['POST'])
 def upload():
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
-    try:
-        title = request.form.get('title')
-        location = request.form.get('location')
-        description = request.form.get('description')
-        seo_title = request.form.get('seo_title') or None
-        meta_description = request.form.get('meta_description') or None
-        keywords = request.form.get('keywords') or None
 
+    try:
+        # --- FORM DATA ---
+        title = request.form.get('title', '').strip()
+        location = request.form.get('location', '').strip()
+        description = request.form.get('description', '').strip()
+        seo_title = request.form.get('seo_title', '').strip() or None
+        meta_description = request.form.get('meta_description', '').strip() or None
+        keywords = request.form.get('keywords', '').strip() or None
+
+        # --- REQUIRED FIELDS CHECK ---
         if not title or not location or not description:
-            flash('All required fields must be filled.')
+            flash('All required fields (Title, Location, Description) must be filled.')
             return redirect(url_for('add_property'))
 
-        # Image upload
+        # --- TRUNCATE SEO FIELDS TO SAFE LENGTHS ---
+        if seo_title:
+            seo_title = seo_title[:255]
+        if meta_description:
+            meta_description = meta_description[:300]
+        if keywords:
+            keywords = keywords[:500]
+
+        # --- IMAGE UPLOAD ---
         image_file = request.files.get('image')
-        image_filename = f"{uuid.uuid4().hex}_{secure_filename(image_file.filename)}" if image_file and image_file.filename else ''
-
+        image_filename = ''
         if image_file and image_file.filename:
-            image_file.save(os.path.join(app.config['UPLOAD_FOLDER'], image_filename))
+            image_filename = f"{uuid.uuid4().hex}_{secure_filename(image_file.filename)}"
+            image_path = os.path.join(app.config['UPLOAD_FOLDER'], image_filename)
+            image_file.save(image_path)
 
-        # Video upload
+        # --- VIDEO UPLOAD ---
         video_file = request.files.get('video')
-        video_filename = f"{uuid.uuid4().hex}_{secure_filename(video_file.filename)}" if video_file and video_file.filename else ''
+        video_filename = ''
         if video_file and video_file.filename:
-            video_file.save(os.path.join(app.config['UPLOAD_FOLDER'], video_filename))
+            video_filename = f"{uuid.uuid4().hex}_{secure_filename(video_file.filename)}"
+            video_path = os.path.join(app.config['UPLOAD_FOLDER'], video_filename)
+            video_file.save(video_path)
 
-        # Slug
+        # --- SLUG GENERATION ---
         slug = slugify(title)
         if Property.query.filter_by(slug=slug).first():
             slug = f"{slug}-{uuid.uuid4().hex[:6]}"
 
+        # --- CREATE NEW PROPERTY RECORD ---
         new_property = Property(
             title=title,
             location=location,
@@ -191,15 +205,19 @@ def upload():
             keywords=keywords,
             slug=slug
         )
+
         db.session.add(new_property)
         db.session.commit()
+
         flash('✅ Property uploaded successfully!')
         return redirect(url_for('admin_dashboard'))
 
-    except Exception:
+    except Exception as e:
+        print("❌ Property upload error:", str(e))
         traceback.print_exc()
         flash('❌ Error uploading property. Check server logs.')
         return redirect(url_for('add_property'))
+
 
 @app.route('/property')
 def property_page():
