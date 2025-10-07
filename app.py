@@ -493,6 +493,11 @@ Your Trusted Real Estate Partner in Ilorin
     return redirect(url_for('home'))
 
 
+@app.route('/robots.txt')
+def robots():
+    return send_from_directory('static', 'robots.txt')
+
+
 # ==============================
 # 🔹 TEMPLATE CONTEXT
 # ==============================

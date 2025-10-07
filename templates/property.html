@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Basic Meta -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <title>Properties for Sale in Ilorin, Kwara | Great Mar-cy’s & Sons Limited</title>
   <meta name="description" content="Explore verified real estate listings in Ilorin, Kwara State — houses, lands, and commercial properties from Great Mar-cy’s & Sons Limited.">
+  <meta name="keywords" content="real estate Ilorin, land for sale Kwara, houses for sale Ilorin, Great Marcy and Sons, property developer Ilorin, real estate Nigeria">
 
   <!-- Canonical URL -->
   <link rel="canonical" href="https://greatmarcysonslimited.com/properties" />
@@ -54,7 +56,7 @@
                    alt="Property for sale in {{ property.location }} - {{ property.title }}">
             {% endif %}
             {% if property.video_url %}
-              <video controls>
+              <video controls preload="metadata">
                 <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
@@ -73,56 +75,54 @@
     {% endfor %}
   </div>
 
-  <footer>
-
   <!-- FOOTER -->
   <footer class="modern-footer">
-  <div class="footer-container">
-    <div class="footer-logo-section">
-      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="" class="footer-logo">
-      <p>Great Mar-cy’s & Sons Limited</p>
-      <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
-    </div>
+    <div class="footer-container">
+      <div class="footer-logo-section">
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Logo" class="footer-logo">
+        <p>Great Mar-cy’s & Sons Limited</p>
+        <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
+      </div>
 
-    <div class="footer-links">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/property">Properties</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/property">Properties</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
 
-    <div class="footer-contact">
-      <h3>Contact Us</h3>
-      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
-      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
-      <div class="social-links">
-        <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
-          <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
-        </a>
-        <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
-          <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
-        </a>
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+        <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
+        <div class="social-links">
+          <a href="https://x.com/greatmarcy88214?s=21" target="_blank">
+            <img src="https://img.icons8.com/color/48/twitterx--v1.png" alt="Twitter / X">
+          </a>
+          <a href="https://www.instagram.com/_greatmarcyrealty?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+          </a>
+          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
+            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+          </a>
+        </div>
       </div>
     </div>
+
+    <div class="footer-bottom">
+    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
+    <p class="developer-credit">
+      Developed by <a href="https://aquilastudio.netlify.app" target="_blank" rel="noopener">Aquila Studio</a>
+    </p>
   </div>
-
-  <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
-  </div>
-</footer>
-
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
-
+  </footer>
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
   </script>
-  </footer>
 
   <!-- Schema Markup -->
   <script type="application/ld+json">
@@ -133,6 +133,12 @@
     "url": "https://greatmarcysonslimited.com/properties",
     "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
     "areaServed": "Ilorin, Kwara State, Nigeria",
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 8.5153929,
+      "longitude": 4.5871271
+    },
+    "hasMap": "https://goo.gl/maps/2K8XH6wFhxzK8Z7u6",
     "contactPoint": {
       "@type": "ContactPoint",
       "telephone": "+2349139070404",
@@ -140,6 +146,5 @@
     }
   }
   </script>
-
 </body>
 </html>
