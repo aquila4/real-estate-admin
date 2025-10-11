@@ -1,4 +1,12 @@
 User-agent: *
+Disallow: /admin-login
+Disallow: /admin-dashboard
+Disallow: /add-property
+Disallow: /admin/blog
+Disallow: /admin/blog/new
+Disallow: /admin/blog/edit
+Disallow: /admin/blog/delete
+
 Allow: /
 
 Sitemap: https://greatmarcysonslimited.com/sitemap.xml

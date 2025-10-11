@@ -389,6 +389,10 @@ def blog_post(slug):
 # 🔹 ENQUIRY FORM
 # ==============================
 
+@app.route('/enquiry', methods=['GET'])
+def enquiry_form():
+    return render_template('enquiry.html')
+
 @app.route('/enquiry', methods=['POST'])
 def enquiry():
     name = request.form.get('name')

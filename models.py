@@ -15,10 +15,10 @@ class Property(db.Model):
     video_url = db.Column(db.String(300))
     slug = db.Column(db.String(250), unique=True, nullable=False)
     
-    # Add SEO fields
-    seo_title = db.Column(db.String(255))
-    meta_description = db.Column(db.String(300))
-    keywords = db.Column(db.String(500))
+    # SEO fields with unlimited length
+    seo_title = db.Column(db.Text)  # changed from String(255) to Text
+    meta_description = db.Column(db.Text)  # changed from String(300) to Text
+    keywords = db.Column(db.Text)  # changed from String(500) to Text
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
@@ -34,9 +34,9 @@ class BlogPost(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String(255))
-    seo_title = db.Column(db.String(70))
-    meta_description = db.Column(db.String(160))
-    keywords = db.Column(db.String(300))
+    seo_title = db.Column(db.Text)  # changed from String(70) to Text
+    meta_description = db.Column(db.Text)  # changed from String(160) to Text
+    keywords = db.Column(db.Text)  # changed from String(300) to Text
     slug = db.Column(db.String(200), unique=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
