@@ -34,6 +34,9 @@
 <meta name="twitter:title" content="{{ seo.title }}">
 <meta name="twitter:description" content="{{ seo.description }}">
 <meta name="twitter:image" content="{{ url_for('static', filename=seo.image) if seo.image else '' }}">
+<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logogmc.png') }}">
+<link rel="shortcut icon" href="{{ url_for('static', filename='images/logogmc.png') }}" type="image/x-icon">
+<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logogmc.png') }}">
 
   <!-- Structured Data: Property -->
   <script type="application/ld+json">
@@ -190,93 +193,72 @@
     <span class="shape shape3"></span>
   </div>
 
-  <div class="container">
-    <div class="core-values animate-up hover-effect">
-      <h2>Our Core Values</h2>
-      <div class="values-grid">
-        <div class="value-box"><h3>Trust</h3><p>Trust is the foundation of everything we do...</p></div>
-        <div class="value-box"><h3>Customer-Centricity</h3><p>We put our clients first...</p></div>
-        <div class="value-box"><h3>Innovation</h3><p>We redefine what's possible...</p></div>
-        <div class="value-box"><h3>Excellence</h3><p>We deliver the best...</p></div>
-        <div class="value-box"><h3>Transparency</h3><p>Open and honest transactions...</p></div>
-      </div>
+<div class="container">
+
+<!-- ===== Modern Core Values Section ===== -->
+<section class="core-values">
+  <h2 class="section-title">Our Core Values</h2>
+  <div class="values-grid">
+    <div class="value-box">
+      <h3>Trust</h3>
+      <p>Trust is the foundation of everything we do — our word is our bond.</p>
     </div>
 
-    <!-- Circle cards -->
-    <section class="about-circles" aria-label="About sections">
-      <div class="circle-card animate-up" data-modal="visionModal" tabindex="0" role="button" aria-pressed="false">
-        <div class="circle-icon">👁️</div>
-        <h3>Our Vision</h3>
-        <p>To be the premier real estate company in Ilorin and beyond...</p>
-        <button class="read-more" data-target="visionModal">Read More</button>
-      </div>
+    <div class="value-box">
+      <h3>Customer-Centricity</h3>
+      <p>We put our clients first, always tailoring solutions that fit their dreams.</p>
+    </div>
 
-      <div class="circle-card animate-left" data-modal="whoModal" tabindex="0" role="button" aria-pressed="false">
-        <div class="circle-icon">🏢</div>
-        <h3>Who We Are</h3>
-        <p>We are redefining property ownership with trust...</p>
-        <button class="read-more" data-target="whoModal">Read More</button>
-      </div>
+    <div class="value-box">
+      <h3>Innovation</h3>
+      <p>We redefine what’s possible, blending creativity with technology.</p>
+    </div>
 
-      <div class="circle-card animate-right" data-modal="whatModal" tabindex="0" role="button" aria-pressed="false">
-        <div class="circle-icon">⚒️</div>
-        <h3>What We Do</h3>
-        <p>Buying, selling, management, development...</p>
-        <button class="read-more" data-target="whatModal">Read More</button>
-      </div>
+    <div class="value-box">
+      <h3>Excellence</h3>
+      <p>We deliver the best in class — with precision, passion, and purpose.</p>
+    </div>
 
-      <div class="circle-card animate-up" data-modal="mottoModal" tabindex="0" role="button" aria-pressed="false">
-        <div class="circle-icon">🌟</div>
-        <h3>Our Motto</h3>
-        <p>Redefining real estate with trust and innovation...</p>
-        <button class="read-more" data-target="mottoModal">Read More</button>
-      </div>
-    </section>
+    <div class="value-box">
+      <h3>Transparency</h3>
+      <p>We believe in open and honest dealings — every step of the way.</p>
+    </div>
+  </div>
+</section>
+ 
+<!-- ===== Modern Animated About Us Section ===== -->
+<section class="about-sharp">
+  <h2>About Us</h2>
+
+  <div class="about-cards">
+    <div class="about-box">
+      <h3>Our Vision</h3>
+      <p>To be the most trusted and innovative real estate company building communities across Nigeria.</p>
+      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
+    </div>
+
+    <div class="about-box">
+      <h3>Who We Are</h3>
+      <p>We redefine property ownership with integrity, excellence, and forward-thinking solutions.</p>
+      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
+    </div>
+
+    <div class="about-box">
+      <h3>What We Do</h3>
+      <p>We help people buy, sell, and manage properties with ease, transparency, and innovation.</p>
+      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
+    </div>
+
+    <div class="about-box">
+      <h3>Our Motto</h3>
+      <p>Redefining real estate through trust, creativity, and a passion for excellence.</p>
+      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
+    </div>
   </div>
 </section>
 
-<!-- 🔽 Move all modals here (outside the about section) -->
-<div class="modal" id="visionModal" aria-hidden="true" role="dialog" aria-labelledby="visionTitle">
-  <div class="modal-content">
-    <button class="close" aria-label="Close modal">&times;</button>
-    <h2 id="visionTitle">Our Vision</h2>
-    <p>At <strong>Great Mar-cy’s & Sons Limited</strong>, our vision is to be the premier real estate company in Ilorin and beyond...</p>
-  </div>
-</div>
 
-<div class="modal" id="whoModal" aria-hidden="true" role="dialog" aria-labelledby="whoTitle">
-  <div class="modal-content">
-    <button class="close" aria-label="Close modal">&times;</button>
-    <h2 id="whoTitle">Who We Are</h2>
-    <p>At Great Marcy & Sons, we set a new benchmark in real estate by making ownership secure, reliable, and accessible...</p>
-  </div>
-</div>
 
-<div class="modal" id="whatModal" aria-hidden="true" role="dialog" aria-labelledby="whatTitle">
-  <div class="modal-content">
-    <button class="close" aria-label="Close modal">&times;</button>
-    <h2 id="whatTitle">What We Do</h2>
-    <ul>
-      <li><strong>Buying & Selling:</strong> Smooth and transparent transactions.</li>
-      <li><strong>Management:</strong> Protecting and enhancing value.</li>
-      <li><strong>Development:</strong> Modern estates & housing projects.</li>
-      <li><strong>Consultancy:</strong> Professional guidance for investments.</li>
-    </ul>
-  </div>
-</div>
-
-<div class="modal" id="mottoModal" aria-hidden="true" role="dialog" aria-labelledby="mottoTitle">
-  <div class="modal-content">
-    <button class="close" aria-label="Close modal">&times;</button>
-    <h2 id="mottoTitle">Our Motto</h2>
-    <p><strong>Redefining Real Estate with Trust, Innovation, and a Future You Can Count On</strong></p>
-  </div>
-</div>
-<!-- 🔼 End of modals -->
-
-  <!-- =========================
-     COMPANY BROCHURE SECTION
-========================= -->
 <section class="brochure-section animate-on-scroll" id="brochure">
   <div class="brochure-container">
     <h2>Our Company Brochure</h2>
@@ -289,6 +271,61 @@
   </div>
 </section>
 
+
+<section class="stats-section">
+  <div class="container">
+    <h2>At Great Marcy Realty, the numbers speak for themselves</h2>
+    <div class="stats-grid">
+      <div class="stat-card">
+        <i class="fa-solid fa-briefcase stat-icon"></i>
+        <h3 class="count" data-target="6" data-suffix="+">0</h3>
+        <p>Years of Experience</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-building stat-icon"></i>
+        <h3 class="count" data-target="103" data-suffix="">0</h3>
+        <p>Estates</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-users stat-icon"></i>
+        <h3 class="count" data-target="104000" data-suffix="k+">0</h3>
+        <p>Clients</p>
+      </div>
+      <div class="stat-card">
+        <i class="fa-solid fa-house-chimney-user stat-icon"></i>
+        <h3 class="count" data-target="12000" data-suffix="k+">0</h3>
+        <p>Allocations</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- 📰 LATEST BLOG POSTS -->
+<section class="home-blog-section">
+  <div class="container">
+    <h2 class="section-title">Latest from Our Blog</h2>
+    <div class="home-blog-grid">
+      {% for post in posts[:3] %}
+      <article class="home-blog-card">
+        {% if post.image_url %}
+        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        {% endif %}
+        <div class="home-blog-content">
+          <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+          <p>{{ post.content[:120] }}{% if post.content|length > 120 %}...{% endif %}</p>
+          <a href="{{ url_for('blog_post', slug=post.slug) }}" class="read-more-btn">Read More</a>
+        </div>
+      </article>
+      {% else %}
+      <p class="no-posts">No blog posts available yet.</p>
+      {% endfor %}
+    </div>
+    <div class="view-all">
+      <a href="{{ url_for('blog') }}" class="view-all-btn">View All Posts</a>
+    </div>
+  </div>
+</section>
 
   <!-- TESTIMONIALS -->
   <section id="testimonials" class="testimonials-section block-section" aria-labelledby="testimonialsTitle">
@@ -373,6 +410,9 @@
     <a href="https://wa.me/2349139070404" target="_blank" class="phone-number whatsapp-link">Chat on WhatsApp</a>
   </div>
 
+
+
+
 <!-- FOOTER -->
 <footer class="footer">
   <div class="footer-container">
@@ -417,7 +457,8 @@
 <script>
   // Auto-update year
   document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+</script>menu if overlay is clicked
+overla
 
 
 
@@ -440,13 +481,11 @@ hamburger.addEventListener("click", () => {
   document.body.classList.toggle("no-scroll");
 });
 
-// Close menu if overlay is clicked
-overlay.addEventListener("click", () => {
+// Close y.addEventListener("click", () => {
   hamburger.classList.remove("active");
   navMenu.classList.remove("show");
   overlay.classList.remove("show");
   document.body.classList.remove("no-scroll");
-});
 
 </script>
 
@@ -700,6 +739,49 @@ document.addEventListener("DOMContentLoaded", () => {
   window.addEventListener('scroll', handleScrollAnimation);
   // Trigger once on page load
   handleScrollAnimation();
+
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const counters = document.querySelectorAll('.count');
+  const speed = 150; // Adjust for faster/slower animation
+
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    const suffix = counter.getAttribute('data-suffix') || '';
+    let count = 0;
+
+    const updateCount = () => {
+      const increment = target / speed;
+      count += increment;
+
+      if (count < target) {
+        if (target >= 1000) {
+          counter.innerText = `${(count / 1000).toFixed(1)}${suffix}`;
+        } else {
+          counter.innerText = `${Math.floor(count)}${suffix}`;
+        }
+        requestAnimationFrame(updateCount);
+      } else {
+        if (target >= 1000) {
+          counter.innerText = `${(target / 1000).toFixed(0)}${suffix}`;
+        } else {
+          counter.innerText = `${target}${suffix}`;
+        }
+      }
+    };
+
+    const observer = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        updateCount();
+        observer.unobserve(counter);
+      }
+    }, { threshold: 0.5 });
+
+    observer.observe(counter);
+  });
+});
+
 </script>
 
 

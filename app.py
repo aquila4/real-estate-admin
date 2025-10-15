@@ -49,8 +49,13 @@ mail = Mail(app)
 # ==============================
 @app.route('/')
 def home():
+    # Fetch properties
     properties = Property.query.all()
 
+    # Fetch latest blog posts (limit to latest 3 for homepage)
+    posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(2).all()
+
+    # SEO Info
     seo = {
         "title": "Great Mar-cy’s & Sons Limited - Real Estate in Ilorin",
         "description": "Find and buy land or property in Ilorin with Great Mar-cy’s & Sons Limited. Trusted estate company in Kwara State.",
@@ -58,20 +63,28 @@ def home():
         "image": url_for('static', filename='image/logo.png')
     }
 
-    logogmc_path = "image/logogmc.png"  # ✅ make sure this matches your folder path
+    # Logo path
+    logogmc_path = "image/logogmc.png"
 
+    # Navigation links
     nav_links = [
-    {"name": "Home", "endpoint": "home"},
-    {"name": "About", "endpoint": "about"},
-    {"name": "Properties", "endpoint": "property_page"},
-    {"name": "Blog", "endpoint": "blog"},  # 🆕 Added blog link
-    {"name": "Contact", "endpoint": "contact"},
-    {"name": "Admin", "endpoint": "admin_dashboard"}
-]
+        {"name": "Home", "endpoint": "home"},
+        {"name": "About", "endpoint": "about"},
+        {"name": "Properties", "endpoint": "property_page"},
+        {"name": "Blog", "endpoint": "blog"},  # ✅ Blog link
+        {"name": "Contact", "endpoint": "contact"},
+        {"name": "Admin", "endpoint": "admin_dashboard"}
+    ]
 
-
-
-    return render_template("home.html", properties=properties, seo=seo, logogmc_path=logogmc_path, nav_links=nav_links)
+    # ✅ Render all together
+    return render_template(
+        "home.html",
+        properties=properties,
+        posts=posts,
+        seo=seo,
+        logogmc_path=logogmc_path,
+        nav_links=nav_links
+    )
 
 
 @app.route('/about')
@@ -388,10 +401,6 @@ def blog_post(slug):
 # ==============================
 # 🔹 ENQUIRY FORM
 # ==============================
-
-@app.route('/enquiry', methods=['GET'])
-def enquiry_form():
-    return render_template('enquiry.html')
 
 @app.route('/enquiry', methods=['POST'])
 def enquiry():
