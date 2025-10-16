@@ -1,7 +1,5 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+  <!-- ✅ Google Tag -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -13,13 +11,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Dynamic SEO -->
+  <!-- ✅ Dynamic SEO -->
   <title>{{ seo.title if seo.title else property.title }} | Great Mar-cy’s & Sons Limited</title>
   <meta name="description" content="{{ seo.description if seo.description else property.description[:150] }}">
   <meta name="keywords" content="{{ seo.keywords if seo.keywords else 'land for sale, property in Ilorin, real estate Kwara, Great Marcy Sons Limited, buy land Nigeria' }}">
   <link rel="canonical" href="{{ request.url }}">
 
-  <!-- Open Graph / Social -->
+  <!-- ✅ Open Graph -->
   <meta property="og:title" content="{{ seo.title if seo.title else property.title }} | Great Mar-cy’s & Sons Limited">
   <meta property="og:description" content="{{ seo.description if seo.description else property.description[:150] }}">
   <meta property="og:type" content="website">
@@ -27,35 +25,43 @@
   <meta property="og:image" content="https://greatmarcysonslimited.com{{ url_for('serve_file', filename=seo.image) if seo.image else url_for('static', filename='image/logo.jpg') }}">
   <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
 
-  <!-- Twitter Cards -->
+  <!-- ✅ Twitter Cards -->
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="{{ seo.title if seo.title else property.title }}">
   <meta name="twitter:description" content="{{ seo.description if seo.description else property.description[:150] }}">
   <meta name="twitter:image" content="https://greatmarcysonslimited.com{{ url_for('serve_file', filename=seo.image) if seo.image else url_for('static', filename='image/logo.jpg') }}">
 
-  <!-- Schema.org Structured Data for Property -->
+  <!-- ✅ JSON-LD: Property Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "SingleFamilyResidence",
+    "@type": "Product",
     "name": "{{ seo.title if seo.title else property.title }}",
     "description": "{{ seo.description if seo.description else property.description[:150] }}",
     "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=seo.image) if seo.image else url_for('static', filename='image/logo.jpg') }}",
+    "category": "Real Estate",
+    "url": "{{ request.url }}",
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "NGN",
+      "availability": "https://schema.org/InStock",
+      "url": "{{ request.url }}"
+    },
     "address": {
       "@type": "PostalAddress",
       "addressLocality": "{{ property.location }}",
       "addressRegion": "Kwara",
       "addressCountry": "NG"
-    },
-    "url": "{{ request.url }}"
+    }
   }
   </script>
 
-  <!-- Schema.org Structured Data for Company -->
+  <!-- ✅ JSON-LD: Company Schema -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "RealEstateAgent",
+    "@id": "https://greatmarcysonslimited.com/#organization",
     "name": "Great Mar-cy’s & Sons Limited",
     "url": "https://greatmarcysonslimited.com/",
     "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
@@ -76,6 +82,7 @@
   }
   </script>
 
+  <!-- ✅ Styles -->
   <link rel="stylesheet" href="{{ url_for('static', filename='css/property_detail.css') }}">
 </head>
 

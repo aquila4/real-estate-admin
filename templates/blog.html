@@ -1,46 +1,52 @@
-{% extends "base.html" %}
-
 {% block head %}
-  <title>Real Estate Blog | Great Mar-cy’s & Sons Limited</title>
-  <meta name="description" content="Stay updated with the latest property news, real estate tips, and investment insights from Great Mar-cy’s & Sons Limited — your trusted property experts in Ilorin, Kwara.">
-  <meta name="keywords" content="real estate blog, property tips, real estate Ilorin, Great Marcy Sons Limited blog, land investment Nigeria, property news Kwara">
-  <link rel="canonical" href="https://greatmarcysonslimited.com/blog">
+  <title>{{ post.title }} | Great Mar-cy’s & Sons Limited Blog</title>
+  <meta name="description" content="{{ post.description }}">
+  <meta name="keywords" content="{{ post.keywords }}">
+  <link rel="canonical" href="https://greatmarcysonslimited.com/blog/{{ post.slug }}" />
 
   <!-- Open Graph -->
-  <meta property="og:title" content="Real Estate Blog | Great Mar-cy’s & Sons Limited">
-  <meta property="og:description" content="Discover real estate insights and investment tips from Great Mar-cy’s & Sons Limited.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://greatmarcysonslimited.com/blog">
-  <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
-  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
+  <meta property="og:title" content="{{ post.title }}" />
+  <meta property="og:description" content="{{ post.description }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://greatmarcysonslimited.com/blog/{{ post.slug }}" />
+  <meta property="og:image" content="{{ post.image_url }}" />
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Real Estate Blog | Great Mar-cy’s & Sons Limited">
-  <meta name="twitter:description" content="Explore real estate tips, updates, and property guides from Great Mar-cy’s & Sons Limited.">
-  <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logo.jpg">
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="{{ post.title }}" />
+  <meta name="twitter:description" content="{{ post.description }}" />
+  <meta name="twitter:image" content="{{ post.image_url }}" />
 
-  <!-- Blog Schema -->
+  <!-- Structured Data (JSON-LD) for Blog Post -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
-    "@type": "Blog",
-    "name": "Great Mar-cy’s & Sons Limited Real Estate Blog",
-    "description": "Real estate news, property tips, and investment insights from Great Mar-cy’s & Sons Limited in Ilorin, Kwara.",
+    "@type": "BlogPosting",
+    "headline": "{{ post.title }}",
+    "description": "{{ post.description }}",
+    "image": "{{ post.image_url }}",
+    "author": {
+      "@type": "Organization",
+      "name": "Great Mar-cy’s & Sons Limited"
+    },
     "publisher": {
       "@type": "Organization",
       "name": "Great Mar-cy’s & Sons Limited",
       "logo": {
         "@type": "ImageObject",
-        "url": "https://greatmarcysonslimited.com/static/image/logo.jpg"
+        "url": "https://greatmarcysonslimited.com/static/images/logo.png"
       }
     },
-    "url": "https://greatmarcysonslimited.com/blog"
+    "mainEntityOfPage": {
+      "@type": "WebPage",
+      "@id": "https://greatmarcysonslimited.com/blog/{{ post.slug }}"
+    },
+    "datePublished": "{{ post.date_published }}",
+    "dateModified": "{{ post.date_modified }}"
   }
   </script>
 {% endblock %}
 
-{% block content %}
 
 <!-- 🌆 BLOG HERO -->
 <section class="blog-hero">

@@ -1,31 +1,38 @@
-<!DOCTYPE html>
-<html lang="en">
 <head>
-  <!-- Basic Meta -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-  <title>Properties for Sale in Ilorin, Kwara | Great Mar-cy’s & Sons Limited</title>
-  <meta name="description" content="Explore verified real estate listings in Ilorin, Kwara State — houses, lands, and commercial properties from Great Mar-cy’s & Sons Limited.">
-  <meta name="keywords" content="real estate Ilorin, land for sale Kwara, houses for sale Ilorin, Great Marcy and Sons, property developer Ilorin, real estate Nigeria">
+  <!-- 🔹 Dynamic Page Title & Description -->
+  <title>{{ property.title }} | Great Mar-cy’s & Sons Limited</title>
+  <meta name="description" content="{{ property.description[:160] }}">
+  <meta name="keywords" content="real estate Ilorin, property for sale in Ilorin, {{ property.title }}, land for sale Ilorin, Great Marcy Sons Limited">
+  <meta name="robots" content="index, follow">
+  <meta name="author" content="Great Mar-cy’s & Sons Limited">
 
-  <!-- Canonical URL -->
-  <link rel="canonical" href="https://greatmarcysonslimited.com/properties" />
+  <!-- 🔹 Canonical URL -->
+  <link rel="canonical" href="https://greatmarcysonslimited.com/property/{{ property.slug }}" />
 
-  <!-- Open Graph / Social Sharing -->
-  <meta property="og:title" content="Properties for Sale in Ilorin, Kwara | Great Mar-cy’s & Sons Limited" />
-  <meta property="og:description" content="Verified real estate listings — houses, lands, and commercial properties for sale in Ilorin, Kwara State." />
-  <meta property="og:type" content="website" />
-  <meta property="og:url" content="https://greatmarcysonslimited.com/properties" />
-  <meta property="og:image" content="{{ url_for('static', filename='image/og-property.jpg') }}" />
+  <!-- 🔹 Open Graph (for Facebook, WhatsApp, LinkedIn) -->
+  <meta property="og:title" content="{{ property.title }} | Great Mar-cy’s & Sons Limited" />
+  <meta property="og:description" content="{{ property.description[:160] }}" />
+  <meta property="og:type" content="article" />
+  <meta property="og:url" content="https://greatmarcysonslimited.com/property/{{ property.slug }}" />
+  <meta property="og:image" content="https://greatmarcysonslimited.com{{ url_for('serve_file', filename=property.image_url) }}" />
+  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited" />
 
-  <!-- Twitter Card -->
+  <!-- 🔹 Twitter Card -->
   <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="Properties for Sale in Ilorin | Great Mar-cy’s & Sons Limited" />
-  <meta name="twitter:description" content="Browse verified properties — houses, lands, and commercial spaces in Ilorin, Kwara State." />
-  <meta name="twitter:image" content="{{ url_for('static', filename='image/og-property.jpg') }}" />
+  <meta name="twitter:title" content="{{ property.title }} | Great Mar-cy’s & Sons Limited" />
+  <meta name="twitter:description" content="{{ property.description[:160] }}" />
+  <meta name="twitter:image" content="https://greatmarcysonslimited.com{{ url_for('serve_file', filename=property.image_url) }}" />
 
-  <!-- Google Tag (gtag.js) -->
+  <!-- 🔹 Favicon -->
+  <link rel="icon" href="https://greatmarcysonslimited.com/static/image/favicon.ico" type="image/x-icon">
+
+  <!-- 🔹 CSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/property-detail.css') }}">
+
+  <!-- 🔹 Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -34,9 +41,38 @@
     gtag('config', 'AW-17421133724');
   </script>
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/property.css') }}">
+  <!-- 🔹 Schema.org Structured Data for Property Listing -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    "name": "{{ property.title }}",
+    "description": "{{ property.description[:160] }}",
+    "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=property.image_url) }}",
+    "url": "https://greatmarcysonslimited.com/property/{{ property.slug }}",
+    "brand": {
+      "@type": "Organization",
+      "name": "Great Mar-cy’s & Sons Limited",
+      "logo": "https://greatmarcysonslimited.com/static/image/logogmc.png"
+    },
+    "offers": {
+      "@type": "Offer",
+      "priceCurrency": "NGN",
+      "price": "{{ property.price if property.price else 'Contact for Price' }}",
+      "availability": "https://schema.org/InStock",
+      "url": "https://greatmarcysonslimited.com/property/{{ property.slug }}"
+    },
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "{{ property.location }}",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
+      "addressCountry": "NG"
+    }
+  }
+  </script>
 </head>
+
 <body>
 
   <header>
