@@ -64,7 +64,7 @@
     "@type": "RealEstateAgent",
     "name": "Great Mar-cy’s & Sons Limited",
     "url": "https://greatmarcysonslimited.com/",
-    "logo": "https://greatmarcysonslimited.com/static/image/logo.jpg",
+    "logo": "https://greatmarcysonslimited.com/static/image/logogmc.png",
     "telephone": ["+2349139070404", "+2349028939653"],
     "address": {
       "@type": "PostalAddress",
@@ -165,14 +165,18 @@
   <!-- FEATURED -->
   <section class="featured animate-on-scroll featured-bg" aria-labelledby="featured-title">
   <h2 id="featured-title" class="estate-name">Our Featured Estates</h2>
-<div class="property-card row">
+  <div class="property-card">
+
+
+  
+
 
   <div class="estate-card">
     <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
     <h3>Success City Estate</h3>
   </div>
 
-  <div class="estate-card">
+ <div class="estate-card">
     <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace City Estate Phase 1">
     <h3>His Grace City Estate Phase 1</h3>
   </div>
@@ -180,6 +184,11 @@
   <div class="estate-card">
     <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace City Estate Phase 2">
     <h3>His Grace City Estate Phase 2</h3>
+  </div>
+
+  <div class="estate-card">
+    <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
+    <h3>Success City Estate</h3>
   </div>
 
 </div>
@@ -274,7 +283,7 @@
 
 <section class="stats-section">
   <div class="container">
-    <h2>At Great Marcy Realty, the numbers speak for themselves</h2>
+    <h2>At Great Mar-cy's Realty, the numbers speak for themselves</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <i class="fa-solid fa-briefcase stat-icon"></i>
@@ -784,11 +793,83 @@ document.addEventListener("DOMContentLoaded", () => {
 
 </script>
 
+<script>
+const slider = document.querySelector('.about-cards');
+const cards = document.querySelectorAll('.about-box');
+let currentIndex = 0;
+const slideInterval = 3000; // 3s per slide
+
+// Only enable auto-slide if screen width is mobile
+function isMobile() {
+  return window.innerWidth <= 768;
+}
+
+// Slide function
+function autoSlide() {
+  if (!isMobile()) return; // stop on desktop
+
+  currentIndex = (currentIndex + 1) % cards.length;
+  const card = cards[currentIndex];
+  slider.scrollTo({
+    left: card.offsetLeft - slider.offsetLeft, // scroll only horizontal
+    behavior: 'smooth'
+  });
+}
+
+// Auto-slide interval
+let intervalId = setInterval(autoSlide, slideInterval);
+
+// Pause auto-slide if user touches/swipes
+slider.addEventListener('touchstart', () => clearInterval(intervalId));
+slider.addEventListener('mousedown', () => clearInterval(intervalId));
+</script>
 
 
 
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const slider = document.querySelector('.property-card');
+  const cards = document.querySelectorAll('.estate-card');
+  let currentIndex = 0;
+  const slideInterval = 3000;
 
+  function isMobile() {
+    return window.innerWidth <= 768;
+  }
 
+  function goToCard(index) {
+    const card = cards[index];
+    if (!card) return;
+    slider.scrollTo({
+      left: card.offsetLeft - slider.offsetLeft,
+      behavior: 'smooth'
+    });
+  }
+
+  // Immediately show the first card
+  if (isMobile()) goToCard(0);
+
+  // Auto-slide interval
+  let intervalId = setInterval(() => {
+    if (!isMobile()) return;
+    currentIndex = (currentIndex + 1) % cards.length;
+    goToCard(currentIndex);
+  }, slideInterval);
+
+  // Pause auto-slide when user interacts
+  slider.addEventListener('touchstart', () => clearInterval(intervalId));
+  slider.addEventListener('mousedown', () => clearInterval(intervalId));
+
+  // Resume auto-slide after interaction
+  slider.addEventListener('touchend', () => {
+    intervalId = setInterval(() => {
+      if (!isMobile()) return;
+      currentIndex = (currentIndex + 1) % cards.length;
+      goToCard(currentIndex);
+    }, slideInterval);
+  });
+});
+</script>
 
 
 </body>
