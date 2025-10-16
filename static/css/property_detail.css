@@ -261,3 +261,47 @@ header p {
     text-align: center;
   }
 }
+
+
+/* ===============================
+   CONTACT AGENT BUTTON
+================================= */
+.contact-agent {
+  display: inline-block;
+  padding: 15px 30px;
+  background: linear-gradient(135deg, #ff4b2b, #ff416c); /* radiant gradient */
+  color: #fff;
+  font-weight: 600;
+  font-size: 16px;
+  border-radius: 50px;
+  text-decoration: none;
+  box-shadow: 0 8px 20px rgba(255, 65, 108, 0.4);
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-agent::after {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: rgba(255, 255, 255, 0.2);
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.contact-agent:hover::after {
+  top: 100%;
+  left: 100%;
+}
+
+.contact-agent:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 25px rgba(255, 65, 108, 0.6);
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+

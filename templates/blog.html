@@ -1,146 +1,162 @@
-{% block head %}
-  <title>{{ post.title }} | Great Mar-cy’s & Sons Limited Blog</title>
-  <meta name="description" content="{{ post.description }}">
-  <meta name="keywords" content="{{ post.keywords }}">
-  <link rel="canonical" href="https://greatmarcysonslimited.com/blog/{{ post.slug }}" />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Open Graph -->
-  <meta property="og:title" content="{{ post.title }}" />
-  <meta property="og:description" content="{{ post.description }}" />
-  <meta property="og:type" content="article" />
-  <meta property="og:url" content="https://greatmarcysonslimited.com/blog/{{ post.slug }}" />
-  <meta property="og:image" content="{{ post.image_url }}" />
+  <!-- ✅ Dynamic Page Title & Description -->
+  {% if posts|length > 0 %}
+    <title>{{ posts[0].title }} | Great Mar-cy’s & Sons Limited Blog</title>
+    <meta name="description" content="{{ posts[0].description }}">
+    <meta name="keywords" content="{{ posts[0].keywords }}">
+    <link rel="canonical" href="https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}">
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="{{ posts[0].title }}">
+    <meta property="og:description" content="{{ posts[0].description }}">
+    <meta property="og:type" content="article">
+    <meta property="og:url" content="https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}">
+    <meta property="og:image" content="{{ posts[0].image_url }}">
 
-  <!-- Twitter -->
-  <meta name="twitter:card" content="summary_large_image" />
-  <meta name="twitter:title" content="{{ post.title }}" />
-  <meta name="twitter:description" content="{{ post.description }}" />
-  <meta name="twitter:image" content="{{ post.image_url }}" />
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ posts[0].title }}">
+    <meta name="twitter:description" content="{{ posts[0].description }}">
+    <meta name="twitter:image" content="{{ posts[0].image_url }}">
 
-  <!-- Structured Data (JSON-LD) for Blog Post -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "{{ post.title }}",
-    "description": "{{ post.description }}",
-    "image": "{{ post.image_url }}",
-    "author": {
-      "@type": "Organization",
-      "name": "Great Mar-cy’s & Sons Limited"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Great Mar-cy’s & Sons Limited",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://greatmarcysonslimited.com/static/images/logo.png"
-      }
-    },
-    "mainEntityOfPage": {
-      "@type": "WebPage",
-      "@id": "https://greatmarcysonslimited.com/blog/{{ post.slug }}"
-    },
-    "datePublished": "{{ post.date_published }}",
-    "dateModified": "{{ post.date_modified }}"
-  }
-  </script>
-{% endblock %}
+    <!-- JSON-LD -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "BlogPosting",
+      "headline": "{{ posts[0].title }}",
+      "description": "{{ posts[0].description }}",
+      "image": "{{ posts[0].image_url }}",
+      "author": {
+        "@type": "Organization",
+        "name": "Great Mar-cy’s & Sons Limited"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "Great Mar-cy’s & Sons Limited",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://greatmarcysonslimited.com/static/image/logogmc.png"
+        }
+      },
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}"
+      },
+      "datePublished": "{{ posts[0].date_published }}",
+      "dateModified": "{{ posts[0].date_modified }}"
+    }
+    </script>
+  {% else %}
+    <title>Blog | Great Mar-cy’s & Sons Limited</title>
+    <meta name="description" content="Stay updated with property insights and news.">
+    <meta name="keywords" content="real estate blog, property tips, investment in Ilorin, Great Marcy Sons Limited">
+  {% endif %}
 
+  <!-- Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+</head>
+<body>
 
-<!-- 🌆 BLOG HERO -->
-<section class="blog-hero">
-  <div class="hero-overlay">
-    <h1>Our Blog</h1>
-    <p>Stay informed with property insights, investment tips, and estate news</p>
-  </div>
-</section>
+  <!-- 🌆 BLOG HERO -->
+  <section class="blog-hero">
+    <div class="hero-overlay">
+      <h1>Our Blog</h1>
+      <p>Stay informed with property insights, investment tips, and estate news</p>
+    </div>
+  </section>
 
-<!-- 🌟 FEATURED POST -->
-{% if posts|length > 0 %}
-<section class="featured-post">
-  <div class="container">
-    <div class="featured-card">
-      {% set post = posts[0] %}
-      {% if post.image_url %}
-        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
-      {% endif %}
-      <div class="featured-content">
-        <h2><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h2>
-        <p>{{ post.content[:250] }}{% if post.content|length > 250 %}...{% endif %}</p>
-        <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
-        <div class="read-more">
-          <a href="{{ url_for('blog_post', slug=post.slug) }}" aria-label="Read more about {{ post.title }}">Read More</a>
+  <!-- 🌟 FEATURED POST -->
+  {% if posts|length > 0 %}
+  <section class="featured-post">
+    <div class="container">
+      <div class="featured-card">
+        {% set post = posts[0] %}
+        {% if post.image_url %}
+          <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        {% endif %}
+        <div class="featured-content">
+          <h2><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h2>
+          <p>{{ post.content[:250] }}{% if post.content|length > 250 %}...{% endif %}</p>
+          <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
+          <div class="read-more">
+            <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-{% endif %}
+  </section>
+  {% endif %}
 
-<!-- 📰 BLOG GRID -->
-<section class="blog-list-section">
-  <div class="container blog-list">
-    {% for post in posts[1:] %}
-    <article class="blog-card">
-      {% if post.image_url %}
-        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
-      {% endif %}
-      <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
-      <p>{{ post.content[:150] }}{% if post.content|length > 150 %}...{% endif %}</p>
-      <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
-      <div class="read-more">
-        <a href="{{ url_for('blog_post', slug=post.slug) }}" aria-label="Read more about {{ post.title }}">Read More</a>
+  <!-- 📰 BLOG GRID -->
+  <section class="blog-list-section">
+    <div class="container blog-list">
+      {% for post in posts[1:] %}
+      <article class="blog-card">
+        {% if post.image_url %}
+          <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        {% endif %}
+        <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+        <p>{{ post.content[:150] }}{% if post.content|length > 150 %}...{% endif %}</p>
+        <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
+        <div class="read-more">
+          <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+        </div>
+      </article>
+      {% else %}
+      <p>No posts found.</p>
+      {% endfor %}
+    </div>
+  </section>
+
+  <!-- 🌍 FOOTER -->
+  <footer class="modern-footer">
+    <div class="footer-container">
+      <div class="footer-logo-section">
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Mar-cy’s & Sons Limited Logo" class="footer-logo">
+        <p>Great Mar-cy’s & Sons Limited</p>
+        <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
+        <p>Address: KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
       </div>
-    </article>
-    {% else %}
-    <p>No posts found.</p>
-    {% endfor %}
-  </div>
-</section>
 
-<!-- 🌍 FOOTER -->
-<footer class="modern-footer">
-  <div class="footer-container">
-    <div class="footer-logo-section">
-      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Mar-cy’s & Sons Limited Logo" class="footer-logo">
-      <p>Great Mar-cy’s & Sons Limited</p>
-      <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
-      <p>Address: KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
-    </div>
+      <div class="footer-links">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/property">Properties</a></li>
+          <li><a href="/about">About Us</a></li>
+          <li><a href="/contact">Contact</a></li>
+        </ul>
+      </div>
 
-    <div class="footer-links">
-      <h3>Quick Links</h3>
-      <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/property">Properties</a></li>
-        <li><a href="/about">About Us</a></li>
-        <li><a href="/contact">Contact</a></li>
-      </ul>
-    </div>
-
-    <div class="footer-contact">
-      <h3>Contact Us</h3>
-      <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
-      <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
-      <div class="social-links">
-      <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
-        <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
-      </a>
-      <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
-        <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
-      </a>
+      <div class="footer-contact">
+        <h3>Contact Us</h3>
+        <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
+        <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
+        <div class="social-links">
+          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
+            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+          </a>
+          <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+          </a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <div class="footer-bottom">
-    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
-  </div>
-</footer>
+    <div class="footer-bottom">
+      <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
+    </div>
+  </footer>
 
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 
-{% endblock %}
+</body>
+</html>
