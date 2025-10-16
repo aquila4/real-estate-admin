@@ -13,51 +13,53 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- Dynamic SEO -->
+  <!-- ✅ Dynamic SEO -->
   <title>{{ seo.title | default("Great Mar-cy’s & Sons Limited - Real Estate Company in Ilorin") }}</title>
-<meta name="description" content="{{ seo.description | default('Buy and sell land, houses, and commercial properties with Great Mar-cy’s & Sons Limited in Ilorin, Kwara State.') }}">
-<meta name="keywords" content="{{ seo.keywords | default('Ilorin real estate, land for sale, Great Marcy Sons Limited, buy land Ilorin, property management') }}">
-<meta name="author" content="Great Mar-cy’s & Sons Limited">
-<meta name="robots" content="index, follow">
+  <meta name="description" content="{{ seo.description | default('Buy and sell land, houses, and commercial properties with Great Mar-cy’s & Sons Limited in Ilorin, Kwara State.') }}">
+  <meta name="keywords" content="{{ seo.keywords | default('Ilorin real estate, land for sale, Great Marcy Sons Limited, buy land Ilorin, property management') }}">
+  <meta name="author" content="Great Mar-cy’s & Sons Limited">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://greatmarcysonslimited.com/">
 
-<!-- Social Sharing -->
-<meta property="og:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
-<meta property="og:description" content="{{ seo.description | default('Find affordable land and properties in Ilorin.') }}">
-<meta property="og:image" content="{{ seo.image | default(url_for('static', filename='images/logo.png')) }}">
-<meta property="og:type" content="website">
-<meta property="og:url" content="{{ request.url }}">
-<meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
+  <!-- ✅ Social Sharing -->
+  <meta property="og:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+  <meta property="og:description" content="{{ seo.description | default('Find affordable land and properties in Ilorin.') }}">
+  <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greatmarcysonslimited.com/">
+  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
 
+  <!-- ✅ Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@greatmarcysons">
+  <meta name="twitter:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+  <meta name="twitter:description" content="{{ seo.description | default('Trusted real estate company in Ilorin, Nigeria.') }}">
+  <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
 
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:site" content="@greatmarcysons">
-<meta name="twitter:title" content="{{ seo.title }}">
-<meta name="twitter:description" content="{{ seo.description }}">
-<meta name="twitter:image" content="{{ url_for('static', filename=seo.image) if seo.image else '' }}">
-<link rel="icon" type="image/png" href="{{ url_for('static', filename='images/logogmc.png') }}">
-<link rel="shortcut icon" href="{{ url_for('static', filename='images/logogmc.png') }}" type="image/x-icon">
-<link rel="apple-touch-icon" href="{{ url_for('static', filename='images/logogmc.png') }}">
+  <!-- ✅ Favicon -->
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/logogmc.png') }}">
+  <link rel="shortcut icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/x-icon">
+  <link rel="apple-touch-icon" href="{{ url_for('static', filename='image/logogmc.png') }}">
 
-  <!-- Structured Data: Property -->
+  <!-- ✅ Structured Data: Property -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "SingleFamilyResidence",
-    "name": "{{ seo.title if seo.title else property.title }}",
-    "description": "{{ seo.description if seo.description else property.description[:150] }}",
-    "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=seo.image) if seo.image else url_for('static', filename='image/logo.jpg') }}",
+    "name": "{{ seo.title if seo.title else 'Featured Property - Great Mar-cy’s & Sons Limited' }}",
+    "description": "{{ seo.description if seo.description else 'Buy and invest in land and houses in Ilorin with Great Mar-cy’s & Sons Limited.' }}",
+    "image": "https://greatmarcysonslimited.com/static/image/logogmc.png",
     "address": {
       "@type": "PostalAddress",
-      "addressLocality": "{{ properties[0].location if properties|length > 0 else 'Ilorin, Kwara State' }}",
-
-      "addressRegion": "Kwara",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
       "addressCountry": "NG"
     },
-    "url": "{{ request.url }}"
+    "url": "https://greatmarcysonslimited.com/"
   }
   </script>
 
-  <!-- Structured Data: Company -->
+  <!-- ✅ Structured Data: Real Estate Company -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -68,6 +70,7 @@
     "telephone": ["+2349139070404", "+2349028939653"],
     "address": {
       "@type": "PostalAddress",
+      "streetAddress": "Olooru along Ajegunle Road",
       "addressLocality": "Ilorin",
       "addressRegion": "Kwara State",
       "addressCountry": "NG"
@@ -79,18 +82,46 @@
     ]
   }
   </script>
+
+  <!-- ✅ Structured Data: Organization (Brand Panel in Google) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Great Mar-cy’s & Sons Limited",
+    "url": "https://greatmarcysonslimited.com/",
+    "logo": "https://greatmarcysonslimited.com/static/image/logogmc.png",
+    "description": "A trusted real estate company in Ilorin helping clients buy, sell, and manage properties across Kwara State.",
+    "email": "info@greatmarcysonslimited.com",
+    "telephone": "+2349139070404",
+    "sameAs": [
+      "https://www.facebook.com/greatmarcysonslimited",
+      "https://www.instagram.com/greatmarcysonslimited",
+      "https://www.linkedin.com/company/greatmarcysonslimited"
+    ],
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Olooru along Ajegunle Road",
+      "addressLocality": "Ilorin",
+      "addressRegion": "Kwara State",
+      "postalCode": "240001",
+      "addressCountry": "NG"
+    }
+  }
+  </script>
+
+  <!-- ✅ Styles -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    integrity="sha512-u5HShQwT3LhG7vaxn9Lsa7uKhRzKuFG6k4LBV9EdaYd3GcP5N0pN9OZxZqQxJZlVcwE0PVoF3pKuKjY2rQZog=="
+    crossorigin="anonymous"
+    referrerpolicy="no-referrer"
+  >
 </head>
 
-<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-<link
-  rel="stylesheet"
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-  integrity="sha512-u5HShQwT3LhG7vaxn9Lsa7uKhRzKuFG6k4LBV9EdaYd3GcP5N0pN9OZxZqQxJZlVcwE0PVoF3pKuKjY2rQZog=="
-  crossorigin="anonymous"
-  referrerpolicy="no-referrer"
-/>
 
-</head>
 
 
 
