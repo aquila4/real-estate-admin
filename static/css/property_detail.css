@@ -1,201 +1,153 @@
-
 /* ===============================
    GLOBAL STYLES
 ================================= */
 body {
   font-family: 'Poppins', Arial, sans-serif;
-  background-color: #f8f9fc;
-  color: #333;
+  background: #f4f7fb;
+  color: #1b1b1b;
   margin: 0;
   padding: 0;
+  line-height: 1.6;
 }
 
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+}
+
+/* ===============================
+   HEADER
+================================= */
 header {
-  background: linear-gradient(135deg, #003366, #004b8d);
+  background: linear-gradient(135deg, #003366, #0077cc);
   color: #fff;
   text-align: center;
-  padding: 50px 20px;
+  padding: 60px 20px;
+  position: relative;
+  z-index: 10;
 }
 
 header h1 {
-  font-size: 28px;
+  font-size: 36px;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
 header p {
-  font-size: 16px;
-  color: #cfe2ff;
+  font-size: 18px;
+  color: #cce0ff;
 }
 
+/* ===============================
+   MAIN CONTAINER
+================================= */
 .container {
-  max-width: 1100px;
+  max-width: 1200px;
   margin: 50px auto;
   padding: 0 20px;
 }
 
 /* ===============================
-   PROPERTY DETAILS
+   PROPERTY DETAIL CARD
 ================================= */
 .property-detail {
   background: #fff;
-  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-  border-radius: 10px;
-  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
 }
 
-.property-detail img {
-  width: 100%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  object-fit: cover;
+.property-detail:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 50px rgba(0, 0, 0, 0.25);
 }
 
+.property-detail img,
 .property-detail video {
   width: 100%;
-  border-radius: 10px;
-  margin-bottom: 20px;
-  background: #000;
+  display: block;
+  object-fit: cover;
+  border-bottom: 1px solid #e0e0e0;
+  border-radius: 0;
+  transition: transform 0.5s ease;
+}
+
+.property-detail img:hover,
+.property-detail video:hover {
+  transform: scale(1.05);
+}
+
+/* ===============================
+   DESCRIPTION
+================================= */
+.description {
+  padding: 30px 35px;
 }
 
 .description p {
-  font-size: 16px;
+  font-size: 17px;
+  color: #333;
   line-height: 1.8;
-  color: #444;
+  margin-bottom: 20px;
 }
 
 /* ===============================
-   FOOTER SECTION
+   PROPERTY FEATURES
 ================================= */
-.footer {
-  background: #00264d;
-  color: #fff;
-  padding: 50px 20px;
-  margin-top: 80px;
-}
-
-.footer-container {
+.features {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  gap: 40px;
-  max-width: 1200px;
-  margin: 0 auto;
+  gap: 15px;
+  margin-bottom: 25px;
 }
 
-.footer-logo img {
-  width: 60px;
-  height: auto;
-  margin-bottom: 10px;
-}
-
-.footer-logo h3 {
-  font-size: 20px;
-  margin-bottom: 5px;
-  color: #ffffff;
-}
-
-.footer-logo p {
-  color: #cce0ff;
-  font-size: 14px;
-  max-width: 250px;
-}
-
-.footer-links ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-links ul li {
-  margin: 6px 0;
-}
-
-.footer-links a {
-  color: #cce0ff;
-  text-decoration: none;
-  transition: color 0.3s;
-}
-
-.footer-links a:hover {
+.features div {
+  flex: 1 1 30%;
+  background: linear-gradient(135deg, #0077cc, #00bcd4);
   color: #fff;
-}
-
-.footer-contact p,
-.footer-contact a {
-  color: #cce0ff;
-  font-size: 15px;
-}
-
-.footer-contact a:hover {
-  color: #fff;
-}
-
-.social-links a {
-  display: inline-block;
-  margin-right: 10px;
-  font-size: 18px;
-  color: #cce0ff;
-  transition: color 0.3s;
-}
-
-.social-links a:hover {
-  color: #fff;
-}
-
-.footer-bottom {
-  border-top: 1px solid #335c8b;
-  margin-top: 30px;
-  padding-top: 15px;
+  font-weight: 600;
   text-align: center;
-  font-size: 14px;
-  color: #cce0ff;
+  padding: 12px 0;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
 }
 
-.developer-credit a {
-  color: #00bcd4;
-  text-decoration: none;
-}
-
-.developer-credit a:hover {
-  text-decoration: underline;
+.features div:hover {
+  transform: translateY(-3px);
 }
 
 /* ===============================
-   RESPONSIVE DESIGN
+   CTA BUTTON
 ================================= */
-@media (max-width: 768px) {
-  header {
-    padding: 40px 15px;
-  }
-
-  header h1 {
-    font-size: 24px;
-  }
-
-  .footer-container {
-    flex-direction: column;
-    text-align: center;
-  }
-
-  .footer-logo,
-  .footer-links,
-  .footer-contact {
-    width: 100%;
-  }
-
-  .footer-links ul {
-    display: inline-block;
-    text-align: left;
-  }
+.contact-btn {
+  display: inline-block;
+  padding: 15px 35px;
+  background: linear-gradient(135deg, #003366, #00bcd4);
+  color: #fff;
+  font-weight: 700;
+  border-radius: 50px;
+  text-align: center;
+  transition: transform 0.3s ease, background 0.4s ease;
 }
 
+.contact-btn:hover {
+  transform: translateY(-3px);
+  background: linear-gradient(135deg, #004b8d, #00e5ff);
+}
 
-
+/* ===============================
+   FOOTER
+================================= */
 .footer {
-  background: #0a0a23; /* deep navy/blackish tone */
-  color: #fff;
+  background: #0a0a23;
+  color: #ccc;
   padding: 50px 20px;
-  position: relative;
-  z-index: 10;
   margin-top: 60px;
 }
 
@@ -210,14 +162,17 @@ header p {
 
 .footer-logo img {
   width: 60px;
-  height: auto;
   margin-bottom: 10px;
 }
 
 .footer-logo h3 {
   font-size: 20px;
-  margin-bottom: 5px;
-  color: #ffffff;
+  color: #fff;
+}
+
+.footer-logo p {
+  font-size: 14px;
+  color: #cce0ff;
 }
 
 .footer-links ul {
@@ -231,7 +186,6 @@ header p {
 
 .footer-links a {
   color: #ccc;
-  text-decoration: none;
   transition: color 0.3s;
 }
 
@@ -279,6 +233,31 @@ header p {
   text-decoration: underline;
 }
 
-.container {
-  padding-bottom: 100px;
+/* ===============================
+   RESPONSIVE DESIGN
+================================= */
+@media (max-width: 992px) {
+  .features div {
+    flex: 1 1 45%;
+  }
+}
+
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 28px;
+  }
+
+  .features div {
+    flex: 1 1 100%;
+  }
+
+  .contact-btn {
+    width: 100%;
+    text-align: center;
+  }
+
+  .footer-container {
+    flex-direction: column;
+    text-align: center;
+  }
 }
