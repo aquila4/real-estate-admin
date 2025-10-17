@@ -78,5 +78,23 @@
   <footer>
     &copy; {{ now.year }} Great Mar-cy’s & Sons Limited
   </footer>
+
+<script>
+  // Fade-in on scroll
+  const fadeElements = document.querySelectorAll('.fade-in');
+  const onScroll = () => {
+    fadeElements.forEach(el => {
+      const rect = el.getBoundingClientRect();
+      if (rect.top < window.innerHeight - 80) {
+        el.classList.add('visible');
+      }
+    });
+  };
+  window.addEventListener('scroll', onScroll);
+  window.addEventListener('load', onScroll);
+</script>
+
+
+
 </body>
 </html>

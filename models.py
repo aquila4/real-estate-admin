@@ -27,21 +27,22 @@ class Property(db.Model):
 
 
 # ==============================
-# 🔹 BLOG POST MODEL
+# 🔹 BLOG POST MODEL (Unlimited Length)
 # ==============================
 class BlogPost(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    title = db.Column(db.String(255), nullable=False)
-    content = db.Column(db.Text, nullable=False)
-    image_url = db.Column(db.String(255))
-    seo_title = db.Column(db.Text)  # changed from String(70) to Text
-    meta_description = db.Column(db.Text)  # changed from String(160) to Text
-    keywords = db.Column(db.Text)  # changed from String(300) to Text
-    slug = db.Column(db.String(200), unique=True, nullable=False)
+    title = db.Column(db.Text, nullable=False)  # changed to Text (unlimited)
+    content = db.Column(db.Text, nullable=False)  # already unlimited
+    image_url = db.Column(db.Text)  # changed from String(255) to Text
+    seo_title = db.Column(db.Text)  # unlimited
+    meta_description = db.Column(db.Text)  # unlimited
+    keywords = db.Column(db.Text)  # unlimited
+    slug = db.Column(db.String(255), unique=True, nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f"<BlogPost {self.title}>"
+
 
 # --- Auto-generate slug before insert ---
 @event.listens_for(BlogPost, 'before_insert')

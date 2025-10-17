@@ -68,6 +68,21 @@
 </head>
 
 <body>
+
+  <body>
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+      <div class="flash-container">
+        {% for category, message in messages %}
+          <div class="flash-message {{ category }}">
+            {{ message }}
+          </div>
+        {% endfor %}
+      </div>
+    {% endif %}
+  {% endwith %}
+
   <div class="contact-container">
     <h1>Contact Us</h1>
     <p>We’d love to hear from you! Reach us through any of the channels below.</p>
@@ -144,6 +159,12 @@
 
 <script>
   document.getElementById('year').textContent = new Date().getFullYear();
+</script>
+
+<script>
+  setTimeout(() => {
+    document.querySelectorAll('.flash-message').forEach(msg => msg.remove());
+  }, 5000);
 </script>
 
 

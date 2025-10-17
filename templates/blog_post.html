@@ -1,66 +1,170 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ post.title }}</title>
 
-{% block head %}
-  <title>{{ post.title }} | Great Mar-cy’s & Sons Limited Blog</title>
-  <meta name="description" content="{{ post.content[:150] | striptags }}">
-  <link rel="canonical" href="{{ request.url }}">
+    <style>
+        /* === RADIANT BLOG POST STYLES === */
 
-  <!-- Open Graph / Social -->
-  <meta property="og:title" content="{{ post.title }} | Great Mar-cy’s & Sons Limited Blog">
-  <meta property="og:description" content="{{ post.content[:150] | striptags }}">
-  <meta property="og:type" content="article">
-  <meta property="og:url" content="{{ request.url }}">
-  <meta property="og:image" content="{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}">
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-  <!-- Twitter Card -->
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="{{ post.title }} | Great Mar-cy’s & Sons Limited Blog">
-  <meta name="twitter:description" content="{{ post.content[:150] | striptags }}">
-  <meta name="twitter:image" content="{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}">
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: radial-gradient(circle at top left, #004aad, #001f3f, #000);
+            color: #f5f7ff;
+            margin: 0;
+            padding: 0;
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
 
-  <!-- Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "BlogPosting",
-    "headline": "{{ post.title }}",
-    "description": "{{ post.content[:150] | striptags }}",
-    "image": "{{ url_for('serve_file', filename=post.image_url) if post.image_url else url_for('static', filename='image/logo.jpg') }}",
-    "author": {
-      "@type": "Organization",
-      "name": "Great Mar-cy’s & Sons Limited"
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "Great Mar-cy’s & Sons Limited",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://greatmarcysonslimited.com/static/image/logo.jpg"
-      }
-    },
-    "datePublished": "{{ post.created_at.isoformat() }}",
-    "mainEntityOfPage": "{{ request.url }}"
-  }
-  </script>
-{% endblock %}
+        .blog-header {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0,74,173,0.9), rgba(0,119,255,0.85));
+            color: white;
+            padding: 70px 20px;
+            border-bottom: 2px solid rgba(255,255,255,0.2);
+            box-shadow: 0 0 40px rgba(0,123,255,0.4);
+        }
 
-{% block content %}
-<div class="blog_post">
-  <h1>{{ post.title }}</h1>
-  <p><em>Published on {{ post.created_at.strftime('%B %d, %Y') }}</em></p>
+        .blog-title {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
 
-  {% if post.image_url %}
-    <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" class="post-image">
-  {% endif %}
+        .blog-meta {
+            font-size: 1rem;
+            opacity: 0.85;
+        }
 
-  <div class="content">
-    {{ post.content | safe }}
-  </div>
+        .blog-container {
+            max-width: 900px;
+            margin: 60px auto;
+            background: rgba(255,255,255,0.07);
+            padding: 45px 35px;
+            border-radius: 25px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255,255,255,0.2);
+            animation: fadeIn 1.5s ease;
+        }
 
-  <br>
-  <a href="{{ url_for('blog') }}" 
-     onclick="gtag('event', 'back_to_blog', {'event_category': 'navigation', 'event_label': 'Blog Post - Back Button'});">
-     ← Back to Blog
-  </a>
-</div>
-{% endblock %}
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(40px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .blog-image img {
+            width: 100%;
+            border-radius: 18px;
+            margin-bottom: 35px;
+            box-shadow: 0 0 25px rgba(0,119,255,0.3);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        .blog-image img:hover {
+            transform: scale(1.03);
+            box-shadow: 0 0 40px rgba(0,119,255,0.6);
+        }
+
+        .blog-content {
+            font-size: 1.15rem;
+            color: #f1f1f1;
+        }
+
+        .blog-content p {
+            margin-bottom: 20px;
+        }
+
+        .blog-tags {
+            margin-top: 30px;
+        }
+
+        .blog-tags .tag {
+            background: linear-gradient(135deg, #0077ff, #00b4d8);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin-right: 8px;
+            display: inline-block;
+            box-shadow: 0 0 10px rgba(0,119,255,0.5);
+            transition: transform 0.2s ease;
+        }
+
+        .blog-tags .tag:hover {
+            transform: scale(1.05);
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 45px;
+            padding: 12px 22px;
+            background: linear-gradient(135deg, #004aad, #00b4d8);
+            color: white;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,119,255,0.4);
+        }
+
+        .back-btn:hover {
+            background: linear-gradient(135deg, #00b4d8, #0077ff);
+            box-shadow: 0 0 25px rgba(0,119,255,0.8);
+            transform: translateY(-2px);
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            .blog-container {
+                margin: 30px 15px;
+                padding: 25px;
+            }
+
+            .blog-title {
+                font-size: 2.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="blog-header">
+        <h1 class="blog-title">{{ post.title }}</h1>
+        <p class="blog-meta">
+            Published on {{ post.created_at.strftime('%B %d, %Y') }}
+        </p>
+    </header>
+
+    <section class="blog-container">
+        {% if post.image_url %}
+        <div class="blog-image">
+            <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}">
+        </div>
+        {% endif %}
+
+        <article class="blog-content">
+            {{ post.content | safe }}
+        </article>
+
+        {% if post.keywords %}
+        <div class="blog-tags">
+            <strong>Tags:</strong>
+            {% for tag in post.keywords.split(',') %}
+                <span class="tag">{{ tag.strip() }}</span>
+            {% endfor %}
+        </div>
+        {% endif %}
+
+        <a href="{{ url_for('blog') }}" class="back-btn">← Back to Blog</a>
+    </section>
+
+</body>
+</html>

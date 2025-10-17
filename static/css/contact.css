@@ -208,3 +208,42 @@ body {
 }
 
 
+.flash-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  animation: slideIn 0.4s ease-out;
+}
+
+.flash-message {
+  padding: 14px 20px;
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  opacity: 1;
+  animation: fadeOut 5s forwards;
+}
+
+/* ✅ Green for success, 🔴 Red for error */
+.flash-message.success {
+  background: linear-gradient(135deg, #28a745, #34d058);
+}
+.flash-message.error {
+  background: linear-gradient(135deg, #dc3545, #ff4d6d);
+}
+
+/* Animations */
+@keyframes slideIn {
+  from { transform: translateY(-30px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes fadeOut {
+  0%, 80% { opacity: 1; }
+  100% { opacity: 0; visibility: hidden; }
+}

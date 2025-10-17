@@ -10,12 +10,35 @@ from slugify import slugify
 from flask_mail import Mail, Message
 from extensions import db
 import uuid
+import threading
+import re
+EMAIL_REGEX = r"[^@]+@[^@]+\.[^@]+"
+from functools import wraps
+
+from flask_mail import Mail, Message
+
 
 # Load environment variables
 load_dotenv()
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "fallback_secret")
+
+
+# === Flask-Mail Config ===
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
+app.config['MAIL_USE_SSL'] = True
+app.config['MAIL_USE_TLS'] = False
+app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
+app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_USERNAME")
+
+mail = Mail(app)
+
+ADMIN_USER = os.getenv("ADMIN_USER", "admin")  # fallback if not set
+ADMIN_PASS = os.getenv("ADMIN_PASS", "1234")   # fallback if not set
+
 
 # === Database config (PostgreSQL from Railway) ===
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
@@ -33,16 +56,6 @@ os.makedirs(UPLOAD_FOLDER, exist_ok=True)
 db.init_app(app)
 migrate = Migrate(app, db)
 
-# === Flask-Mail Config ===
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 465
-app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USE_TLS'] = False
-app.config['MAIL_USERNAME'] = os.getenv("MAIL_USERNAME")
-app.config['MAIL_PASSWORD'] = os.getenv("MAIL_PASSWORD")
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv("MAIL_USERNAME")
-
-mail = Mail(app)
 
 # ==============================
 # 🔹 ROUTES
@@ -113,20 +126,273 @@ def sitemap():
 def google_verification():
     return app.send_static_file('google78ddd9d79ee95af7.html')
 
+
+def admin_required(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        if not session.get('admin_logged_in'):
+            flash("Please log in as admin.")
+            return redirect(url_for('admin_login'))
+        return f(*args, **kwargs)
+    return decorated
+
+def send_email(to_email, subject, content):
+    message = Mail(
+        from_email='greatmarcysonslimited@gmail.com',
+        to_emails=to_email,
+        subject=subject,
+        html_content=content
+    )
+    try:
+        sg = SendGridAPIClient(os.getenv('SENDGRID_API_KEY'))
+        sg.send(message)
+        print("✅ Email sent successfully")
+    except Exception as e:
+        print("❌ Error sending email:", e)
+
 # ==============================
-# 🔹 ADMIN AUTH
+# 🔹 ASYNC EMAIL FUNCTION
 # ==============================
+def send_email(subject, recipients, body_text=None, body_html=None, reply_to=None):
+    """
+    Send email asynchronously with Gmail first, fallback to SendGrid.
+    
+    Args:
+        subject (str): Email subject
+        recipients (list): List of recipient emails
+        body_text (str): Plain text email
+        body_html (str): HTML email (optional)
+        reply_to (str): Reply-to address
+    """
+    def async_send(app, msg):
+        with app.app_context():
+            def send_with_gmail(msg):
+                try:
+                    mail.send(msg)
+                    print(f"✅ Email sent via Gmail to {msg.recipients}")
+                    return True
+                except Exception as e:
+                    print(f"❌ Gmail failed: {e}")
+                    traceback.print_exc()
+                    return False
+
+            def send_with_sendgrid(msg):
+                try:
+                    # Temporarily override config for SendGrid
+                    app.config.update(
+                        MAIL_SERVER="smtp.sendgrid.net",
+                        MAIL_PORT=587,
+                        MAIL_USE_TLS=True,
+                        MAIL_USE_SSL=False,
+                        MAIL_USERNAME="apikey",
+                        MAIL_PASSWORD=os.getenv("SENDGRID_API_KEY"),
+                        MAIL_DEFAULT_SENDER=os.getenv("MAIL_USERNAME")
+                    )
+                    mail.send(msg)
+                    print(f"✅ Email sent via SendGrid to {msg.recipients}")
+                    return True
+                except Exception as e:
+                    print(f"❌ SendGrid failed: {e}")
+                    traceback.print_exc()
+                    return False
+
+            if not send_with_gmail(msg):
+                print("⚠️ Falling back to SendGrid...")
+                send_with_sendgrid(msg)
+
+    # Create Message object
+    msg = Message(
+        subject=subject,
+        recipients=recipients,
+        body=body_text or "",
+        html=body_html or None,
+        reply_to=reply_to
+    )
+
+    threading.Thread(target=async_send, args=(app, msg)).start()
+
+# ==============================
+# 🔹 SUBSCRIBE ROUTE
+# ==============================
+
+@app.route('/subscribe', methods=['POST'])
+def subscribe():
+    email = request.form.get('email', '').strip().lower()  # Normalize email
+
+    if not email:
+        flash("Email is required to subscribe.")
+        return redirect(url_for('home'))
+
+    # Validate email format
+    if not re.match(EMAIL_REGEX, email):
+        flash("Invalid email format.")
+        return redirect(url_for('home'))
+
+    # Check if already subscribed
+    if Newsletter.query.filter_by(email=email).first():
+        flash("You are already subscribed!")
+        return redirect(url_for('home'))
+
+    # Save to database
+    new_sub = Newsletter(email=email)
+    db.session.add(new_sub)
+    db.session.commit()
+
+    # Prepare welcome email to user
+    text_body = f"""
+Hello there 👋,
+
+Thank you for subscribing to Great Mar-cy’s & Sons Limited!
+
+You’ll now receive updates about our latest property listings, estate opportunities,
+and real estate insights — straight to your inbox.
+
+If you ever have any questions, feel free to reply to this email anytime.
+
+Warm regards,
+Great Mar-cy’s & Sons Limited
+Your Trusted Real Estate Partner in Ilorin
+"""
+    html_body = f"""
+<html>
+  <body>
+    <p>Hello there 👋,</p>
+    <p>Thank you for subscribing to <b>Great Mar-cy’s & Sons Limited</b>!</p>
+    <p>You’ll now receive updates about our latest property listings, estate opportunities, 
+    and real estate insights — straight to your inbox.</p>
+    <p>If you ever have any questions, feel free to reply to this email anytime.</p>
+    <p>Warm regards,<br>
+    <b>Great Mar-cy’s & Sons Limited</b><br>
+    Your Trusted Real Estate Partner in Ilorin</p>
+  </body>
+</html>
+"""
+
+    # === Send welcome email to user ===
+    send_email(
+        subject="Welcome to Great Mar-cy’s & Sons Limited Newsletter",
+        recipients=[email],
+        body_text=text_body,
+        body_html=html_body
+    )
+
+    # === Notify admin of new subscriber ===
+    try:
+        admin_email = os.getenv("MAIL_USERNAME")
+        admin_msg = f"""
+New Newsletter Subscriber 🎉
+
+A new user has subscribed to the newsletter.
+
+Email: {email}
+
+— Great Mar-cy’s & Sons Limited System
+"""
+        send_email(
+            subject="📩 New Newsletter Subscriber Alert",
+            recipients=[admin_email],
+            body_text=admin_msg
+        )
+        print(f"✅ Admin notified about new subscriber: {email}")
+    except Exception as e:
+        print(f"⚠️ Error sending admin notification: {e}")
+
+    flash("✅ Thank you for subscribing! Welcome to Great Mar-cy’s community.")
+    return redirect(url_for('home'))
+
+@app.route('/enquire', methods=['POST'])
+def enquiry():
+    name = request.form.get('name', '').strip()
+    email = request.form.get('email', '').strip()
+    message = request.form.get('message', '').strip()
+    subject = request.form.get('subject', 'New Enquiry').strip()  # Default subject
+
+    # --- Validation ---
+    if not name or not email or not message:
+        flash("All fields are required.")
+        return redirect(url_for('contact'))
+
+    if not re.match(EMAIL_REGEX, email):
+        flash("Invalid email address.")
+        return redirect(url_for('contact'))
+
+    # --- Save to Database ---
+    new_enquiry = Enquiry(name=name, email=email, subject=subject, message=message)
+    db.session.add(new_enquiry)
+    db.session.commit()
+
+    # --- Confirmation Email to User ---
+    user_text = f"""
+Hi {name},
+
+Thank you for contacting Great Mar-cy’s & Sons Limited!
+
+We’ve received your enquiry and our team will get back to you soon.
+If you have urgent questions, feel free to reply to this email.
+
+Warm regards,  
+Great Mar-cy’s & Sons Limited  
+Your Trusted Real Estate Partner in Ilorin
+"""
+    user_html = f"""
+<html>
+  <body style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+    <p>Hi <b>{name}</b>,</p>
+    <p>Thank you for contacting <b>Great Mar-cy’s & Sons Limited</b>!</p>
+    <p>We’ve received your enquiry and our team will get back to you shortly.</p>
+    <p>If you have urgent questions, you can simply reply to this email.</p>
+    <p>Warm regards,<br>
+    <b>Great Mar-cy’s & Sons Limited</b><br>
+    Your Trusted Real Estate Partner in Ilorin</p>
+  </body>
+</html>
+"""
+    send_email(
+        subject="We’ve received your enquiry – Great Mar-cy’s & Sons Limited",
+        recipients=[email],
+        body_text=user_text,
+        body_html=user_html
+    )
+
+    # --- Notification to Admin ---
+    admin_email = os.getenv("MAIL_USERNAME")
+    admin_text = f"""
+New Enquiry Received:
+
+Name: {name}
+Email: {email}
+Subject: {subject}
+Message: {message}
+
+Sent on: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
+"""
+    send_email(
+        subject=f"New Enquiry from {name}",
+        recipients=[admin_email],
+        body_text=admin_text
+    )
+
+    flash("✅ Your enquiry has been received. We'll get back to you soon.")
+    return redirect(url_for('contact'))
+
+
 
 @app.route('/admin-login', methods=['GET', 'POST'])
 def admin_login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        if username == 'Greatmarcy' and password == '5467':
+        username = request.form.get('username', '').strip()
+        password = request.form.get('password', '').strip()
+
+        if username == ADMIN_USER and password == ADMIN_PASS:
             session['admin_logged_in'] = True
+            flash("✅ Logged in successfully!")
             return redirect(url_for('admin_dashboard'))
-        flash('Invalid credentials.')
-    return render_template('admin-login.html')
+
+        flash("❌ Invalid credentials")
+        return redirect(url_for('admin_login'))
+
+    return render_template('admin/login.html')
+
 
 @app.route('/logout')
 def logout():
@@ -139,30 +405,19 @@ def logout():
 # ==============================
 
 @app.route('/admin-dashboard')
+@admin_required
 def admin_dashboard():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
     properties = Property.query.order_by(Property.created_at.desc()).all()
     return render_template('admin-dashboard.html', properties=properties)
 
 @app.route('/add-property')
+@admin_required
 def add_property():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
     return render_template('add_property.html')
 
-# ==============================
-# 🔹 PROPERTY ROUTES
-# ==============================
-
-@app.route('/uploads/<filename>')
-def serve_file(filename):
-    return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 @app.route('/upload', methods=['POST'])
+@admin_required
 def upload():
-    if not session.get('admin_logged_in'):
-        return redirect(url_for('admin_login'))
-
     try:
         # --- FORM DATA ---
         title = request.form.get('title', '').strip()
@@ -177,7 +432,7 @@ def upload():
             flash('All required fields (Title, Location, Description) must be filled.')
             return redirect(url_for('add_property'))
 
-        # --- TRUNCATE SEO FIELDS TO SAFE LENGTHS ---
+        # --- TRUNCATE SEO FIELDS ---
         if seo_title:
             seo_title = seo_title[:255]
         if meta_description:
@@ -206,7 +461,7 @@ def upload():
         if Property.query.filter_by(slug=slug).first():
             slug = f"{slug}-{uuid.uuid4().hex[:6]}"
 
-        # --- CREATE NEW PROPERTY RECORD ---
+        # --- CREATE PROPERTY ---
         new_property = Property(
             title=title,
             location=location,
@@ -221,7 +476,6 @@ def upload():
 
         db.session.add(new_property)
         db.session.commit()
-
         flash('✅ Property uploaded successfully!')
         return redirect(url_for('admin_dashboard'))
 
@@ -402,109 +656,11 @@ def blog_post(slug):
 # 🔹 ENQUIRY FORM
 # ==============================
 
-@app.route('/enquiry', methods=['POST'])
-def enquiry():
-    name = request.form.get('name')
-    email = request.form.get('email')
-    subject = request.form.get('subject')
-    message = request.form.get('message')
+@app.route('/uploads/<path:filename>')
+def serve_file(filename):
+    return send_from_directory('static/uploads', filename)
 
-    if not name or not email or not subject or not message:
-        flash("All fields are required for enquiry.")
-        return redirect(url_for('home'))
-
-    new_enquiry = Enquiry(name=name, email=email, subject=subject, message=message)
-    db.session.add(new_enquiry)
-    db.session.commit()
-
-    try:
-        # Admin notification
-        admin_msg = Message(
-            subject=f"New Enquiry: {subject}",
-            sender=os.getenv("MAIL_USERNAME"),
-            recipients=[os.getenv("MAIL_USERNAME")],
-            reply_to=email,
-            body=f"Name: {name}\nEmail: {email}\nSubject: {subject}\nMessage:\n{message}"
-        )
-        mail.send(admin_msg)
-
-        # 📩 Auto-reply to Customer
-        confirmation = Message(
-            subject="We Received Your Enquiry – Great Mar-cy’s & Sons Limited",
-            sender=os.getenv("MAIL_USERNAME"),
-            recipients=[email],
-            body=f"""Dear {name},
-
-Thank you for reaching out to Great Mar-cy’s & Sons Limited.
-We’ve received your enquiry regarding “{subject}” and our team is already reviewing it.
-
-One of our representatives will get back to you shortly with more information.
-
-We truly appreciate your interest in our services — your satisfaction is our priority.
-
-Warm regards,
-Great Mar-cy’s & Sons Limited
-📍 Ilorin, Kwara State
-📞 +234 913 907 0404, +234 902 893 9653
-📧 greatmarcysonslimited@gmail.com
-"""
-        )
-        mail.send(confirmation)
-
-        flash("✅ Your enquiry has been submitted successfully! We'll get back to you soon.")
-
-    except Exception as e:
-        print("❌ Email error:", str(e))
-        flash("Your enquiry was saved but email notification failed.")
-
-    return redirect(url_for('home'))
-
-
-# ==============================
-# 🔹 NEWSLETTER SUBSCRIPTION
-# ==============================
-
-@app.route('/subscribe', methods=['POST'])
-def subscribe():
-    email = request.form.get('email')
-    if not email:
-        flash("Email is required to subscribe.")
-        return redirect(url_for('home'))
-
-    if Newsletter.query.filter_by(email=email).first():
-        flash("You are already subscribed!")
-        return redirect(url_for('home'))
-
-    new_sub = Newsletter(email=email)
-    db.session.add(new_sub)
-    db.session.commit()
-
-    try:
-        msg = Message(
-            subject="Welcome to Great Mar-cy’s & Sons Limited Newsletter",
-            sender=os.getenv("MAIL_USERNAME"),
-            recipients=[email],
-            body=f"""Hello there 👋,
-
-Thank you for subscribing to Great Mar-cy’s & Sons Limited!
-
-You’ll now receive updates about our latest property listings, estate opportunities,
-and real estate insights — straight to your inbox.
-
-If you ever have any questions, feel free to reply to this email anytime.
-
-Warm regards,
-Great Mar-cy’s & Sons Limited
-Your Trusted Real Estate Partner in Ilorin
-"""
-        )
-        mail.send(msg)
-    except Exception as e:
-        print("❌ Newsletter email failed:", str(e))
-
-    flash("✅ Thank you for subscribing! Welcome to Great Mar-cy’s & Sons community.")
-    return redirect(url_for('home'))
-
+    
 
 @app.route('/robots.txt')
 def robots():
