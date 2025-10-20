@@ -86,20 +86,33 @@
     <h1>Explore Our Premium Listings</h1>
     <p>Discover amazing verified properties from Great Mar-cy’s & Sons Limited</p>
   </header>
-
   <div class="property-grid">
+  {% if properties %}
     {% for property in properties %}
       <div class="property-card">
-        <a href="{{ url_for('property_detail', slug=property.slug) }}" 
-           onclick="gtag('event', 'view_property', {'event_category': 'property', 'event_label': '{{ property.title }}'});">
+        <a href="{{ url_for('property_detail', slug=property.slug) }}"
+           onclick="gtag('event', 'view_property', { 
+             'event_category': 'property', 
+             'event_label': '{{ property.title }}'
+           });">
 
           <div class="property-media">
             {% if property.image_url %}
-              <img src="{{ url_for('serve_file', filename=property.image_url) }}" 
-                   alt="Property for sale in {{ property.location }} - {{ property.title }}">
+              <img 
+                src="{{ url_for('serve_file', filename=property.image_url) }}" 
+                alt="{{ property.title }} - Property for sale in {{ property.location }}" 
+                class="property-image"
+                loading="lazy">
+            {% else %}
+              <img 
+                src="{{ url_for('static', filename='image/default-property.jpg') }}" 
+                alt="Default property image" 
+                class="property-image"
+                loading="lazy">
             {% endif %}
+
             {% if property.video_url %}
-              <video controls preload="metadata">
+              <video controls preload="metadata" class="property-video">
                 <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
@@ -113,10 +126,13 @@
           </div>
         </a>
       </div>
-    {% else %}
-      <p>No properties available at the moment. Please check back later.</p>
     {% endfor %}
-  </div>
+  {% else %}
+    <p>No properties available at the moment. Please check back later.</p>
+  {% endif %}
+</div>
+
+
 
   <!-- FOOTER -->
   <footer class="modern-footer">
