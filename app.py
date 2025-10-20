@@ -192,7 +192,7 @@ def admin_login():
             session['admin_logged_in'] = True; flash("✅ Logged in successfully!")
             return redirect(url_for('admin_dashboard'))
         flash("❌ Invalid credentials"); return redirect(url_for('admin_login'))
-    return render_template('admin/login.html')
+    return render_template('admin-login.html')
 
 @app.route('/logout')
 def logout():
