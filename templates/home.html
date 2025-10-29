@@ -294,33 +294,7 @@
   </div>
 </section>
  
-<!-- 🔹 Featured Listings Section -->
-<section class="featured-listings" id="listings">
-  <div class="container">
-    <h2>Featured Listings</h2>
-    <p class="subtitle">Explore our latest real estate offers</p>
 
-    <div class="listing-grid">
-      {% for listing in listings %}
-      <a href="{{ url_for('listing_detail', slug=listing.slug) }}" class="listing-card">
-        {% if listing.images %}
-        <img src="{{ url_for('static', filename='uploads/' + listing.images[0].filename) }}" alt="{{ listing.title }}">
-        {% endif %}
-        <div class="info">
-          <h3>{{ listing.title }}</h3>
-          <p class="location">{{ listing.location }}</p>
-          <p class="price">{{ listing.price or 'N/A' }}</p>
-          <span class="badge {{ listing.status|lower }}">{{ listing.status }}</span>
-        </div>
-      </a>
-      {% endfor %}
-    </div>
-
-    <div class="more-btn">
-      <a href="{{ url_for('listings') }}">View All Listings →</a>
-    </div>
-  </div>
-</section>
 
 
 <!-- ===== Modern Animated About Us Section ===== -->

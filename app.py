@@ -283,6 +283,7 @@ def upload():
     try:
         title = request.form.get('title', '').strip()
         location = request.form.get('location', '').strip()
+        price = request.form.get('price', '').strip()
         description = request.form.get('description', '').strip()
         seo_title = request.form.get('seo_title', '').strip()[:255] or None
         meta_description = request.form.get('meta_description', '').strip()[:300] or None
