@@ -281,14 +281,13 @@ def add_property():
 @admin_required
 def upload():
     try:
-        title = request.form['title']
-    location = request.form['location']
-    price = request.form['price']  # 🆕 get price
-    description = request.form['description']
-    seo_title = request.form.get('seo_title')
-    meta_description = request.form.get('meta_description')
-    keywords = request.form.get('keywords')
-    
+        title = request.form.get('title', '').strip()
+        location = request.form.get('location', '').strip()
+        description = request.form.get('description', '').strip()
+        seo_title = request.form.get('seo_title', '').strip()[:255] or None
+        meta_description = request.form.get('meta_description', '').strip()[:300] or None
+        keywords = request.form.get('keywords', '').strip()[:500] or None
+
         if not title or not location or not description:
             flash('All required fields (Title, Location, Description) must be filled.')
             return redirect(url_for('add_property'))
