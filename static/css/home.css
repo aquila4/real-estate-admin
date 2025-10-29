@@ -1617,6 +1617,114 @@ body.dark-mode .stat-icon {
   scrollbar-width: none;     
 }
 
+
+
+.featured-listings {
+  background: linear-gradient(135deg, #003cff, #00bcd4);
+  color: #fff;
+  text-align: center;
+  padding: 70px 20px;
+}
+
+.featured-listings h2 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+}
+
+.featured-listings .subtitle {
+  color: #e0f7fa;
+  font-size: 1rem;
+  margin-bottom: 40px;
+}
+
+.listing-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 25px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.listing-card {
+  background: #fff;
+  color: #333;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+  text-decoration: none;
+  transition: transform 0.3s ease;
+}
+
+.listing-card:hover {
+  transform: translateY(-5px);
+}
+
+.listing-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.listing-card .info {
+  padding: 15px;
+  text-align: left;
+}
+
+.listing-card h3 {
+  font-size: 1.2rem;
+  margin: 0;
+  color: #003cff;
+}
+
+.listing-card .location {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.listing-card .price {
+  margin-top: 8px;
+  font-weight: bold;
+  color: #00bcd4;
+}
+
+.badge {
+  display: inline-block;
+  padding: 5px 10px;
+  border-radius: 8px;
+  font-size: 0.8rem;
+  margin-top: 8px;
+}
+
+.badge.sale {
+  background: #4caf50;
+  color: #fff;
+}
+
+.badge.rent {
+  background: #ff9800;
+  color: #fff;
+}
+
+.more-btn {
+  margin-top: 40px;
+}
+
+.more-btn a {
+  background: #fff;
+  color: #003cff;
+  padding: 12px 25px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+}
+
+.more-btn a:hover {
+  background: #003cff;
+  color: #fff;
+}
+
+
 /* End of CSS */
 
 

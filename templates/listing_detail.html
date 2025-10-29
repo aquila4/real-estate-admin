@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ listing.title }} - Great Marcy Realty</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: #f6f8fc;
+            color: #333;
+        }
+        .header {
+            background: linear-gradient(90deg, #003cff, #00bcd4);
+            color: #fff;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2rem;
+        }
+        .carousel {
+            position: relative;
+            max-width: 900px;
+            margin: 40px auto;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        .carousel img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            display: none;
+        }
+        .carousel img.active {
+            display: block;
+        }
+        .carousel .controls {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+        .carousel button {
+            background: rgba(0,0,0,0.4);
+            border: none;
+            color: #fff;
+            font-size: 2rem;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+        .carousel button:hover {
+            background: rgba(0,0,0,0.7);
+        }
+        .details {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .details h2 {
+            color: #003cff;
+            margin-bottom: 10px;
+        }
+        .details p {
+            margin: 10px 0;
+            font-size: 15px;
+            color: #555;
+        }
+        .info-box {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        .info-box div {
+            background: #f0f6ff;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 5px;
+            flex: 1 1 200px;
+        }
+        .info-box strong {
+            color: #003cff;
+        }
+        .contact-section {
+            text-align: center;
+            padding: 30px;
+        }
+        .contact-section a {
+            background: linear-gradient(90deg, #003cff, #00bcd4);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+        .contact-section a:hover {
+            opacity: 0.9;
+        }
+        /* Admin buttons */
+        .admin-actions {
+            text-align: center;
+            margin: 20px;
+        }
+        .admin-actions a, .admin-actions button {
+            display: inline-block;
+            margin: 5px;
+            padding: 10px 20px;
+            border-radius: 10px;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+        }
+        .admin-actions a {
+            background: #fff;
+            color: #003cff;
+            border: 2px solid #003cff;
+        }
+        .admin-actions a:hover {
+            background: #003cff;
+            color: #fff;
+        }
+        .admin-actions button {
+            background: #e91e63;
+            color: #fff;
+        }
+        .admin-actions button:hover {
+            background: #c2185b;
+        }
+        /* Recent listings */
+        .recent {
+            background: #eef3ff;
+            padding: 50px 20px;
+        }
+        .recent h2 {
+            text-align: center;
+            color: #003cff;
+            margin-bottom: 30px;
+        }
+        .recent-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .recent-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        .recent-item:hover {
+            transform: translateY(-5px);
+        }
+        .recent-item img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+        }
+        .recent-item .info {
+            padding: 15px;
+        }
+        .recent-item h3 {
+            color: #003cff;
+            margin: 0 0 5px;
+            font-size: 1.1rem;
+        }
+        .recent-item p {
+            margin: 0;
+            color: #555;
+            font-size: 0.9rem;
+        }
+        .recent-item .price {
+            color: #00bcd4;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>{{ listing.title }}</h1>
+        <p>{{ listing.location }}</p>
+    </div>
+
+    <!-- Image Carousel -->
+    <div class="carousel">
+        {% for image in listing.images %}
+            <img src="{{ url_for('static', filename='uploads/' + image.filename) }}" 
+                 alt="{{ listing.title }}" 
+                 class="{% if loop.first %}active{% endif %}">
+        {% endfor %}
+        <div class="controls">
+            <button id="prev">&#10094;</button>
+            <button id="next">&#10095;</button>
+        </div>
+    </div>
+
+    <div class="details">
+        <div class="info-box">
+            <div><strong>Price:</strong> {{ listing.price or 'N/A' }}</div>
+            <div><strong>Type:</strong> {{ listing.property_type }}</div>
+            <div><strong>Status:</strong> {{ listing.status }}</div>
+            <div><strong>Category:</strong> {{ listing.category }}</div>
+        </div>
+
+        <h2>About this Property</h2>
+        <p>{{ listing.description }}</p>
+    </div>
+
+    {% if session.get('admin_logged_in') %}
+    <div class="admin-actions">
+        <a href="{{ url_for('edit_listing', id=listing.id) }}">Edit</a>
+        <form action="{{ url_for('delete_listing', id=listing.id) }}" method="POST" style="display:inline;">
+            <button type="submit">Delete</button>
+        </form>
+    </div>
+    {% endif %}
+
+    <div class="contact-section">
+        <a href="https://wa.me/2348105208988?text=Hi, I'm interested in {{ listing.title }} at {{ listing.location }}." target="_blank">
+            Contact Agent on WhatsApp
+        </a>
+    </div>
+
+    <!-- Recent Listings Section -->
+    <div class="recent">
+        <h2>Recent Listings</h2>
+        <div class="recent-grid">
+            {% for recent in Listing.query.order_by(Listing.created_at.desc()).limit(4).all() %}
+                {% if recent.id != listing.id %}
+                <a href="{{ url_for('listing_detail', slug=recent.slug) }}" style="text-decoration:none;">
+                    <div class="recent-item">
+                        {% if recent.images %}
+                        <img src="{{ url_for('static', filename='uploads/' + recent.images[0].filename) }}" alt="{{ recent.title }}">
+                        {% endif %}
+                        <div class="info">
+                            <h3>{{ recent.title }}</h3>
+                            <p>{{ recent.location }}</p>
+                            <p class="price">{{ recent.price or 'N/A' }}</p>
+                        </div>
+                    </div>
+                </a>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const images = document.querySelectorAll('.carousel img');
+        const next = document.getElementById('next');
+        const prev = document.getElementById('prev');
+        let current = 0;
+
+        next.addEventListener('click', () => {
+            images[current].classList.remove('active');
+            current = (current + 1) % images.length;
+            images[current].classList.add('active');
+        });
+
+        prev.addEventListener('click', () => {
+            images[current].classList.remove('active');
+            current = (current - 1 + images.length) % images.length;
+            images[current].classList.add('active');
+        });
+    </script>
+
+</body>
+</html>

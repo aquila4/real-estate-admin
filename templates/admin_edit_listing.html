@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Listing - {{ listing.title }}</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003cff, #00bcd4);
+            color: #fff;
+            padding: 40px;
+        }
+        form {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+        }
+        button {
+            background: #fff;
+            color: #003cff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #00bcd4;
+            color: #fff;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        <h2>Edit Listing</h2>
+        <input type="text" name="title" value="{{ listing.title }}" required>
+        <input type="text" name="location" value="{{ listing.location }}" required>
+        <input type="text" name="price" value="{{ listing.price }}">
+        <textarea name="description" rows="4" required>{{ listing.description }}</textarea>
+        <select name="property_type" required>
+            <option selected>{{ listing.property_type }}</option>
+            <option value="Land">Land</option>
+            <option value="House">House</option>
+            <option value="Duplex">Duplex</option>
+            <option value="Shop">Shop</option>
+        </select>
+        <select name="status" required>
+            <option selected>{{ listing.status }}</option>
+            <option value="For Sale">For Sale</option>
+            <option value="For Rent">For Rent</option>
+        </select>
+        <select name="category" required>
+            <option selected>{{ listing.category }}</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+        </select>
+        <input type="file" name="images" multiple accept="image/*">
+        <button type="submit">Update Listing</button>
+    </form>
+</body>
+</html>

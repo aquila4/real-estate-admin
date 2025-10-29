@@ -123,6 +123,70 @@ def google_verification(): return app.send_static_file('google78ddd9d79ee95af7.h
 @app.context_processor
 def inject_now(): return {'now': datetime.now()}
 
+@app.route('/listings')
+def listings():
+    listings = Listing.query.order_by(Listing.created_at.desc()).all()
+    return render_template('listings.html', listings=listings)
+
+@app.route('/listing/<string:slug>')
+def listing_detail(slug):
+    listing = Listing.query.filter_by(slug=slug).first_or_404()
+    return render_template('listing_detail.html', listing=listing)
+
+
+@app.route('/admin/edit-listing/<int:id>', methods=['GET', 'POST'])
+@admin_required
+def edit_listing(id):
+    listing = Listing.query.get_or_404(id)
+
+    if request.method == 'POST':
+        try:
+            listing.title = request.form.get('title', listing.title)
+            listing.location = request.form.get('location', listing.location)
+            listing.price = request.form.get('price', listing.price)
+            listing.description = request.form.get('description', listing.description)
+            listing.property_type = request.form.get('property_type', listing.property_type)
+            listing.status = request.form.get('status', listing.status)
+            listing.category = request.form.get('category', listing.category)
+
+            # Handle new images (optional)
+            new_images = request.files.getlist('images')
+            for image in new_images:
+                if image and image.filename:
+                    filename = f"{uuid.uuid4().hex}_{secure_filename(image.filename)}"
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    db.session.add(ListingImage(filename=filename, listing_id=listing.id))
+
+            db.session.commit()
+            flash('✅ Listing updated successfully!')
+            return redirect(url_for('listing_detail', slug=listing.slug))
+        except Exception as e:
+            traceback.print_exc()
+            flash('❌ Error updating listing.')
+
+    return render_template('admin_edit_listing.html', listing=listing)
+
+
+@app.route('/admin/delete-listing/<int:id>', methods=['POST'])
+@admin_required
+def delete_listing(id):
+    listing = Listing.query.get_or_404(id)
+    try:
+        # Delete all images from folder
+        for image in listing.images:
+            path = os.path.join(app.config['UPLOAD_FOLDER'], image.filename)
+            if os.path.exists(path):
+                os.remove(path)
+        db.session.delete(listing)
+        db.session.commit()
+        flash('🗑️ Listing deleted successfully!')
+        return redirect(url_for('listings'))
+    except Exception as e:
+        traceback.print_exc()
+        flash('❌ Error deleting listing.')
+        return redirect(url_for('listing_detail', slug=listing.slug))
+
+
 # ==============================
 # 🔹 SUBSCRIBE
 # ==============================
@@ -217,13 +281,14 @@ def add_property():
 @admin_required
 def upload():
     try:
-        title = request.form.get('title', '').strip()
-        location = request.form.get('location', '').strip()
-        description = request.form.get('description', '').strip()
-        seo_title = request.form.get('seo_title', '').strip()[:255] or None
-        meta_description = request.form.get('meta_description', '').strip()[:300] or None
-        keywords = request.form.get('keywords', '').strip()[:500] or None
-
+        title = request.form['title']
+    location = request.form['location']
+    price = request.form['price']  # 🆕 get price
+    description = request.form['description']
+    seo_title = request.form.get('seo_title')
+    meta_description = request.form.get('meta_description')
+    keywords = request.form.get('keywords')
+    
         if not title or not location or not description:
             flash('All required fields (Title, Location, Description) must be filled.')
             return redirect(url_for('add_property'))
@@ -301,6 +366,28 @@ def delete_property(property_id):
     db.session.commit()
     flash('Property deleted.')
     return redirect(url_for('admin_dashboard'))
+
+
+# ✅ move classes out of function — start at far left
+class Listing(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(255), nullable=False)
+    location = db.Column(db.String(255), nullable=False)
+    price = db.Column(db.String(100))
+    description = db.Column(db.Text)
+    property_type = db.Column(db.String(100))  # land, duplex, shop, etc.
+    status = db.Column(db.String(50))  # rent or sale
+    category = db.Column(db.String(50))  # residential or commercial
+    images = db.relationship('ListingImage', backref='listing', cascade='all, delete', lazy=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    slug = db.Column(db.String(255), unique=True, nullable=False)
+
+
+class ListingImage(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    filename = db.Column(db.String(255))
+    listing_id = db.Column(db.Integer, db.ForeignKey('listing.id'))
+
 
 
 # ==============================
@@ -434,6 +521,64 @@ def blog_post(slug):
 def serve_file(filename):
     upload_dir = os.path.join(app.root_path, app.config['UPLOAD_FOLDER'])
     return send_from_directory(upload_dir, filename)
+
+
+
+
+@app.route('/admin/upload-listing', methods=['GET', 'POST'])
+@admin_required
+def upload_listing():
+    if request.method == 'POST':
+        try:
+            title = request.form.get('title', '').strip()
+            location = request.form.get('location', '').strip()
+            price = request.form.get('price', '').strip()
+            description = request.form.get('description', '').strip()
+            property_type = request.form.get('property_type', '').strip()
+            status = request.form.get('status', '').strip()
+            category = request.form.get('category', '').strip()
+
+            if not title or not location or not description:
+                flash('All required fields must be filled!')
+                return redirect(url_for('upload_listing'))
+
+            # Slug creation
+            slug = slugify(title)
+            if Listing.query.filter_by(slug=slug).first():
+                slug = f"{slug}-{uuid.uuid4().hex[:6]}"
+
+            # Save listing
+            listing = Listing(
+                title=title,
+                location=location,
+                price=price,
+                description=description,
+                property_type=property_type,
+                status=status,
+                category=category,
+                slug=slug
+            )
+            db.session.add(listing)
+            db.session.commit()
+
+            # Handle multiple image uploads
+            images = request.files.getlist('images')
+            for image in images:
+                if image and image.filename:
+                    filename = f"{uuid.uuid4().hex}_{secure_filename(image.filename)}"
+                    image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
+                    db.session.add(ListingImage(filename=filename, listing_id=listing.id))
+            db.session.commit()
+
+            flash('✅ Listing uploaded successfully!')
+            return redirect(url_for('admin_dashboard'))
+
+        except Exception as e:
+            traceback.print_exc()
+            flash('❌ Error uploading listing.')
+            return redirect(url_for('upload_listing'))
+
+    return render_template('admin_upload_listing.html')
 
 
 # ==============================

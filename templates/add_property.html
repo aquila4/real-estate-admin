@@ -137,19 +137,21 @@
     </style>
 </head>
 <body>
+<h1 class="form-title">➕ Add New Property</h1>
 
-    <h1 class="form-title">➕ Add New Property</h1>
+<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
+    <!-- Basic Info -->
+    <label>Title:</label>
+    <input type="text" name="title" placeholder="Property Title" required>
 
-    <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-        <!-- Basic Info -->
-        <label>Title:</label>
-        <input type="text" name="title" placeholder="Property Title" required>
+    <label>Location:</label>
+    <input type="text" name="location" placeholder="Location" required>
 
-        <label>Location:</label>
-        <input type="text" name="location" placeholder="Location" required>
+    <label>Price:</label>
+    <input type="text" name="price" placeholder="Enter Price (e.g. ₦500,000 per plot)" required>
 
-        <label>Description:</label>
-        <textarea name="description" rows="4" placeholder="Property Description" required></textarea>
+    <label>Description:</label>
+    <textarea name="description" rows="4" placeholder="Property Description" required></textarea>
 
         <!-- SEO Fields -->
         <h3>SEO Settings</h3>
@@ -202,6 +204,31 @@
     {% else %}
         <p style="text-align:center; color:#666;">No properties uploaded yet.</p>
     {% endif %}
+
+
+<div class="add-listing-link">
+    <a href="{{ url_for('upload_listing') }}" class="btn-primary">+ Add Listing</a>
+</div>
+
+<style>
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(90deg, #003cff, #00bcd4);
+    color: white;
+    padding: 12px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: 0.3s;
+}
+.btn-primary:hover {
+    opacity: 0.85;
+}
+.add-listing-link {
+    margin: 20px 0;
+}
+</style>
+
 
 </body>
 </html>

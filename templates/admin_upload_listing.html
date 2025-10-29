@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Upload Listing - Admin</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #003cff, #00bcd4);
+            color: #fff;
+            padding: 40px;
+        }
+        form {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        }
+        input, textarea, select {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: none;
+            border-radius: 10px;
+            outline: none;
+        }
+        button {
+            background: #fff;
+            color: #003cff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        button:hover {
+            background: #00bcd4;
+            color: #fff;
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form action="" method="POST" enctype="multipart/form-data">
+        <h2>Upload New Listing</h2>
+        <input type="text" name="title" placeholder="Property Title" required>
+        <input type="text" name="location" placeholder="Location" required>
+        <input type="text" name="price" placeholder="Price">
+        <textarea name="description" placeholder="Property Description" rows="4" required></textarea>
+        <select name="property_type" required>
+            <option value="">Select Property Type</option>
+            <option value="Land">Land</option>
+            <option value="House">House</option>
+            <option value="Duplex">Duplex</option>
+            <option value="Shop">Shop</option>
+        </select>
+        <select name="status" required>
+            <option value="">Select Status</option>
+            <option value="For Sale">For Sale</option>
+            <option value="For Rent">For Rent</option>
+        </select>
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option value="Residential">Residential</option>
+            <option value="Commercial">Commercial</option>
+        </select>
+        <input type="file" name="images" multiple accept="image/*" required>
+        <button type="submit">Upload Listing</button>
+    </form>
+</body>
+</html>

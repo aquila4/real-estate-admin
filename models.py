@@ -10,21 +10,21 @@ class Property(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(200), nullable=False)
     location = db.Column(db.String(200), nullable=False)
+    price = db.Column(db.String(100), nullable=False)  # 💰 New field added
     description = db.Column(db.Text, nullable=False)
     image_url = db.Column(db.String(300))
     video_url = db.Column(db.String(300))
     slug = db.Column(db.String(250), unique=True, nullable=False)
     
-    # SEO fields with unlimited length
-    seo_title = db.Column(db.Text)  # changed from String(255) to Text
-    meta_description = db.Column(db.Text)  # changed from String(300) to Text
-    keywords = db.Column(db.Text)  # changed from String(500) to Text
+    # SEO fields
+    seo_title = db.Column(db.Text)
+    meta_description = db.Column(db.Text)
+    keywords = db.Column(db.Text)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     def __repr__(self):
         return f"<Property {self.title}>"
-
 
 # ==============================
 # 🔹 BLOG POST MODEL (Unlimited Length)
