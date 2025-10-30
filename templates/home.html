@@ -171,26 +171,23 @@
   <video autoplay muted loop playsinline class="hero-video">
     <source src="{{ url_for('static', filename='image/hero-background.mp4') }}" type="video/mp4">
   </video>
-
-  <div class="hero-overlay">
-    <div class="hero-about-container">
-      <div class="about-preview hero-preview" id="hero-preview">
-        <h1 id="hero-title">Welcome to Great Mar-cy’s & Sons Limited</h1>
-        <p>Search through our listings of land, houses, and commercial properties.</p>
-        <form class="search-form" action="{{ url_for('property_page') }}" method="GET" role="search">
-          <input name="q" type="text" placeholder="Search property..." />
-          <button type="submit">Search</button>
-        </form>
-      </div>
-
-      <div class="fullscreen-message-container">
-        <div class="fullscreen-message">
-          Great Mar-cy's & Sons — we don’t just sell properties, we build trust, stability, and a shared future for every client.
-        </div>
-      </div>
+<div class="hero-overlay">
+  <div class="hero-about-container">
+    <div class="about-preview hero-preview" id="hero-preview">
+      <h1 id="hero-title">Welcome to Great Marcy Realty</h1>
+      <p style="font-size: 1rem; color: rgba(255,255,255,0.85); font-style: italic; margin-top: -5px;">
+        A division of <strong>Great Mar-cy’s & Sons Limited</strong>
+      </p>
+      <p>Search through our listings of land, houses, and commercial properties.</p>
+      <form class="search-form" action="{{ url_for('property_page') }}" method="GET" role="search">
+        <input name="q" type="text" placeholder="Search property..." />
+        <button type="submit">Search</button>
+      </form>
     </div>
-  </div>
+
+   
 </section>
+
 
 
   <!-- PRIME ESTATES SECTION -->
@@ -358,7 +355,7 @@
   <div class="brochure-container">
     <h2>Our Company Brochure</h2>
     <p>
-      Discover more about Great Marcy & Sons Limited – our vision, services, featured estates, and how we can help you find your dream property.
+      Discover more about Great Marcy Realty – our vision, services, featured estates, and how we can help you find your dream property.
     </p>
     <a href="{{ url_for('static', filename='brochure/Great-Marcy-Brochure.pdf') }}" class="cta-btn" target="_blank" download>
       Download Brochure
@@ -369,7 +366,7 @@
 
 <section class="stats-section">
   <div class="container">
-    <h2>At Great Mar-cy's Realty, the numbers speak for themselves</h2>
+    <h2>At GMC, the numbers speak for themselves</h2>
     <div class="stats-grid">
       <div class="stat-card">
         <i class="fa-solid fa-briefcase stat-icon"></i>
@@ -474,7 +471,7 @@
   <section id="newsletter" class="newsletter-section">
     <div class="newsletter-container animate-up">
       <h2>Stay Updated</h2>
-      <p>Subscribe to our newsletter and be the first to receive updates on new properties, investment opportunities, and real estate tips from <strong>Great Mar-cy’s & Sons Limited</strong>.</p>
+      <p>Subscribe to our newsletter and be the first to receive updates on new properties, investment opportunities, and real estate tips from <strong>GMC Realty</strong>.</p>
 
       <form id="newsletterForm" class="newsletter-form" method="POST" action="{{ url_for('subscribe') }}">
         <input type="email" name="email" placeholder="Enter your email address" required />
@@ -516,8 +513,12 @@
   <div class="footer-container">
     <div class="footer-logo">
       <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Logo" />
-      <h3>Great Mar-cy’s & Sons Limited</h3>
-      <p>Trusted Real Estate Company in Ilorin — Turning Land into Legacy.</p>
+      <h3>Great Marcy Realty</h3>
+     <p>A division of 
+  <strong>Great Mar-cy’s & Sons Limited</strong><br>
+  Trusted Real Estate Company in Ilorin — Turning Land into Legacy.
+</p>
+
     </div>
 <div class="footer-contact">
   <h3>Contact Us</h3>
