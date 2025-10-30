@@ -92,9 +92,14 @@
 
 <body>
   <header>
-    <h1>{{ property.title }}</h1>
-    <p><strong>Location:</strong> {{ property.location }}</p>
-  </header>
+  <h1>{{ property.title }}</h1>
+  <p><strong>Location:</strong> {{ property.location }}</p>
+  
+  {% if property.price %}
+  <h2 class="price-tag">₦{{ "{:,.0f}".format(property.price|float) }}</h2>
+  {% endif %}
+</header>
+
 
   <main class="container">
     <div class="property-detail">

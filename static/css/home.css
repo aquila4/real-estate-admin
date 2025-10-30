@@ -183,15 +183,17 @@ header {
     margin: 30px auto 0;
   }
 }
-/* ===== Featured Estates Section ===== */
-.featured {
+
+
+/* PRIME ESTATES SECTION */
+.prime-estates-section {
   padding: 80px 20px;
   text-align: center;
   background: radial-gradient(circle at top left, #1a1f36, #0b0e1f);
   color: #fff;
 }
 
-.featured h2 {
+.prime-estates-heading {
   font-size: 2.4rem;
   margin-bottom: 50px;
   font-weight: 700;
@@ -208,196 +210,304 @@ header {
   to { text-shadow: 0 0 25px rgba(255,255,255,0.6); }
 }
 
-.property-card {
-  display: flex;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 25px;
+/* GRID LAYOUT FOR DESKTOP */
+.prime-estates-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 2rem;
+  padding: 20px 40px;
+  justify-items: center;
+  align-items: stretch;
 }
 
-/* Each estate card */
-.estate-card {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 20px;
-  width: 280px;
-  padding: 20px;
+/* Card Design */
+.prime-estate-card {
+  background: #fff;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  overflow: hidden;
   text-align: center;
-  color: #fff;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-  transition: all 0.5s ease;
-  backdrop-filter: blur(8px);
-  border: 1px solid rgba(255,255,255,0.2);
-  animation: floatCard 6s ease-in-out infinite;
-}
-
-.estate-card:nth-child(2) { animation-delay: 1.5s; }
-.estate-card:nth-child(3) { animation-delay: 3s; }
-.estate-card:nth-child(4) { animation-delay: 4.5s; }
-
-@keyframes floatCard {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-10px); }
-}
-
-.estate-card img {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
   width: 100%;
-  height: 180px;
+  max-width: 300px;
+  color: #000;
+}
+
+.prime-estate-card img {
+  width: 100%;
+  height: 200px;
   object-fit: cover;
-  border-radius: 12px;
-  margin-bottom: 15px;
 }
 
-.estate-card h3 {
-  font-size: 1.3rem;
+.prime-estate-card h3 {
+  margin: 10px 0 5px;
+  font-size: 1.1rem;
+  color: #1b3b6f;
+}
+
+.prime-estate-price {
   font-weight: 600;
-  color: #ffbf00;
-  margin: 0;
+  color: #0a7f2e;
+  margin-bottom: 15px;
+  font-size: 1rem;
 }
 
-/* Hover effect */
-.estate-card:hover {
-  transform: translateY(-12px) scale(1.05);
-  box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-  background: rgba(255,255,255,0.2);
-  border-color: rgba(255,255,255,0.4);
+.prime-estate-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* Mobile carousel */
-@media(max-width: 768px) {
-  .property-card {
+/* MOBILE SCROLLABLE CAROUSEL */
+@media (max-width: 768px) {
+  .prime-estates-grid {
     display: flex;
     flex-wrap: nowrap;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
     -webkit-overflow-scrolling: touch;
-    scroll-behavior: smooth;
     gap: 15px;
-    padding-left: 15px; /* ensure first card fully visible */
-    padding-right: 15px; 
+    padding: 10px 0 20px 10px;
+    margin: 0;
   }
 
-  .estate-card {
-    flex: 0 0 80%;
+  .prime-estate-card {
+    flex: 0 0 85%;
+    min-width: 85%;
     scroll-snap-align: center;
-    min-width: 250px;
+    border-radius: 12px;
+  }
+
+  .prime-estates-grid::-webkit-scrollbar {
+    display: none;
   }
 }
 
+  
 
-.partner-growth-section {
-  background: linear-gradient(135deg, #f5f7fa, #e1e8f0);
+
+/* RECENTLY ADDED PROPERTIES */
+.recent-properties {
+  padding: 60px 20px;
+  background: linear-gradient(180deg, #0b0e1f, #1a1f36);
+  color: #fff;
   text-align: center;
-  padding: 120px 20px;
-  position: relative;
   overflow: hidden;
 }
 
+.recent-properties h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 40px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  background: linear-gradient(90deg, #ff8a00, #e52e71);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: fadeInDown 1s ease;
+}
+
+/* Desktop grid layout */
+.property-slider {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1.5rem;
+  justify-items: center;
+  align-items: stretch;
+  padding: 0 20px;
+}
+
+/* Each property slide card */
+.slide {
+  background: #fff;
+  color: #000;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 100%;
+  max-width: 280px;
+}
+
+.slide:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+}
+
+.slide img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.slide h3 {
+  font-size: 1.1rem;
+  color: #1b3b6f;
+  margin: 10px 0 5px;
+}
+
+.slide p {
+  margin: 5px 0 10px;
+  color: #333;
+  font-size: 0.95rem;
+}
+
+.slide p:first-of-type {
+  color: #0a7f2e;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/* Mobile horizontal scroll */
+@media (max-width: 768px) {
+  .property-slider {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    gap: 15px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 10px 20px 10px;
+  }
+
+  .slide {
+    flex: 0 0 80%;
+    min-width: 80%;
+    scroll-snap-align: center;
+    border-radius: 12px;
+  }
+
+  .property-slider::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+
+
+/* === Partner in Growth Section === */
+.partner-growth-section {
+  position: relative;
+  background: linear-gradient(135deg, #001f3f, #0047ab, #007bff);
+  color: #ffffff;
+  text-align: center;
+  padding: 100px 20px;
+  overflow: hidden;
+  border-radius: 0;
+  box-shadow: inset 0 0 50px rgba(255,255,255,0.1);
+}
+
+/* Container and content */
 .partner-growth-section .container {
   max-width: 900px;
   margin: 0 auto;
-  position: relative;
-  z-index: 2;
 }
 
 .partner-growth-section h2 {
-  font-size: 3rem;
-  color: #0a3d62;
-  margin-bottom: 20px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s forwards 0.2s;
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(0, 123, 255, 0.7);
 }
 
 .partner-growth-section p {
-  font-size: 1.2rem;
-  color: #333;
-  line-height: 1.6;
-  margin-bottom: 30px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s forwards 0.4s;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #dce7ff;
+  margin-bottom: 25px;
 }
 
+/* === Primary Button === */
 .partner-growth-section .btn-primary {
-  background-color: #0a3d62;
-  color: #fff;
-  padding: 16px 35px;
-  font-size: 1.1rem;
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #00aaff, #0047ab);
+  color: #ffffff;
+  font-weight: 600;
+  border-radius: 50px;
   text-decoration: none;
-  border-radius: 10px;
-  transition: all 0.3s ease, box-shadow 0.3s ease;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s forwards 0.6s;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(0, 150, 255, 0.6);
 }
 
 .partner-growth-section .btn-primary:hover {
-  background-color: #062c43;
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(10,61,98,0.4);
+  background: linear-gradient(90deg, #0047ab, #00aaff);
+  transform: translateY(-3px);
+  box-shadow: 0 0 25px rgba(0, 150, 255, 0.9);
 }
 
-/* Optional: make floating shapes react slightly when hovering the button */
-.partner-growth-section .btn-primary:hover ~ .icon-shape {
-  animation-duration: 4s; /* speeds up floating for subtle effect */
-}
-
+/* === Note below button === */
 .partner-growth-section .note {
   margin-top: 20px;
-  font-size: 1rem;
-  color: #555;
   font-style: italic;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 1s forwards 0.8s;
+  font-size: 1rem;
+  color: #a8c7ff;
+}
+.partner-growth-section .note i {
+  color: #00aaff;
+  margin-right: 6px;
 }
 
-/* Fade-up animation */
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Floating icon shapes */
-.icon-shape {
+/* === Floating Icon Shapes === */
+.partner-growth-section .icon-shape {
   position: absolute;
-  width: 80px;
-  height: 80px;
-  background-color: rgba(10, 61, 98, 0.15);
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  color: #0a3d62;
-  animation: floatIcon 6s ease-in-out infinite;
+  font-size: 3rem;
+  opacity: 0.15;
+  color: #ffffff;
+  animation: floatShape 8s ease-in-out infinite alternate;
 }
 
 .shape1 { top: 15%; left: 10%; animation-delay: 0s; }
-.shape2 { top: 50%; right: 15%; animation-delay: 2s; }
-.shape3 { bottom: 10%; left: 40%; animation-delay: 4s; }
+.shape2 { bottom: 20%; right: 15%; animation-delay: 2s; }
+.shape3 { top: 50%; right: 5%; animation-delay: 4s; }
 
-@keyframes floatIcon {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(15deg); }
+@keyframes floatShape {
+  from { transform: translateY(0); opacity: 0.1; }
+  to { transform: translateY(-25px); opacity: 0.25; }
 }
 
-/* Particle dots */
-.particle {
+/* === Particle dots === */
+.partner-growth-section .particle {
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background-color: rgba(10,61,98,0.2);
+  width: 8px;
+  height: 8px;
+  background: radial-gradient(circle, #00bfff, transparent);
   border-radius: 50%;
-  animation: floatParticle 8s ease-in-out infinite;
+  opacity: 0.4;
+  animation: floatParticle 12s ease-in-out infinite alternate;
 }
 
-.particle1 { top: 25%; left: 30%; animation-delay: 0s; }
-.particle2 { top: 60%; right: 25%; animation-delay: 3s; }
-.particle3 { bottom: 20%; left: 50%; animation-delay: 5s; }
+.particle1 { top: 10%; left: 50%; animation-delay: 1s; }
+.particle2 { bottom: 15%; right: 25%; animation-delay: 3s; }
+.particle3 { top: 60%; left: 25%; animation-delay: 5s; }
 
 @keyframes floatParticle {
-  0%, 100% { transform: translateY(0px); }
-  50% { transform: translateY(-15px); }
+  from { transform: translateY(0) scale(1); opacity: 0.3; }
+  to { transform: translateY(-30px) scale(1.3); opacity: 0.6; }
+}
+
+/* === Responsive Design === */
+@media (max-width: 768px) {
+  .partner-growth-section {
+    padding: 70px 20px;
+  }
+
+  .partner-growth-section h2 {
+    font-size: 2rem;
+  }
+
+  .partner-growth-section p {
+    font-size: 1rem;
+  }
+
+  .partner-growth-section .btn-primary {
+    padding: 10px 25px;
+  }
+
+  .partner-growth-section .icon-shape {
+    font-size: 2.2rem;
+  }
 }
 
 
@@ -1724,6 +1834,130 @@ body.dark-mode .stat-icon {
   color: #fff;
 }
 
+
+
+.recent-properties {
+  background: #f8fafc;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.recent-properties h2 {
+  font-size: 2rem;
+  color: #004aad;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.property-slider {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.property-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.property-track {
+  display: flex;
+  gap: 20px;
+  transition: transform 0.3s ease;
+}
+
+.property-card {
+  flex: 0 0 85%;
+  max-width: 320px;
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease;
+}
+
+.property-card:hover {
+  transform: translateY(-6px);
+}
+
+.property-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+
+.property-card h3 {
+  font-size: 1.1rem;
+  margin: 12px 0 4px;
+  color: #111;
+}
+
+.property-card p {
+  color: #555;
+  font-size: 0.95rem;
+  margin-bottom: 5px;
+}
+
+.property-card .price {
+  color: #004aad;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.property-card .btn {
+  display: inline-block;
+  background: #004aad;
+  color: #fff;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  margin-bottom: 12px;
+}
+
+.property-card .btn:hover {
+  background: #003380;
+}
+
+/* Desktop grid */
+@media (min-width: 768px) {
+  .property-slider {
+    overflow: visible;
+  }
+  .property-track {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .property-card {
+    flex: 0 0 calc(33.333% - 20px);
+  }
+}
+
+.property-slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  gap: 15px;
+  padding: 10px;
+}
+
+.property-slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  min-width: 80%;
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  scroll-snap-align: center;
+  transition: transform 0.3s;
+}
+
+.slide img {
+  width: 100%;
+  border-radius: 12px 12px 0 0;
+  height: 200px;
+  object-fit: cover;
+}
 
 /* End of CSS */
 

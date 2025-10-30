@@ -85,13 +85,16 @@ def send_email(subject, recipients, body_text=None, body_html=None, reply_to=Non
 @app.route('/')
 def home():
     properties = Property.query.all()
+    recent_properties = Property.query.order_by(Property.created_at.desc()).limit(3).all()
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(2).all()
+    
     seo = {
         "title": "Great Mar-cy’s & Sons Limited - Real Estate in Ilorin",
         "description": "Find and buy land or property in Ilorin with Great Mar-cy’s & Sons Limited.",
         "keywords": "Ilorin real estate, buy land Ilorin, Great Marcy Sons Limited, property for sale",
         "image": url_for('static', filename='image/logo.png')
     }
+    
     nav_links = [
         {"name": "Home", "endpoint": "home"},
         {"name": "About", "endpoint": "about"},
@@ -100,7 +103,16 @@ def home():
         {"name": "Contact", "endpoint": "contact"},
         {"name": "Admin", "endpoint": "admin_dashboard"}
     ]
-    return render_template("home.html", properties=properties, posts=posts, seo=seo, nav_links=nav_links, logogmc_path="image/logogmc.png")
+    
+    return render_template(
+        "home.html",
+        properties=properties,
+        recent_properties=recent_properties,  # ✅ Add this
+        posts=posts,
+        seo=seo,
+        nav_links=nav_links,
+        logogmc_path="image/logogmc.png"
+    )
 
 @app.route('/about')
 def about(): return render_template('about.html')
@@ -276,14 +288,13 @@ def admin_dashboard():
 def add_property():
     return render_template('add_property.html')
 
-
 @app.route('/upload', methods=['POST'])
 @admin_required
 def upload():
     try:
         title = request.form.get('title', '').strip()
         location = request.form.get('location', '').strip()
-        price = request.form.get('price', '').strip()
+        price = request.form.get('price', '').strip()  # ✅ You already have this
         description = request.form.get('description', '').strip()
         seo_title = request.form.get('seo_title', '').strip()[:255] or None
         meta_description = request.form.get('meta_description', '').strip()[:300] or None
@@ -311,18 +322,22 @@ def upload():
         slug = slugify(title)
         if Property.query.filter_by(slug=slug).first():
             slug = f"{slug}-{uuid.uuid4().hex[:6]}"
+            
+            new_property = Property(
+    title=title,
+    location=location,
+    price=price,  # ✅ Save to database
+    description=description,
+    image_url=image_filename,
+    video_url=video_filename,
+    seo_title=seo_title,
+    meta_description=meta_description,
+    keywords=keywords,
+    slug=slug
+)
 
-        new_property = Property(
-            title=title,
-            location=location,
-            description=description,
-            image_url=image_filename,
-            video_url=video_filename,
-            seo_title=seo_title,
-            meta_description=meta_description,
-            keywords=keywords,
-            slug=slug
-        )
+
+
         db.session.add(new_property)
         db.session.commit()
         flash('✅ Property uploaded successfully!')

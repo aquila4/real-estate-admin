@@ -193,36 +193,60 @@
 </section>
 
 
-  <!-- FEATURED -->
-  <section class="featured animate-on-scroll featured-bg" aria-labelledby="featured-title">
-  <h2 id="featured-title" class="estate-name">Our Featured Estates</h2>
-  <div class="property-card">
+  <!-- PRIME ESTATES SECTION -->
+<section class="prime-estates-section animate-on-scroll" aria-labelledby="prime-estates-title">
+  <h2 id="prime-estates-title" class="prime-estates-heading">Our Featured Estates</h2>
 
+  <div class="prime-estates-grid">
 
-  
+    <div class="prime-estate-card">
+      <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
+      <h3>Success City Estate</h3>
+      <p class="prime-estate-price">From ₦960,000 per Acre</p>
+    </div>
 
+    <div class="prime-estate-card">
+      <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace City Estate Phase 1">
+      <h3>His Grace City Estate Phase 1</h3>
+      <p class="prime-estate-price">From ₦1,520,190 per Acre</p>
+    </div>
 
-  <div class="estate-card">
-    <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
-    <h3>Success City Estate</h3>
+    <div class="prime-estate-card">
+      <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace City Estate Phase 2">
+      <h3>His Grace City Estate Phase 2</h3>
+      <p class="prime-estate-price">From ₦960,000 per Acre</p>
+    </div>
+
+    <div class="prime-estate-card">
+      <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate (Annex)">
+      <h3>Success City Estate (Annex)</h3>
+      <p class="prime-estate-price">From ₦960,000 per Acre</p>
+    </div>
+
   </div>
+</section>
 
- <div class="estate-card">
-    <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace City Estate Phase 1">
-    <h3>His Grace City Estate Phase 1</h3>
+
+<section class="recent-properties">
+  <h2>Recently Added</h2>
+  <div class="property-slider">
+    {% for prop in recent_properties %}
+    <div class="slide">
+      <a href="{{ url_for('property_detail', slug=prop.slug) }}">
+        <img src="{{ url_for('serve_file', filename=prop.image_url or 'default-property.jpg') }}" 
+             alt="{{ prop.title }}">
+        <h3>{{ prop.title }}</h3>
+        {% if prop.price %}
+        <p>₦{{ "{:,.0f}".format(prop.price|float) }}</p>
+        {% endif %}
+        <p>{{ prop.location }}</p>
+      </a>
+    </div>
+    {% endfor %}
   </div>
+</section>
 
-  <div class="estate-card">
-    <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace City Estate Phase 2">
-    <h3>His Grace City Estate Phase 2</h3>
-  </div>
 
-  <div class="estate-card">
-    <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
-    <h3>Success City Estate</h3>
-  </div>
-
-</div>
 
 
 <!-- Partner in Growth Section -->
@@ -934,6 +958,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }, slideInterval);
   });
 });
+</script>
+
+<script>
+  const track = document.querySelector('.property-track');
+  if (track && window.innerWidth < 768) {
+    let scrollAmount = 0;
+    setInterval(() => {
+      track.scrollBy({ left: 320, behavior: 'smooth' });
+      scrollAmount += 320;
+      if (scrollAmount >= track.scrollWidth - window.innerWidth) {
+        scrollAmount = 0;
+        track.scrollTo({ left: 0, behavior: 'smooth' });
+      }
+    }, 4000);
+  }
 </script>
 
 
