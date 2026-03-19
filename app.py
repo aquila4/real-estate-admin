@@ -294,7 +294,7 @@ def upload():
     try:
         title = request.form.get('title', '').strip()
         location = request.form.get('location', '').strip()
-        price = request.form.get('price', '').strip()  # ✅ You already have this
+        price = request.form.get('price', '').strip()
         description = request.form.get('description', '').strip()
         seo_title = request.form.get('seo_title', '').strip()[:255] or None
         meta_description = request.form.get('meta_description', '').strip()[:300] or None
@@ -322,24 +322,24 @@ def upload():
         slug = slugify(title)
         if Property.query.filter_by(slug=slug).first():
             slug = f"{slug}-{uuid.uuid4().hex[:6]}"
-            
-            new_property = Property(
-    title=title,
-    location=location,
-    price=price,  # ✅ Save to database
-    description=description,
-    image_url=image_filename,
-    video_url=video_filename,
-    seo_title=seo_title,
-    meta_description=meta_description,
-    keywords=keywords,
-    slug=slug
-)
 
-
+        # Create property
+        new_property = Property(
+            title=title,
+            location=location,
+            price=price,
+            description=description,
+            image_url=image_filename,
+            video_url=video_filename,
+            seo_title=seo_title,
+            meta_description=meta_description,
+            keywords=keywords,
+            slug=slug
+        )
 
         db.session.add(new_property)
         db.session.commit()
+
         flash('✅ Property uploaded successfully!')
         return redirect(url_for('admin_dashboard'))
 
