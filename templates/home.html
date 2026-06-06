@@ -1,1026 +1,1264 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17421133724');
-  </script>
-
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17421133724');</script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <!-- ✅ Dynamic SEO -->
-  <title>{{ seo.title | default("Great Mar-cy’s & Sons Limited - Real Estate Company in Ilorin") }}</title>
-  <meta name="description" content="{{ seo.description | default('Buy and sell land, houses, and commercial properties with Great Mar-cy’s & Sons Limited in Ilorin, Kwara State.') }}">
+  <title>{{ seo.title | default("Great Mar-cy's & Sons Limited - Real Estate Company in Ilorin") }}</title>
+  <meta name="description" content="{{ seo.description | default('Buy and sell land, houses, and commercial properties with Great Mar-cy\'s & Sons Limited in Ilorin, Kwara State.') }}">
   <meta name="keywords" content="{{ seo.keywords | default('Ilorin real estate, land for sale, Great Marcy Sons Limited, buy land Ilorin, property management') }}">
-  <meta name="author" content="Great Mar-cy’s & Sons Limited">
+  <meta name="author" content="Great Mar-cy's & Sons Limited">
   <meta name="robots" content="index, follow">
   <link rel="canonical" href="https://greatmarcysonslimited.com/">
-
-  <!-- ✅ Social Sharing -->
-  <meta property="og:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+  <meta property="og:title" content="{{ seo.title | default('Great Mar-cy\'s & Sons Limited') }}">
   <meta property="og:description" content="{{ seo.description | default('Find affordable land and properties in Ilorin.') }}">
   <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://greatmarcysonslimited.com/">
-  <meta property="og:site_name" content="Great Mar-cy’s & Sons Limited">
-
-  <!-- ✅ Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:site" content="@greatmarcysons">
-  <meta name="twitter:title" content="{{ seo.title | default('Great Mar-cy’s & Sons Limited') }}">
+  <meta name="twitter:title" content="{{ seo.title | default('Great Mar-cy\'s & Sons Limited') }}">
   <meta name="twitter:description" content="{{ seo.description | default('Trusted real estate company in Ilorin, Nigeria.') }}">
   <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
-
-  <!-- ✅ Favicon -->
   <link rel="icon" type="image/png" href="{{ url_for('static', filename='image/logogmc.png') }}">
-  <link rel="shortcut icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/x-icon">
-  <link rel="apple-touch-icon" href="{{ url_for('static', filename='image/logogmc.png') }}">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"RealEstateAgent","name":"Great Mar-cy's & Sons Limited","url":"https://greatmarcysonslimited.com/","telephone":["+2349139070404","+2349028939653"],"address":{"@type":"PostalAddress","streetAddress":"Olooru along Ajegunle Road","addressLocality":"Ilorin","addressRegion":"Kwara State","addressCountry":"NG"}}</script>
 
-  <!-- ✅ Structured Data: Property -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "SingleFamilyResidence",
-    "name": "{{ seo.title if seo.title else 'Featured Property - Great Mar-cy’s & Sons Limited' }}",
-    "description": "{{ seo.description if seo.description else 'Buy and invest in land and houses in Ilorin with Great Mar-cy’s & Sons Limited.' }}",
-    "image": "https://greatmarcysonslimited.com/static/image/logogmc.png",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Ilorin",
-      "addressRegion": "Kwara State",
-      "addressCountry": "NG"
-    },
-    "url": "https://greatmarcysonslimited.com/"
-  }
-  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-  <!-- ✅ Structured Data: Real Estate Company -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "RealEstateAgent",
-    "name": "Great Mar-cy’s & Sons Limited",
-    "url": "https://greatmarcysonslimited.com/",
-    "logo": "https://greatmarcysonslimited.com/static/image/logogmc.png",
-    "telephone": ["+2349139070404", "+2349028939653"],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Olooru along Ajegunle Road",
-      "addressLocality": "Ilorin",
-      "addressRegion": "Kwara State",
-      "addressCountry": "NG"
-    },
-    "sameAs": [
-      "https://www.facebook.com/greatmarcysonslimited",
-      "https://www.instagram.com/greatmarcysonslimited",
-      "https://www.linkedin.com/company/greatmarcysonslimited"
-    ]
-  }
-  </script>
-
-  <!-- ✅ Structured Data: Organization (Brand Panel in Google) -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "Great Mar-cy’s & Sons Limited",
-    "url": "https://greatmarcysonslimited.com/",
-    "logo": "https://greatmarcysonslimited.com/static/image/logogmc.png",
-    "description": "A trusted real estate company in Ilorin helping clients buy, sell, and manage properties across Kwara State.",
-    "email": "info@greatmarcysonslimited.com",
-    "telephone": "+2349139070404",
-    "sameAs": [
-      "https://www.facebook.com/greatmarcysonslimited",
-      "https://www.instagram.com/greatmarcysonslimited",
-      "https://www.linkedin.com/company/greatmarcysonslimited"
-    ],
-    "address": {
-      "@type": "PostalAddress",
-      "streetAddress": "Olooru along Ajegunle Road",
-      "addressLocality": "Ilorin",
-      "addressRegion": "Kwara State",
-      "postalCode": "240001",
-      "addressCountry": "NG"
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --amber:#D4961A;
+      --amber2:#F0B429;
+      --amber3:#FCD77F;
+      --dark:#080808;
+      --dark2:#111111;
+      --dark3:#1A1A1A;
+      --cream:#FAF7F0;
+      --cream2:#F0EBE0;
+      --white:#FFFFFF;
+      --text-muted:rgba(255,255,255,0.55);
+      --ff-display:'Playfair Display',Georgia,serif;
+      --ff-body:'Outfit',system-ui,sans-serif;
+      --ease:cubic-bezier(0.16,1,0.3,1);
     }
-  }
-  </script>
+    html{scroll-behavior:smooth;font-size:16px}
+    body{font-family:var(--ff-body);background:var(--dark);color:var(--white);overflow-x:hidden;cursor:none}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 2.5rem}
 
-  <!-- ✅ Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}">
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
-    integrity="sha512-u5HShQwT3LhG7vaxn9Lsa7uKhRzKuFG6k4LBV9EdaYd3GcP5N0pN9OZxZqQxJZlVcwE0PVoF3pKuKjY2rQZog=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  >
+    /* Custom cursor */
+    .cursor{position:fixed;width:12px;height:12px;background:var(--amber2);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s,background .2s}
+    .cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(212,150,26,0.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease}
+    .cursor.grow{width:20px;height:20px;background:var(--amber)}
+    .cursor-ring.grow{width:60px;height:60px;border-color:var(--amber)}
+
+    /* ── HEADER ── */
+    header{
+      position:fixed;top:0;left:0;right:0;z-index:1000;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:1.5rem 3rem;
+      transition:all .5s var(--ease);
+    }
+    header.sticky{background:rgba(8,8,8,0.92);backdrop-filter:blur(20px);padding:1rem 3rem;border-bottom:1px solid rgba(212,150,26,0.1)}
+    .logo{height:42px;width:auto;object-fit:contain}
+    .nav-menu{display:flex;gap:3rem;align-items:center}
+    .nav-menu a{
+      font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(255,255,255,0.7);position:relative;padding-bottom:4px;
+      transition:color .3s
+    }
+    .nav-menu a::after{
+      content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+      background:var(--amber2);transition:width .4s var(--ease)
+    }
+    .nav-menu a:hover{color:var(--amber2)}
+    .nav-menu a:hover::after{width:100%}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100}
+    .hamburger span{display:block;width:28px;height:2px;background:var(--white);border-radius:2px;transition:.4s var(--ease)}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,0.7);backdrop-filter:blur(6px);z-index:900;opacity:0;pointer-events:none;transition:.4s}
+    .overlay.show{opacity:1;pointer-events:all}
+    body.no-scroll{overflow:hidden}
+
+    /* ── HERO ── */
+    .hero{
+      position:relative;height:100dvh;min-height:700px;
+      display:flex;align-items:center;overflow:hidden
+    }
+    .hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;filter:brightness(0.35) saturate(1.2)}
+    .hero-noise{
+      position:absolute;inset:0;z-index:1;opacity:.04;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+      background-size:200px
+    }
+    .hero-grad{
+      position:absolute;inset:0;z-index:2;
+      background:linear-gradient(135deg,rgba(0,0,0,.85) 0%,rgba(0,0,0,.2) 60%,rgba(0,0,0,.5) 100%)
+    }
+    .hero-content{position:relative;z-index:3;max-width:900px;padding:0 3rem}
+    .hero-tag{
+      display:inline-flex;align-items:center;gap:12px;
+      background:rgba(212,150,26,0.15);border:1px solid rgba(212,150,26,0.3);
+      padding:.5rem 1.25rem;border-radius:100px;
+      font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber3);
+      margin-bottom:2rem;
+      animation:fadeSlideUp .8s var(--ease) .2s both
+    }
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--amber2);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.6)}}
+    .hero h1{
+      font-family:var(--ff-display);font-size:clamp(3.5rem,8vw,7.5rem);
+      font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--white);
+      margin-bottom:2rem;
+      animation:fadeSlideUp .9s var(--ease) .4s both
+    }
+    .hero h1 em{font-style:italic;color:var(--amber2)}
+    .hero-sub{
+      font-size:1.1rem;color:rgba(255,255,255,0.65);max-width:560px;
+      line-height:1.7;margin-bottom:3rem;
+      animation:fadeSlideUp .9s var(--ease) .6s both
+    }
+    .hero-actions{display:flex;gap:1.25rem;flex-wrap:wrap;animation:fadeSlideUp .9s var(--ease) .8s both}
+    .btn-primary{
+      display:inline-flex;align-items:center;gap:10px;
+      background:var(--amber);color:var(--dark);
+      padding:1rem 2.25rem;font-weight:600;font-size:.85rem;letter-spacing:.06em;
+      text-transform:uppercase;border:none;cursor:pointer;
+      position:relative;overflow:hidden;transition:all .4s var(--ease)
+    }
+    .btn-primary::before{
+      content:'';position:absolute;inset:0;
+      background:var(--amber2);transform:translateX(-101%);transition:.4s var(--ease)
+    }
+    .btn-primary:hover::before{transform:translateX(0)}
+    .btn-primary span{position:relative;z-index:1}
+    .btn-ghost{
+      display:inline-flex;align-items:center;gap:10px;
+      border:1px solid rgba(255,255,255,0.3);color:var(--white);
+      padding:1rem 2.25rem;font-weight:500;font-size:.85rem;letter-spacing:.06em;
+      text-transform:uppercase;cursor:pointer;transition:all .4s var(--ease)
+    }
+    .btn-ghost:hover{border-color:var(--amber2);color:var(--amber2)}
+
+    /* Search bar */
+    .hero-search{
+      position:absolute;bottom:0;left:0;right:0;z-index:3;
+      background:rgba(10,10,10,0.85);backdrop-filter:blur(20px);
+      border-top:1px solid rgba(212,150,26,0.15);
+      padding:1.5rem 3rem;
+      animation:fadeSlideUp .8s var(--ease) 1s both
+    }
+    .search-inner{max-width:1280px;margin:0 auto;display:flex;align-items:center;gap:1rem}
+    .search-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber3);white-space:nowrap}
+    .search-input{
+      flex:1;background:transparent;border:none;border-bottom:1px solid rgba(255,255,255,0.15);
+      padding:.75rem .5rem;color:var(--white);font-family:var(--ff-body);font-size:1rem;
+      outline:none;transition:border-color .3s
+    }
+    .search-input::placeholder{color:rgba(255,255,255,0.3)}
+    .search-input:focus{border-color:var(--amber2)}
+    .search-btn{
+      background:var(--amber);color:var(--dark);border:none;
+      padding:.75rem 2rem;font-weight:600;font-size:.75rem;
+      letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+      white-space:nowrap;transition:background .3s
+    }
+    .search-btn:hover{background:var(--amber2)}
+
+    @keyframes fadeSlideUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+    /* Scrolling ticker */
+    .ticker{background:var(--amber);overflow:hidden;padding:.7rem 0}
+    .ticker-track{display:flex;gap:0;animation:ticker 30s linear infinite;white-space:nowrap}
+    .ticker-track span{
+      display:inline-flex;align-items:center;gap:2rem;
+      font-size:.7rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;
+      color:var(--dark);padding:0 2rem
+    }
+    .ticker-track span::before{content:'◆';font-size:.5rem;opacity:.6}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ── SECTION BASE ── */
+    section{padding:7rem 0}
+    .s-label{
+      display:inline-flex;align-items:center;gap:10px;
+      font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--amber2);margin-bottom:1.25rem
+    }
+    .s-label::before{content:'';width:32px;height:1px;background:var(--amber2)}
+
+    /* ── ESTATES / PORTFOLIO ── */
+    .estates-section{background:var(--dark2)}
+    .estates-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:4rem;flex-wrap:wrap;gap:2rem}
+    .estates-header h2{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4.5rem);
+      font-weight:700;line-height:1;color:var(--white)
+    }
+    .estates-header h2 em{color:var(--amber2);font-style:italic}
+    .estates-header p{color:rgba(255,255,255,0.5);max-width:320px;font-size:.95rem;line-height:1.6}
+    .estates-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:2px;
+      background:rgba(255,255,255,0.03)
+    }
+    .estate-card{
+      position:relative;overflow:hidden;cursor:pointer;
+      aspect-ratio:3/4;
+    }
+    .estate-card:first-child{grid-row:span 2;aspect-ratio:unset}
+    .estate-card img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .8s var(--ease);filter:brightness(.7) saturate(1.1)
+    }
+    .estate-card:hover img{transform:scale(1.08)}
+    .estate-card-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(0,0,0,.9) 0%,rgba(0,0,0,.1) 60%);
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:2rem;transition:background .4s
+    }
+    .estate-card:hover .estate-card-overlay{background:linear-gradient(to top,rgba(0,0,0,.95) 0%,rgba(0,0,0,.3) 70%)}
+    .estate-tag{
+      display:inline-block;background:var(--amber);color:var(--dark);
+      font-size:.6rem;letter-spacing:.15em;font-weight:700;text-transform:uppercase;
+      padding:.3rem .8rem;margin-bottom:.75rem;width:fit-content
+    }
+    .estate-card h3{
+      font-family:var(--ff-display);font-size:1.4rem;font-weight:700;
+      color:var(--white);line-height:1.1;margin-bottom:.5rem
+    }
+    .estate-price{font-size:.85rem;color:var(--amber3);font-weight:500}
+    .estate-arrow{
+      position:absolute;top:1.5rem;right:1.5rem;
+      width:44px;height:44px;background:var(--amber);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;transform:translateY(-10px) rotate(-45deg);
+      transition:all .4s var(--ease)
+    }
+    .estate-card:hover .estate-arrow{opacity:1;transform:translateY(0) rotate(0deg)}
+    .estate-arrow i{color:var(--dark);font-size:.9rem}
+
+    /* ── BILLBOARD ── */
+    .billboard{position:relative;height:60vh;overflow:hidden;min-height:400px}
+    .billboard img{width:100%;height:100%;object-fit:cover;filter:brightness(.45) saturate(1.3)}
+    .billboard-inner{
+      position:absolute;inset:0;display:flex;
+      align-items:center;justify-content:center;flex-direction:column;gap:2rem;
+      text-align:center
+    }
+    .billboard-inner h2{
+      font-family:var(--ff-display);
+      font-size:clamp(2rem,5vw,4.5rem);
+      font-weight:900;color:var(--white);
+      text-shadow:0 4px 30px rgba(0,0,0,.6)
+    }
+    .billboard-inner h2 em{color:var(--amber2);font-style:italic}
+
+    /* ── RECENT ── */
+    .recent-section{background:var(--dark3)}
+    .recent-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1rem}
+    .recent-header h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white)}
+    .recent-header h2 em{color:var(--amber2);font-style:italic}
+    .recent-grid{
+      display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;
+      background:rgba(255,255,255,0.04)
+    }
+    .recent-card{background:var(--dark3);overflow:hidden;position:relative;cursor:pointer}
+    .recent-card-img{aspect-ratio:16/10;overflow:hidden}
+    .recent-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.8);transition:transform .6s var(--ease),filter .4s}
+    .recent-card:hover .recent-card-img img{transform:scale(1.07);filter:brightness(.65)}
+    .recent-card-body{padding:1.5rem;border-top:1px solid rgba(255,255,255,0.04)}
+    .recent-card-body h3{font-family:var(--ff-display);font-size:1.15rem;color:var(--white);margin-bottom:.4rem}
+    .recent-card-body p{font-size:.85rem;color:rgba(255,255,255,0.45)}
+    .recent-card-body .price{color:var(--amber3);font-weight:600;font-size:.95rem;margin-top:.4rem}
+
+    /* ── PARTNER / INVESTOR ── */
+    .partner-section{
+      background:var(--dark2);
+      position:relative;overflow:hidden
+    }
+    .partner-bg-text{
+      position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+      font-family:var(--ff-display);font-size:clamp(8rem,18vw,18rem);
+      font-weight:900;color:rgba(255,255,255,0.02);
+      white-space:nowrap;pointer-events:none;user-select:none;letter-spacing:-.05em
+    }
+    .partner-inner{position:relative;z-index:1;display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    @media(max-width:900px){.partner-inner{grid-template-columns:1fr;gap:3rem}}
+    .partner-left h2{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);
+      font-weight:700;line-height:1.05;color:var(--white);margin-bottom:1.5rem
+    }
+    .partner-left h2 em{color:var(--amber2);font-style:italic}
+    .partner-left p{color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:2.5rem;font-size:1.05rem}
+    .partner-right{display:flex;flex-direction:column;gap:1.5rem}
+    .partner-stat{
+      border:1px solid rgba(212,150,26,0.15);padding:1.75rem 2rem;
+      position:relative;overflow:hidden;transition:border-color .3s
+    }
+    .partner-stat::before{
+      content:'';position:absolute;top:0;left:0;width:3px;height:100%;
+      background:var(--amber)
+    }
+    .partner-stat:hover{border-color:rgba(212,150,26,0.4)}
+    .partner-stat-num{
+      font-family:var(--ff-display);font-size:2.5rem;font-weight:700;
+      color:var(--amber2);line-height:1
+    }
+    .partner-stat-label{font-size:.8rem;color:rgba(255,255,255,.45);letter-spacing:.1em;text-transform:uppercase;margin-top:.4rem}
+
+    /* ── VALUES ── */
+    .values-section{background:var(--cream);color:var(--dark)}
+    .values-section .s-label{color:var(--amber)}
+    .values-section .s-label::before{background:var(--amber)}
+    .values-header{margin-bottom:4rem}
+    .values-header h2{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4.5rem);
+      font-weight:900;color:var(--dark);line-height:1
+    }
+    .values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:0;border:1px solid rgba(0,0,0,.06)}
+    .value-box{
+      padding:2.5rem 2rem;border-right:1px solid rgba(0,0,0,.06);border-bottom:1px solid rgba(0,0,0,.06);
+      position:relative;overflow:hidden;cursor:default;transition:background .4s
+    }
+    .value-box::before{
+      content:'';position:absolute;bottom:0;left:0;right:0;height:0;
+      background:var(--dark);transition:height .5s var(--ease);z-index:0
+    }
+    .value-box:hover::before{height:100%}
+    .value-box-inner{position:relative;z-index:1}
+    .value-num{
+      font-family:var(--ff-display);font-size:3.5rem;font-weight:900;
+      color:rgba(0,0,0,.06);line-height:1;margin-bottom:.75rem;
+      transition:color .4s
+    }
+    .value-box:hover .value-num{color:rgba(255,255,255,.08)}
+    .value-box h3{
+      font-family:var(--ff-display);font-size:1.3rem;font-weight:700;
+      color:var(--dark);margin-bottom:.6rem;transition:color .4s
+    }
+    .value-box:hover h3{color:var(--amber2)}
+    .value-box p{font-size:.88rem;color:rgba(0,0,0,.55);line-height:1.6;transition:color .4s}
+    .value-box:hover p{color:rgba(255,255,255,.6)}
+
+    /* ── ABOUT ── */
+    .about-section{background:var(--dark)}
+    .about-inner{display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center}
+    @media(max-width:900px){.about-inner{grid-template-columns:1fr;gap:3rem}}
+    .about-left h2{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);
+      font-weight:700;color:var(--white);line-height:1.05;margin-bottom:1.5rem
+    }
+    .about-left h2 em{color:var(--amber2);font-style:italic}
+    .about-left p{color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:2rem;font-size:1.05rem}
+    .about-cards-stack{display:flex;flex-direction:column;gap:1px;background:rgba(255,255,255,.03)}
+    .about-box{
+      background:var(--dark);padding:1.75rem 2rem;
+      display:flex;gap:1.5rem;align-items:flex-start;
+      border-left:2px solid transparent;transition:all .4s var(--ease)
+    }
+    .about-box:hover{background:var(--dark2);border-left-color:var(--amber)}
+    .about-box-icon{
+      width:42px;height:42px;background:rgba(212,150,26,0.1);
+      border:1px solid rgba(212,150,26,0.2);flex-shrink:0;
+      display:flex;align-items:center;justify-content:center;
+      color:var(--amber2);font-size:.95rem;transition:all .3s
+    }
+    .about-box:hover .about-box-icon{background:var(--amber);color:var(--dark);border-color:var(--amber)}
+    .about-box-content h3{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+    .about-box-content p{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.6}
+
+    /* ── BROCHURE ── */
+    .brochure-section{
+      background:var(--amber);color:var(--dark);
+      display:flex;align-items:center;justify-content:space-between;
+      padding:5rem 5%;flex-wrap:wrap;gap:2rem
+    }
+    .brochure-section h2{
+      font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);
+      font-weight:900;line-height:1;flex:1;min-width:260px
+    }
+    .brochure-section p{color:rgba(0,0,0,.65);flex:1;min-width:220px;max-width:420px;line-height:1.7}
+    .btn-dark-solid{
+      display:inline-flex;align-items:center;gap:10px;
+      background:var(--dark);color:var(--white);
+      padding:1rem 2.25rem;font-weight:600;font-size:.8rem;
+      letter-spacing:.1em;text-transform:uppercase;cursor:pointer;
+      transition:all .3s;white-space:nowrap
+    }
+    .btn-dark-solid:hover{background:var(--dark2);transform:translateY(-2px)}
+
+    /* ── STATS ── */
+    .stats-section{background:var(--dark2);padding:6rem 0}
+    .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid rgba(255,255,255,.04)}
+    @media(max-width:768px){.stats-grid{grid-template-columns:repeat(2,1fr)}}
+    .stat-card{
+      padding:3rem 2rem;text-align:center;border-right:1px solid rgba(255,255,255,.04);
+      position:relative;overflow:hidden;transition:background .4s
+    }
+    .stat-card:hover{background:rgba(212,150,26,0.04)}
+    .stat-icon{font-size:1.4rem;color:var(--amber2);margin-bottom:1.25rem;display:block}
+    .stat-num{
+      font-family:var(--ff-display);font-size:3.5rem;font-weight:900;
+      color:var(--white);line-height:1;display:block;margin-bottom:.5rem
+    }
+    .stat-label{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35)}
+
+    /* ── BLOG ── */
+    .blog-section{background:var(--dark3)}
+    .blog-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1rem}
+    .blog-header h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white)}
+    .blog-header h2 em{color:var(--amber2);font-style:italic}
+    .blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:2px;background:rgba(255,255,255,.03)}
+    .blog-card{background:var(--dark3);overflow:hidden;cursor:pointer;position:relative}
+    .blog-card-img{aspect-ratio:16/9;overflow:hidden}
+    .blog-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.7);transition:transform .6s var(--ease),filter .4s}
+    .blog-card:hover .blog-card-img img{transform:scale(1.08);filter:brightness(.55)}
+    .blog-card-body{padding:1.75rem}
+    .blog-date{font-size:.7rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber2);margin-bottom:.75rem}
+    .blog-card-body h3{font-family:var(--ff-display);font-size:1.2rem;color:var(--white);margin-bottom:.6rem;line-height:1.3}
+    .blog-card-body h3 a{color:inherit;transition:color .3s}
+    .blog-card-body h3 a:hover{color:var(--amber2)}
+    .blog-card-body p{font-size:.88rem;color:rgba(255,255,255,.4);line-height:1.6;margin-bottom:1.25rem}
+    .read-link{font-size:.72rem;letter-spacing:.15em;text-transform:uppercase;color:var(--amber2);border-bottom:1px solid rgba(212,150,26,0.4);padding-bottom:2px;transition:color .3s,border-color .3s}
+    .read-link:hover{color:var(--amber3);border-color:var(--amber3)}
+
+    /* ── TESTIMONIALS ── */
+    .testimonials-section{
+      background:var(--cream);color:var(--dark);
+      position:relative;overflow:hidden
+    }
+    .testimonials-section .s-label{color:var(--amber)}
+    .testimonials-section .s-label::before{background:var(--amber)}
+    .test-bg-quote{
+      position:absolute;top:-2rem;right:-2rem;
+      font-size:20rem;font-family:var(--ff-display);font-weight:900;
+      color:rgba(0,0,0,.04);line-height:1;pointer-events:none;user-select:none
+    }
+    .test-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem}
+    .test-header h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);font-weight:900;color:var(--dark);line-height:1}
+    .testimonials-wrap{display:flex;gap:1.5px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;scrollbar-width:none;background:rgba(0,0,0,.04)}
+    .testimonials-wrap::-webkit-scrollbar{display:none}
+    .testimonial-card{
+      flex:0 0 360px;scroll-snap-align:center;background:var(--cream);
+      padding:2.5rem;border-top:3px solid var(--amber)
+    }
+    .testimonial-stars{color:var(--amber);font-size:.8rem;margin-bottom:1.25rem;letter-spacing:2px}
+    .testimonial-text{
+      font-family:var(--ff-display);font-size:1.1rem;
+      color:var(--dark);line-height:1.6;margin-bottom:1.5rem;font-style:italic
+    }
+    .test-author-row{display:flex;align-items:center;gap:12px}
+    .test-avatar{width:46px;height:46px;border-radius:50%;object-fit:cover;border:2px solid var(--amber)}
+    .test-author-name{font-weight:600;font-size:.9rem;color:var(--dark)}
+    .test-author-role{font-size:.78rem;color:rgba(0,0,0,.45)}
+    .test-controls{display:flex;align-items:center;justify-content:flex-end;gap:1rem;margin-top:2.5rem}
+    .test-btn{
+      width:48px;height:48px;background:transparent;border:1px solid rgba(0,0,0,.15);
+      color:var(--dark);display:flex;align-items:center;justify-content:center;
+      cursor:pointer;font-size:.9rem;transition:all .3s
+    }
+    .test-btn:hover{background:var(--dark);color:var(--amber2);border-color:var(--dark)}
+    .test-dots{display:flex;gap:8px;align-items:center}
+    .test-dot{width:8px;height:8px;border-radius:50%;background:rgba(0,0,0,.15);border:none;cursor:pointer;transition:all .3s}
+    .test-dot.active{background:var(--amber);width:24px;border-radius:4px}
+
+    /* ── NEWSLETTER ── */
+    .newsletter-section{background:var(--dark);padding:6rem 0}
+    .newsletter-inner{
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center
+    }
+    @media(max-width:900px){.newsletter-inner{grid-template-columns:1fr;gap:2.5rem}}
+    .newsletter-left h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1rem}
+    .newsletter-left h2 em{color:var(--amber2);font-style:italic}
+    .newsletter-left p{color:rgba(255,255,255,.45);line-height:1.7}
+    .nl-form{display:flex;border:1px solid rgba(212,150,26,0.2);overflow:hidden}
+    .nl-input{
+      flex:1;background:transparent;border:none;padding:1.1rem 1.5rem;
+      color:var(--white);font-family:var(--ff-body);font-size:.95rem;outline:none
+    }
+    .nl-input::placeholder{color:rgba(255,255,255,.25)}
+    .nl-btn{
+      background:var(--amber);color:var(--dark);border:none;
+      padding:1.1rem 2rem;font-weight:700;font-size:.72rem;
+      letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap
+    }
+    .nl-btn:hover{background:var(--amber2)}
+    #newsletterMsg{margin-top:.75rem;font-size:.9rem}
+
+    /* ── ENQUIRY ── */
+    .enquiry-section{background:var(--dark2);padding:6rem 0}
+    .enquiry-inner{
+      display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:flex-start
+    }
+    @media(max-width:900px){.enquiry-inner{grid-template-columns:1fr;gap:3rem}}
+    .enquiry-left h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white);line-height:1.05;margin-bottom:1rem}
+    .enquiry-left h2 em{color:var(--amber2);font-style:italic}
+    .enquiry-left p{color:rgba(255,255,255,.45);line-height:1.7;margin-bottom:2rem}
+    .contact-item{display:flex;align-items:flex-start;gap:1rem;margin-bottom:1.25rem}
+    .contact-icon{width:40px;height:40px;background:rgba(212,150,26,.1);border:1px solid rgba(212,150,26,.2);display:flex;align-items:center;justify-content:center;color:var(--amber2);flex-shrink:0}
+    .contact-icon i{font-size:.9rem}
+    .contact-item a,.contact-item span{color:rgba(255,255,255,.55);font-size:.9rem;line-height:1.5;transition:color .3s}
+    .contact-item a:hover{color:var(--amber2)}
+    .enquiry-form{display:flex;flex-direction:column;gap:1rem}
+    .fgroup input,.fgroup textarea{
+      width:100%;background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+      padding:1rem 1.25rem;color:var(--white);
+      font-family:var(--ff-body);font-size:.9rem;outline:none;
+      transition:border-color .3s
+    }
+    .fgroup input:focus,.fgroup textarea:focus{border-color:rgba(212,150,26,.4)}
+    .fgroup input::placeholder,.fgroup textarea::placeholder{color:rgba(255,255,255,.2)}
+    .fgroup textarea{resize:vertical;min-height:130px}
+    .enquiry-btn{
+      background:var(--amber);color:var(--dark);border:none;
+      padding:1.1rem;font-weight:700;font-size:.8rem;
+      letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .3s;
+      align-self:flex-start;padding-left:2.5rem;padding-right:2.5rem
+    }
+    .enquiry-btn:hover{background:var(--amber2)}
+
+    /* ── CTA STRIP ── */
+    .cta-strip{
+      background:var(--dark3);padding:1.75rem 2.5rem;
+      display:flex;flex-wrap:wrap;align-items:center;justify-content:center;
+      gap:2.5rem;border-top:1px solid rgba(255,255,255,.04)
+    }
+    .cta-strip a{
+      font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(255,255,255,.5);transition:color .3s
+    }
+    .cta-strip a:hover{color:var(--amber2)}
+    .cta-strip .sep{color:rgba(255,255,255,.12);font-size:1.2rem}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark);padding:5rem 0 2.5rem;border-top:1px solid rgba(255,255,255,.04)}
+    .footer-grid{display:grid;grid-template-columns:1.8fr 1fr;gap:6rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2.5rem}
+    @media(max-width:768px){.footer-grid{grid-template-columns:1fr;gap:3rem}}
+    .footer-logo-img{height:44px;width:auto;object-fit:contain;margin-bottom:1.5rem;filter:brightness(.9)}
+    .footer-brand h3{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.75rem}
+    .footer-brand p{color:rgba(255,255,255,.35);font-size:.88rem;line-height:1.7;max-width:360px}
+    .footer-contact-title{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber2);margin-bottom:1.5rem}
+    .footer-contact p,.footer-contact a{color:rgba(255,255,255,.4);font-size:.88rem;display:block;margin-bottom:.6rem;transition:color .3s}
+    .footer-contact a:hover{color:var(--amber2)}
+    .social-links{display:flex;gap:.75rem;margin-top:2rem}
+    .social-links a{
+      width:40px;height:40px;border:1px solid rgba(255,255,255,.08);
+      display:flex;align-items:center;justify-content:center;transition:all .3s
+    }
+    .social-links a:hover{border-color:var(--amber2);background:rgba(212,150,26,.08)}
+    .social-links img{width:18px;height:18px;object-fit:contain}
+    .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.78rem;color:rgba(255,255,255,.2)}
+    .footer-bottom a{color:rgba(255,255,255,.2);transition:color .3s}
+    .footer-bottom a:hover{color:var(--amber2)}
+
+    /* WhatsApp */
+    .whatsapp-button{
+      position:fixed;bottom:2rem;right:2rem;z-index:9999;
+      width:56px;height:56px;background:#25D366;border-radius:50%;
+      display:flex;align-items:center;justify-content:center;
+      box-shadow:0 4px 24px rgba(37,211,102,.35);transition:transform .3s var(--ease)
+    }
+    .whatsapp-button:hover{transform:scale(1.12)}
+    .whatsapp-button img{width:30px;height:30px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-l{opacity:0;transform:translateX(-48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal-l.visible{opacity:1;transform:none}
+    .reveal-r{opacity:0;transform:translateX(48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal-r.visible{opacity:1;transform:none}
+
+    /* Responsive nav */
+    @media(max-width:900px){
+      .hamburger{display:flex}
+      .nav-menu{
+        position:fixed;top:0;right:-100%;width:min(340px,80vw);height:100dvh;
+        background:var(--dark);flex-direction:column;align-items:flex-start;
+        gap:0;padding:6rem 2.5rem 2rem;z-index:1000;
+        transition:right .5s var(--ease);overflow-y:auto;
+        border-left:1px solid rgba(212,150,26,.1)
+      }
+      .nav-menu.show{right:0}
+      .nav-menu a{width:100%;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.9rem}
+      header{padding:1.25rem 1.75rem}
+      .hero-content{padding:0 1.75rem}
+      .hero-search{padding:1.25rem 1.75rem}
+      .search-inner{flex-wrap:wrap}
+    }
+    @media(max-width:768px){
+      .estates-grid{grid-template-columns:1fr 1fr}
+      .estate-card:first-child{grid-column:span 2;aspect-ratio:16/9}
+      .stats-grid{grid-template-columns:repeat(2,1fr)}
+      .footer-grid{grid-template-columns:1fr}
+      .enquiry-inner,.newsletter-inner{grid-template-columns:1fr}
+    }
+    @media(max-width:480px){
+      .estates-grid{grid-template-columns:1fr}
+      .estate-card:first-child{grid-column:auto;aspect-ratio:3/4}
+      .hero h1{font-size:clamp(2.5rem,10vw,5rem)}
+    }
+
+    .scrolling-text-section{
+      overflow:hidden;padding:4rem 0;background:var(--dark2);
+      border-top:1px solid rgba(255,255,255,.03);border-bottom:1px solid rgba(255,255,255,.03)
+    }
+    .scrolling-row{display:flex;animation:scroll-l 20s linear infinite;white-space:nowrap}
+    .scrolling-row.rev{animation:scroll-r 22s linear infinite}
+    .scrolling-row span{
+      font-family:var(--ff-display);font-size:clamp(2.5rem,5vw,4rem);
+      font-weight:900;color:rgba(255,255,255,.04);padding:0 2rem;
+      text-transform:uppercase;letter-spacing:-.02em;white-space:nowrap
+    }
+    .scrolling-row span.accent{color:rgba(212,150,26,.12)}
+    @keyframes scroll-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+    @keyframes scroll-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+  </style>
 </head>
-
-
-
-
-
 <body>
-  <!-- HEADER -->
- <header>
-  <!-- Logo -->
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
   <a href="{{ url_for('home') }}">
-    <img src="{{ url_for('static', filename=logogmc_path) }}" alt="Logo" class="logo">
+    <img src="{{ url_for('static', filename=logogmc_path) }}" alt="Great Marcy Realty" class="logo">
   </a>
-<!-- Circular Dots + List Icon Menu Button -->
-<div class="hamburger" id="hamburger" aria-label="Toggle navigation" aria-controls="navMenu" role="button" tabindex="0">
-  <!-- Dots Circle -->
-  <svg viewBox="0 0 64 64" width="34" height="34" class="dots-circle" aria-hidden="true">
-    <circle cx="32" cy="10" r="5"/>
-    <circle cx="47" cy="15" r="5"/>
-    <circle cx="55" cy="28" r="5"/>
-    <circle cx="50" cy="43" r="5"/>
-    <circle cx="37" cy="53" r="5"/>
-    <circle cx="23" cy="53" r="5"/>
-    <circle cx="10" cy="43" r="5"/>
-    <circle cx="7" cy="28" r="5"/>
-  </svg>
-
-  <!-- List Icon (3 bars) -->
-  <svg viewBox="0 0 24 24" width="28" height="28" class="list-icon" aria-hidden="true">
-    <rect x="3" y="6" width="18" height="2" rx="1"/>
-    <rect x="3" y="11" width="18" height="2" rx="1"/>
-    <rect x="3" y="16" width="18" height="2" rx="1"/>
-  </svg>
-</div>
-
-
-  <!-- Navigation -->
-  <nav class="nav-menu" id="navMenu" role="navigation" aria-label="Main navigation">
+  <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+  <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
     {% for link in nav_links %}
       <a href="{{ url_for(link.endpoint) }}">{{ link.name }}</a>
     {% endfor %}
   </nav>
 </header>
-
-<!-- Overlay -->
 <div class="overlay" id="overlay"></div>
 
-<!-- HERO / SHARED BANNER -->
-<section class="bg-shared" aria-labelledby="hero-title">
+<!-- HERO -->
+<section class="hero" aria-labelledby="hero-title">
   <video autoplay muted loop playsinline class="hero-video">
     <source src="{{ url_for('static', filename='image/hero-background.mp4') }}" type="video/mp4">
   </video>
-<div class="hero-overlay">
-  <div class="hero-about-container">
-    <div class="about-preview hero-preview" id="hero-preview">
-      <h1 id="hero-title">Welcome to Great Marcy Realty</h1>
-      <p style="font-size: 1rem; color: rgba(255,255,255,0.85); font-style: italic; margin-top: -5px;">
-        A division of <strong>Great Mar-cy’s & Sons Limited</strong>
-      </p>
-      <p>Search through our listings of land, houses, and commercial properties.</p>
-      <form class="search-form" action="{{ url_for('property_page') }}" method="GET" role="search">
-        <input name="q" type="text" placeholder="Search property..." />
-        <button type="submit">Search</button>
-      </form>
+  <div class="hero-noise"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="hero-tag">
+      <span></span>
+      Trusted Real Estate · Ilorin, Nigeria
     </div>
-
-   
-</section>
-
-
-
-  <!-- PRIME ESTATES SECTION -->
-<section class="prime-estates-section animate-on-scroll" aria-labelledby="prime-estates-title">
-  <h2 id="prime-estates-title" class="prime-estates-heading">our Featured Estates</h2>
- <div class="prime-estates-grid">
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/MERCY ESTATE.png') }}" alt="MERCY ESTATE">
-      <h3>MERCY ESTATE</h3>
-      <p class="prime-estate-price">₦260,000 per plot</p>
+    <h1 id="hero-title">Your <em>Dream</em><br>Property<br>Awaits.</h1>
+    <p class="hero-sub">Great Mar-cy's &amp; Sons Limited — where land meets legacy. Buy, sell, and invest in premium estates across Kwara State.</p>
+    <div class="hero-actions">
+      <a href="{{ url_for('property_page') }}" class="btn-primary"><span>Explore Estates</span><i class="fas fa-arrow-right"></i></a>
+      <a href="{{ url_for('contact') }}" class="btn-ghost"><i class="fas fa-phone-alt"></i>Talk to Us</a>
     </div>
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/AL.jpg') }}" alt="MERCY ESTATE">
-      <h3>MERCY ESTATE PLAN</h3>
-      <p class="prime-estate-price">LAND PLAN</p>
-    </div>
-
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/extent.jpg') }}" alt="PHASE 3 MASHANKORE">
-      <h3>PHASE 3 MASHANKORE EXTENSION</h3>
-      <p class="prime-estate-price">₦150,000 per plot</p>
-    </div>
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate">
-      <h3>Success City Estate</h3>
-      <p class="prime-estate-price">₦960,000 per Acre</p>
-    </div>
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace City Estate Phase 1">
-      <h3>His Grace City Estate Phase 1</h3>
-      <p class="prime-estate-price">₦1,520,190 per Acre</p>
-    </div>
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace City Estate Phase 2">
-      <h3>His Grace City Estate Phase 2</h3>
-      <p class="prime-estate-price">₦960,000 per Acre</p>
-    </div>
-
-    <div class="prime-estate-card">
-      <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate (Annex)">
-      <h3>Success City Estate (Annex)</h3>
-      <p class="prime-estate-price">₦960,000 per Acre</p>
-    </div>
-
   </div>
+  <form class="hero-search" action="{{ url_for('property_page') }}" method="GET" role="search">
+    <div class="search-inner">
+      <span class="search-label">Find Property</span>
+      <input class="search-input" name="q" type="text" placeholder="Search estates, locations, property types…" autocomplete="off">
+      <button type="submit" class="search-btn"><i class="fas fa-search"></i>&nbsp; Search</button>
+    </div>
+  </form>
 </section>
 
-
-<!-- BILLBOARD SECTION START -->
-<div class="billboard-banner">
-  <img src="{{ url_for('static', filename='image/banner.jpg') }}" alt="Promotional Billboard">
-
-  <div class="billboard-text">
-
-    <a href="{{ url_for('property_page') }}" class="billboard-btn">View Properties</a>
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Premium Land for Sale</span><span>His Grace City Estate</span><span>Mercy Estate</span><span>Success City Estate</span><span>Mashankore Extension</span><span>Ilorin Kwara State</span><span>Trusted Since 2018</span><span>Premium Land for Sale</span><span>His Grace City Estate</span><span>Mercy Estate</span><span>Success City Estate</span><span>Mashankore Extension</span><span>Ilorin Kwara State</span><span>Trusted Since 2018</span>
   </div>
 </div>
-<!-- BILLBOARD SECTION END -->
 
-
-<!-- BILLBOARD SECTION START -->
-<section class="billboard-banner">
-  <img src="{{ url_for('static', filename='image/olo.jpg') }}" alt="Promotional Billboard">
-
-  <div class="billboard-text">
-    <a href="{{ url_for('property_page') }}" class="billboard-btn">
-      View Properties
-    </a>
+<!-- SCROLLING BIG TEXT -->
+<div class="scrolling-text-section" aria-hidden="true">
+  <div class="scrolling-row">
+    <span>REAL ESTATE</span><span class="accent">◆</span><span>ILORIN</span><span class="accent">◆</span><span>GREAT MARCY</span><span class="accent">◆</span><span>INVEST</span><span class="accent">◆</span><span>REAL ESTATE</span><span class="accent">◆</span><span>ILORIN</span><span class="accent">◆</span><span>GREAT MARCY</span><span class="accent">◆</span><span>INVEST</span><span class="accent">◆</span>
   </div>
-</section>
-<!-- BILLBOARD SECTION END -->
-
-<section class="recent-properties">
-  <h2>Recently Added</h2>
-  <div class="property-slider">
-    {% for prop in recent_properties %}
-    <div class="slide">
-      <a href="{{ url_for('property_detail', slug=prop.slug) }}">
-        <img src="{{ url_for('serve_file', filename=prop.image_url or 'default-property.jpg') }}" 
-             alt="{{ prop.title }}">
-        <h3>{{ prop.title }}</h3>
-        {% if prop.price %}
-        <p>₦{{ "{:,.0f}".format(prop.price|float) }}</p>
-        {% endif %}
-        <p>{{ prop.location }}</p>
-      </a>
-    </div>
-    {% endfor %}
+  <div class="scrolling-row rev" style="margin-top:.5rem">
+    <span>LAND</span><span class="accent">◆</span><span>LEGACY</span><span class="accent">◆</span><span>PROPERTY</span><span class="accent">◆</span><span>KWARA STATE</span><span class="accent">◆</span><span>GMC REALTY</span><span class="accent">◆</span><span>LAND</span><span class="accent">◆</span><span>LEGACY</span><span class="accent">◆</span><span>PROPERTY</span><span class="accent">◆</span><span>KWARA STATE</span><span class="accent">◆</span><span>GMC REALTY</span><span class="accent">◆</span>
   </div>
-</section>
+</div>
 
-
-
-
-<!-- Partner in Growth Section -->
-<section id="partner-growth" class="partner-growth-section">
-  <!-- Floating icon shapes -->
-  <div class="icon-shape shape1"><i class="fas fa-handshake"></i></div>
-  <div class="icon-shape shape2"><i class="fas fa-chart-line"></i></div>
-  <div class="icon-shape shape3"><i class="fas fa-seedling"></i></div>
-
-  <!-- Particle dots -->
-  <div class="particle particle1"></div>
-  <div class="particle particle2"></div>
-  <div class="particle particle3"></div>
-
+<!-- FEATURED ESTATES -->
+<section class="estates-section reveal" aria-labelledby="estates-title">
   <div class="container">
-    <div class="content">
-      <h2>Partner in Growth</h2>
-      <p>
-        We believe in building legacies through collaboration. Join us as an investor and be part of a forward-thinking group driving sustainable success.
-      </p>
-      <!-- Button linking to separate contact page -->
-      <a href="{{ url_for('contact') }}" class="btn-primary">Request Investor Brief</a>
-
-      <p class="note"><i class="fas fa-calendar-alt"></i> Upcoming Investor Dinner</p>
+    <div class="estates-header">
+      <div>
+        <div class="s-label">Portfolio</div>
+        <h2 id="estates-title">Our <em>Featured</em><br>Estates</h2>
+      </div>
+      <p>Handpicked premium land and properties across Kwara State — built for value, built for legacy.</p>
+    </div>
+    <div class="estates-grid">
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/MERCY ESTATE.png') }}" alt="Mercy Estate" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Land</span>
+          <h3>Mercy Estate</h3>
+          <p class="estate-price">₦260,000 / plot</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/extent.jpg') }}" alt="Phase 3 Mashankore" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Extension</span>
+          <h3>Phase 3 Mashankore Extension</h3>
+          <p class="estate-price">₦150,000 / plot</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Acres</span>
+          <h3>Success City Estate</h3>
+          <p class="estate-price">₦960,000 / acre</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace Phase 1" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Premium</span>
+          <h3>His Grace City Estate Phase 1</h3>
+          <p class="estate-price">₦1,520,190 / acre</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace Phase 2" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Premium</span>
+          <h3>His Grace City Estate Phase 2</h3>
+          <p class="estate-price">₦960,000 / acre</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/AL.jpg') }}" alt="Mercy Estate Plan" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Plan</span>
+          <h3>Mercy Estate Plan</h3>
+          <p class="estate-price">Land Survey Plan</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
     </div>
   </div>
 </section>
 
-
-<!-- COMPANY OVERVIEW -->
-<section id="about" class="company-overview">
-  <div class="parallax-bg" aria-hidden="true"></div>
-  <div class="background-shapes" aria-hidden="true">
-    <span class="shape shape1"></span>
-    <span class="shape shape2"></span>
-    <span class="shape shape3"></span>
+<!-- BILLBOARD 1 -->
+<div class="billboard">
+  <img src="{{ url_for('static', filename='image/banner.jpg') }}" alt="GMC Properties">
+  <div class="billboard-inner">
+    <h2>Own a Piece of <em>Ilorin</em></h2>
+    <a href="{{ url_for('property_page') }}" class="btn-primary"><span>View All Properties</span><i class="fas fa-arrow-right"></i></a>
   </div>
+</div>
 
-<div class="container">
-
-<!-- ===== Modern Core Values Section ===== -->
-<section class="core-values">
-  <h2 class="section-title">Our Core Values</h2>
-  <div class="values-grid">
-    <div class="value-box">
-      <h3>Trust</h3>
-      <p>Trust is the foundation of everything we do — our word is our bond.</p>
-    </div>
-
-    <div class="value-box">
-      <h3>Customer-Centricity</h3>
-      <p>We put our clients first, always tailoring solutions that fit their dreams.</p>
-    </div>
-
-    <div class="value-box">
-      <h3>Innovation</h3>
-      <p>We redefine what’s possible, blending creativity with technology.</p>
-    </div>
-
-    <div class="value-box">
-      <h3>Excellence</h3>
-      <p>We deliver the best in class — with precision, passion, and purpose.</p>
-    </div>
-
-    <div class="value-box">
-      <h3>Transparency</h3>
-      <p>We believe in open and honest dealings — every step of the way.</p>
-    </div>
-  </div>
-</section>
- 
-
-
-
-<!-- ===== Modern Animated About Us Section ===== -->
-<section class="about-sharp">
-  <h2>About Us</h2>
-
-  <div class="about-cards">
-    <div class="about-box">
-      <h3>Our Vision</h3>
-      <p>To be the most trusted and innovative real estate company building communities across Nigeria.</p>
-      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
-    </div>
-
-    <div class="about-box">
-      <h3>Who We Are</h3>
-      <p>We redefine property ownership with integrity, excellence, and forward-thinking solutions.</p>
-      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
-    </div>
-
-    <div class="about-box">
-      <h3>What We Do</h3>
-      <p>We help people buy, sell, and manage properties with ease, transparency, and innovation.</p>
-      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
-    </div>
-
-    <div class="about-box">
-      <h3>Our Motto</h3>
-      <p>Redefining real estate through trust, creativity, and a passion for excellence.</p>
-      <a href="{{ url_for('about') }}" class="read-more">Read More</a>
-    </div>
-  </div>
-</section>
-
-
-
-<section class="brochure-section animate-on-scroll" id="brochure">
-  <div class="brochure-container">
-    <h2>Our Company Brochure</h2>
-    <p>
-      Discover more about Great Marcy Realty – our vision, services, featured estates, and how we can help you find your dream property.
-    </p>
-    <a href="{{ url_for('static', filename='brochure/Great-Marcy-Brochure.pdf') }}" class="cta-btn" target="_blank" download>
-      Download Brochure
-    </a>
-  </div>
-</section>
-
-
-<section class="stats-section">
+<!-- RECENT -->
+<section class="recent-section reveal" aria-labelledby="recent-title">
   <div class="container">
-    <h2>At GMC, the numbers speak for themselves</h2>
+    <div class="recent-header">
+      <div>
+        <div class="s-label">New Listings</div>
+        <h2 id="recent-title">Recently <em>Added</em></h2>
+      </div>
+      <a href="{{ url_for('property_page') }}" class="btn-ghost" style="font-size:.72rem;padding:.7rem 1.75rem">View All <i class="fas fa-arrow-right" style="font-size:.8rem"></i></a>
+    </div>
+    <div class="recent-grid">
+      {% for prop in recent_properties %}
+      <div class="recent-card">
+        <a href="{{ url_for('property_detail', slug=prop.slug) }}">
+          <div class="recent-card-img">
+            <img src="{{ url_for('serve_file', filename=prop.image_url or 'default-property.jpg') }}" alt="{{ prop.title }}" loading="lazy">
+          </div>
+          <div class="recent-card-body">
+            <h3>{{ prop.title }}</h3>
+            {% if prop.price %}<p class="price">₦{{ "{:,.0f}".format(prop.price|float) }}</p>{% endif %}
+            <p>{{ prop.location }}</p>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<!-- PARTNER / INVESTOR -->
+<section class="partner-section" aria-labelledby="partner-title">
+  <div class="partner-bg-text" aria-hidden="true">INVEST</div>
+  <div class="container">
+    <div class="partner-inner">
+      <div class="partner-left reveal-l">
+        <div class="s-label">Investment</div>
+        <h2 id="partner-title">Partner <em>in</em><br>Growth</h2>
+        <p>We believe in building legacies through collaboration. Join us as an investor and be part of a forward-thinking group driving sustainable success across Kwara State.</p>
+        <a href="{{ url_for('contact') }}" class="btn-primary"><span>Request Investor Brief</span><i class="fas fa-arrow-right"></i></a>
+        <p style="margin-top:1.5rem;font-size:.78rem;color:var(--amber3);letter-spacing:.1em"><i class="fas fa-calendar-alt" style="margin-right:6px"></i>Upcoming Investor Dinner — Reserve your seat</p>
+      </div>
+      <div class="partner-right reveal-r">
+        <div class="partner-stat">
+          <div class="partner-stat-num count" data-target="6" data-suffix="+">0+</div>
+          <div class="partner-stat-label">Years of Experience</div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num count" data-target="103" data-suffix="">0</div>
+          <div class="partner-stat-label">Estates Across Kwara</div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num count" data-target="104" data-suffix="k+">0k+</div>
+          <div class="partner-stat-label">Happy Clients</div>
+        </div>
+        <div class="partner-stat">
+          <div class="partner-stat-num count" data-target="12" data-suffix="k+">0k+</div>
+          <div class="partner-stat-label">Allocations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="values-section reveal" aria-labelledby="values-title">
+  <div class="container">
+    <div class="values-header">
+      <div class="s-label">Foundation</div>
+      <h2 id="values-title">What We Stand For</h2>
+    </div>
+    <div class="values-grid">
+      <div class="value-box">
+        <div class="value-box-inner">
+          <div class="value-num">01</div>
+          <h3>Trust</h3>
+          <p>Our word is our bond — every transaction built on integrity.</p>
+        </div>
+      </div>
+      <div class="value-box">
+        <div class="value-box-inner">
+          <div class="value-num">02</div>
+          <h3>Client-First</h3>
+          <p>Tailoring solutions that fit each client's unique dreams and goals.</p>
+        </div>
+      </div>
+      <div class="value-box">
+        <div class="value-box-inner">
+          <div class="value-num">03</div>
+          <h3>Innovation</h3>
+          <p>Blending creativity with technology to redefine what's possible.</p>
+        </div>
+      </div>
+      <div class="value-box">
+        <div class="value-box-inner">
+          <div class="value-num">04</div>
+          <h3>Excellence</h3>
+          <p>Precision, passion, and purpose in everything we deliver.</p>
+        </div>
+      </div>
+      <div class="value-box">
+        <div class="value-box-inner">
+          <div class="value-num">05</div>
+          <h3>Transparency</h3>
+          <p>Open, honest dealings — no fine print, no surprises.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section reveal" aria-labelledby="about-title">
+  <div class="container">
+    <div class="about-inner">
+      <div class="about-left">
+        <div class="s-label">Who We Are</div>
+        <h2 id="about-title">Redefining <em>Real Estate</em><br>in Nigeria</h2>
+        <p>We help people buy, sell, and manage properties with ease, transparency, and innovation. From land surveys to allocation — we handle it all so you don't have to.</p>
+        <a href="{{ url_for('about') }}" class="btn-primary" style="margin-top:1rem"><span>Learn More</span><i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="about-cards-stack">
+        <div class="about-box">
+          <div class="about-box-icon"><i class="fas fa-eye"></i></div>
+          <div class="about-box-content">
+            <h3>Our Vision</h3>
+            <p>To be the most trusted and innovative real estate company building communities across Nigeria.</p>
+          </div>
+        </div>
+        <div class="about-box">
+          <div class="about-box-icon"><i class="fas fa-users"></i></div>
+          <div class="about-box-content">
+            <h3>Who We Are</h3>
+            <p>We redefine property ownership with integrity, excellence, and forward-thinking solutions.</p>
+          </div>
+        </div>
+        <div class="about-box">
+          <div class="about-box-icon"><i class="fas fa-home"></i></div>
+          <div class="about-box-content">
+            <h3>What We Do</h3>
+            <p>We help people buy, sell, and manage properties with ease, transparency, and innovation.</p>
+          </div>
+        </div>
+        <div class="about-box">
+          <div class="about-box-icon"><i class="fas fa-star"></i></div>
+          <div class="about-box-content">
+            <h3>Our Motto</h3>
+            <p>Redefining real estate through trust, creativity, and a passion for excellence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BILLBOARD 2 -->
+<div class="billboard">
+  <img src="{{ url_for('static', filename='image/olo.jpg') }}" alt="Olooru Estate">
+  <div class="billboard-inner">
+    <h2>Land That Becomes <em>Legacy</em></h2>
+    <a href="{{ url_for('property_page') }}" class="btn-primary"><span>Explore Listings</span><i class="fas fa-arrow-right"></i></a>
+  </div>
+</div>
+
+<!-- BROCHURE -->
+<div class="brochure-section reveal">
+  <h2>Download Our<br>Company Brochure</h2>
+  <p>Discover our vision, services, featured estates, and how we can help you find your dream property in Ilorin.</p>
+  <a href="{{ url_for('static', filename='brochure/Great-Marcy-Brochure.pdf') }}" class="btn-dark-solid" target="_blank" download>
+    <i class="fas fa-download"></i> Download PDF
+  </a>
+</div>
+
+<!-- STATS -->
+<section class="stats-section" aria-labelledby="stats-title">
+  <div class="container">
+    <div class="s-label" style="justify-content:center;display:flex;margin-bottom:1rem">Track Record</div>
+    <h2 id="stats-title" style="font-family:var(--ff-display);text-align:center;font-size:clamp(2rem,4vw,3.5rem);font-weight:700;margin-bottom:3.5rem">Numbers That <em style="color:var(--amber2);font-style:italic">Speak</em></h2>
     <div class="stats-grid">
       <div class="stat-card">
         <i class="fa-solid fa-briefcase stat-icon"></i>
-        <h3 class="count" data-target="6" data-suffix="+">0</h3>
-        <p>Years of Experience</p>
+        <span class="stat-num count" data-target="6" data-suffix="+">0</span>
+        <span class="stat-label">Years of Experience</span>
       </div>
       <div class="stat-card">
         <i class="fa-solid fa-building stat-icon"></i>
-        <h3 class="count" data-target="103" data-suffix="">0</h3>
-        <p>Estates</p>
+        <span class="stat-num count" data-target="103" data-suffix="">0</span>
+        <span class="stat-label">Estates</span>
       </div>
       <div class="stat-card">
         <i class="fa-solid fa-users stat-icon"></i>
-        <h3 class="count" data-target="104000" data-suffix="k+">0</h3>
-        <p>Clients</p>
+        <span class="stat-num count" data-target="104" data-suffix="k+">0</span>
+        <span class="stat-label">Clients</span>
       </div>
       <div class="stat-card">
         <i class="fa-solid fa-house-chimney-user stat-icon"></i>
-        <h3 class="count" data-target="12000" data-suffix="k+">0</h3>
-        <p>Allocations</p>
+        <span class="stat-num count" data-target="12" data-suffix="k+">0</span>
+        <span class="stat-label">Allocations</span>
       </div>
     </div>
   </div>
 </section>
 
-
-
-
-
-<!-- 📰 LATEST BLOG POSTS -->
-<section class="home-blog-section">
+<!-- BLOG -->
+<section class="blog-section reveal" aria-labelledby="blog-title">
   <div class="container">
-    <h2 class="section-title">Latest from Our Blog</h2>
-    <div class="home-blog-grid">
+    <div class="blog-header">
+      <div>
+        <div class="s-label">Insights</div>
+        <h2 id="blog-title">Latest from <em>Our Blog</em></h2>
+      </div>
+      <a href="{{ url_for('blog') }}" class="btn-ghost" style="font-size:.72rem;padding:.7rem 1.75rem">All Posts <i class="fas fa-arrow-right" style="font-size:.8rem"></i></a>
+    </div>
+    <div class="blog-grid">
       {% for post in posts[:3] %}
-      <article class="home-blog-card">
+      <article class="blog-card">
         {% if post.image_url %}
-        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        <div class="blog-card-img">
+          <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        </div>
         {% endif %}
-        <div class="home-blog-content">
+        <div class="blog-card-body">
+          <div class="blog-date"><i class="fas fa-circle" style="font-size:.4rem;margin-right:6px"></i>Real Estate</div>
           <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
-          <p>{{ post.content[:120] }}{% if post.content|length > 120 %}...{% endif %}</p>
-          <a href="{{ url_for('blog_post', slug=post.slug) }}" class="read-more-btn">Read More</a>
+          <p>{{ post.content[:110] }}{% if post.content|length > 110 %}…{% endif %}</p>
+          <a href="{{ url_for('blog_post', slug=post.slug) }}" class="read-link">Read Article</a>
         </div>
       </article>
       {% else %}
-      <p class="no-posts">No blog posts available yet.</p>
+      <p style="color:rgba(255,255,255,.3)">No blog posts yet.</p>
       {% endfor %}
-    </div>
-    <div class="view-all">
-      <a href="{{ url_for('blog') }}" class="view-all-btn">View All Posts</a>
     </div>
   </div>
 </section>
 
-  <!-- TESTIMONIALS -->
-  <section id="testimonials" class="testimonials-section block-section" aria-labelledby="testimonialsTitle">
-    <div class="container">
-      <h2 id="testimonialsTitle" class="section-title">What our clients say</h2>
-
+<!-- TESTIMONIALS -->
+<section class="testimonials-section reveal" aria-labelledby="test-title">
+  <div class="test-bg-quote" aria-hidden="true">"</div>
+  <div class="container">
+    <div class="test-header">
+      <div>
+        <div class="s-label">Clients</div>
+        <h2 id="test-title">What They Say<br>About Us</h2>
+      </div>
+    </div>
+    <div class="testimonials-wrap" id="testimonialsWrap">
       {% if testimonials %}
-      <div class="testimonials-wrap" id="testimonialsWrap">
         {% for t in testimonials %}
-        <article class="testimonial-card" aria-label="Testimonial from {{ t.name }}">
-          {% if t.avatar %}
-          <img class="testimonial-avatar" src="{{ url_for('static', filename=t.avatar) }}" alt="{{ t.name }} avatar">
-          {% endif %}
-          <p class="testimonial-text">“{{ t.text }}”</p>
-          <p class="testimonial-author">{{ t.name }} <span class="testimonial-role">— {{ t.role }}</span></p>
+        <article class="testimonial-card">
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"{{ t.text }}"</p>
+          <div class="test-author-row">
+            {% if t.avatar %}<img class="test-avatar" src="{{ url_for('static', filename=t.avatar) }}" alt="{{ t.name }}">{% endif %}
+            <div><div class="test-author-name">{{ t.name }}</div><div class="test-author-role">{{ t.role }}</div></div>
+          </div>
         </article>
         {% endfor %}
-      </div>
       {% else %}
-      <div class="testimonials-wrap" id="testimonialsWrap">
         <article class="testimonial-card">
-          <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial1.jpg') }}" alt="Mrs A. avatar">
-          <p class="testimonial-text">“Great Mar-cy’s & Sons made my purchase painless — professional and transparent from start to finish.”</p>
-          <p class="testimonial-author">Mrs Adeniyi <span class="testimonial-role">— Homeowner, Ilorin</span></p>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Great Mar-cy's &amp; Sons made my purchase painless — professional and transparent from start to finish."</p>
+          <div class="test-author-row">
+            <img class="test-avatar" src="{{ url_for('static', filename='image/testimonial1.jpg') }}" alt="Mrs Adeniyi">
+            <div><div class="test-author-name">Mrs Adeniyi</div><div class="test-author-role">Homeowner, Ilorin</div></div>
+          </div>
         </article>
         <article class="testimonial-card">
-          <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial2.jpg') }}" alt="Mr B. avatar">
-          <p class="testimonial-text">“Excellent estates and fast process. Highly recommended.”</p>
-          <p class="testimonial-author">Mr Amasa <span class="testimonial-role">— Investor</span></p>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Excellent estates and fast process. Highly recommended for any serious investor."</p>
+          <div class="test-author-row">
+            <img class="test-avatar" src="{{ url_for('static', filename='image/testimonial2.jpg') }}" alt="Mr Amasa">
+            <div><div class="test-author-name">Mr Amasa</div><div class="test-author-role">Investor</div></div>
+          </div>
         </article>
         <article class="testimonial-card">
-          <img class="testimonial-avatar" src="{{ url_for('static', filename='image/testimonial3.jpg') }}" alt="Ms C. avatar">
-          <p class="testimonial-text">“Professional team, lovely estates and great post-sale support.”</p>
-          <p class="testimonial-author">Ms Taiwo <span class="testimonial-role">— Land Buyer</span></p>
+          <div class="testimonial-stars">★★★★★</div>
+          <p class="testimonial-text">"Professional team, lovely estates and great post-sale support. Couldn't be happier."</p>
+          <div class="test-author-row">
+            <img class="test-avatar" src="{{ url_for('static', filename='image/testimonial3.jpg') }}" alt="Ms Taiwo">
+            <div><div class="test-author-name">Ms Taiwo</div><div class="test-author-role">Land Buyer</div></div>
+          </div>
         </article>
-      </div>
       {% endif %}
+    </div>
+    <div class="test-controls">
+      <div class="test-dots" id="testDots"></div>
+      <button class="test-btn test-prev" aria-label="Previous">&#8592;</button>
+      <button class="test-btn test-next" aria-label="Next">&#8594;</button>
+    </div>
+  </div>
+</section>
 
-      <div class="testimonials-controls" aria-hidden="false">
-        <button class="test-prev" aria-label="Previous testimonial">&larr;</button>
-        <div class="test-dots" id="testDots" aria-hidden="false"></div>
-        <button class="test-next" aria-label="Next testimonial">&rarr;</button>
+<!-- NEWSLETTER -->
+<section class="newsletter-section reveal" aria-labelledby="nl-title">
+  <div class="container">
+    <div class="newsletter-inner">
+      <div class="newsletter-left">
+        <div class="s-label">Stay Updated</div>
+        <h2 id="nl-title">Get the <em>Latest</em><br>Listings First</h2>
+        <p>Subscribe and be the first to receive new properties, investment opportunities, and real estate tips from GMC Realty.</p>
+      </div>
+      <div>
+        <form id="newsletterForm" method="POST" action="{{ url_for('subscribe') }}">
+          <div class="nl-form">
+            <input class="nl-input" type="email" name="email" placeholder="Your email address" required>
+            <button type="submit" class="nl-btn">Subscribe</button>
+          </div>
+        </form>
+        <div id="newsletterMsg" role="status" aria-live="polite"></div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- NEWSLETTER -->
-  <section id="newsletter" class="newsletter-section">
-    <div class="newsletter-container animate-up">
-      <h2>Stay Updated</h2>
-      <p>Subscribe to our newsletter and be the first to receive updates on new properties, investment opportunities, and real estate tips from <strong>GMC Realty</strong>.</p>
-
-      <form id="newsletterForm" class="newsletter-form" method="POST" action="{{ url_for('subscribe') }}">
-        <input type="email" name="email" placeholder="Enter your email address" required />
-        <button type="submit">Subscribe</button>
-      </form>
-
-      <div id="newsletterMsg" role="status" aria-live="polite"></div>
-    </div>
-  </section>
-
-  <!-- ENQUIRY -->
-  <section id="enquiry" class="enquiry-section">
-    <div class="enquiry-container animate-up">
-      <h2>Send Us an Enquiry</h2>
-      <p>Have questions? Fill out the form below and our team will get back to you shortly.</p>
-
+<!-- ENQUIRY -->
+<section class="enquiry-section reveal" aria-labelledby="enquiry-title">
+  <div class="container">
+    <div class="enquiry-inner">
+      <div class="enquiry-left">
+        <div class="s-label">Get in Touch</div>
+        <h2 id="enquiry-title">Let's Talk<br>About Your <em>Property</em></h2>
+        <p>Have questions? Fill out the form and our team will get back to you shortly.</p>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+          <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-phone-alt"></i></div>
+          <a href="tel:+2349139070404">+234 913 907 0404</a>
+        </div>
+        <div class="contact-item">
+          <div class="contact-icon"><i class="fas fa-map-marker-alt"></i></div>
+          <span>Kulende Area, KM5 Old Jebba Road, Sango Rd, Ilorin 240101, Kwara</span>
+        </div>
+      </div>
       <form class="enquiry-form" action="{{ url_for('enquiry') }}" method="POST">
-        <div class="form-group"><input type="text" name="name" placeholder="Your Full Name" required></div>
-        <div class="form-group"><input type="email" name="email" placeholder="Your Email Address" required></div>
-        <div class="form-group"><input type="text" name="subject" placeholder="Subject" required></div>
-        <div class="form-group"><textarea name="message" rows="5" placeholder="Write your message here..." required></textarea></div>
-        <button type="submit" class="enquiry-btn">Send Enquiry</button>
+        <div class="fgroup"><input type="text" name="name" placeholder="Your Full Name" required></div>
+        <div class="fgroup"><input type="email" name="email" placeholder="Email Address" required></div>
+        <div class="fgroup"><input type="text" name="subject" placeholder="Subject" required></div>
+        <div class="fgroup"><textarea name="message" rows="5" placeholder="Your message…" required></textarea></div>
+        <button type="submit" class="enquiry-btn">Send Enquiry <i class="fas fa-paper-plane" style="margin-left:8px"></i></button>
       </form>
     </div>
-  </section>
-
-  <!-- CTA -->
-  <div class="cta-wrapper">
-    <a href="#contact" class="cta-btn">Contact Us Today</a>
-    <a href="tel:+2349139070404" class="phone-number">+234 913 907 0404</a>
-    <a href="https://wa.me/2349139070404" target="_blank" class="phone-number whatsapp-link">Chat on WhatsApp</a>
   </div>
+</section>
 
-
-
-
-<!-- FOOTER -->
-<footer class="footer">
-  <div class="footer-container">
-    <div class="footer-logo">
-      <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Logo" />
-      <h3>Great Marcy Realty</h3>
-     <p>A division of 
-  <strong>Great Mar-cy’s & Sons Limited</strong><br>
-  Trusted Real Estate Company in Ilorin — Turning Land into Legacy.
-</p>
-
-    </div>
-<div class="footer-contact">
-  <h3>Contact Us</h3>
-  <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
-  <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
-  <p>Address: KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
-
-  <div class="social-links">
-    <a href="https://x.com/greatmarcy88214?s=21" target="_blank" aria-label="Twitter / X">
-      <img src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v2.png" alt="X (Twitter)">
-    </a>
-    <a href="https://www.instagram.com/_greatmarcyrealty?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank" aria-label="Instagram">
-      <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
-    </a>
-    <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
-      <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
-    </a>
-    <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All rights reserved.</p>
-    <p class="developer-credit">
-      Developed by 
-<a href="https://wa.me/2348105208988?text=Hello%20Aquila%20Studio%2C%20I%20need%20a%20website" target="_blank" rel="noopener">
-  Aquila Tech
-</a>
-    </p>
-  </div>
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <a href="#enquiry">Contact Us Today</a>
+  <span class="sep">|</span>
+  <a href="tel:+2349139070404"><i class="fas fa-phone-alt" style="margin-right:6px;font-size:.7rem"></i>+234 913 907 0404</a>
+  <span class="sep">|</span>
+  <a href="https://wa.me/2349139070404" target="_blank"><i class="fab fa-whatsapp" style="margin-right:6px;font-size:.85rem"></i>WhatsApp</a>
 </div>
 
-  </div>
-
-
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Realty" class="footer-logo-img">
+        <h3>Great Marcy Realty</h3>
+        <p>A division of Great Mar-cy's &amp; Sons Limited. Trusted real estate in Ilorin — turning land into legacy, one plot at a time.</p>
+        <div class="social-links">
+          <a href="https://x.com/greatmarcy88214?s=21" target="_blank" aria-label="X / Twitter">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v2.png" alt="X">
+          </a>
+          <a href="https://www.instagram.com/_greatmarcyrealty?igsh=M2VoNm9yaGI2bGln" target="_blank" aria-label="Instagram">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+          </a>
+          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
+            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+          </a>
+        </div>
+      </div>
+      <div class="footer-contact">
+        <div class="footer-contact-title">Contact</div>
+        <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a>
+        <a href="tel:+2349139070404">+234 913 907 0404</a>
+        <p>Kulende Area, KM5 Old Jebba Road,<br>Sango Rd, Ilorin 240101, Kwara</p>
+      </div>
     </div>
-  </div>
-
-  <div class="footer-bottom">
-    
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Great Mar-cy's &amp; Sons Limited. All rights reserved.</span>
+      <span>Developed by <a href="https://wa.me/2348105208988?text=Hello%20Aquila%20Studio%2C%20I%20need%20a%20website" target="_blank" rel="noopener">Aquila Tech</a></span>
+    </div>
   </div>
 </footer>
 
+<!-- WhatsApp -->
+<a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy's%20%26%20Sons%20Limited!" class="whatsapp-button" target="_blank" aria-label="Chat on WhatsApp">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+</a>
+
 <script>
-  // Auto-update year
   document.getElementById('year').textContent = new Date().getFullYear();
-</script>
 
+  // Custom cursor
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  function animateRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animateRing)}
+  animateRing();
+  document.querySelectorAll('a,button,.estate-card,.value-box,.about-box,.partner-stat').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.classList.add('grow');ring.classList.add('grow')});
+    el.addEventListener('mouseleave',()=>{cursor.classList.remove('grow');ring.classList.remove('grow')});
+  });
 
+  // Header scroll
+  window.addEventListener('scroll',()=>{
+    document.getElementById('mainHeader').classList.toggle('sticky',window.scrollY>80)
+  });
 
-  <!-- WhatsApp Button -->
-  <a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy’s%20&%20Sons%20Limited!" class="whatsapp-button" target="_blank" aria-label="Chat on WhatsApp">
-    <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp" />
-  </a>
+  // Nav
+  const ham=document.getElementById('hamburger');
+  const nav=document.getElementById('navMenu');
+  const ov=document.getElementById('overlay');
+  function closeNav(){ham.classList.remove('active');nav.classList.remove('show');ov.classList.remove('show');document.body.classList.remove('no-scroll')}
+  ham.addEventListener('click',()=>{const o=nav.classList.toggle('show');ham.classList.toggle('active',o);ov.classList.toggle('show',o);document.body.classList.toggle('no-scroll',o)});
+  ov.addEventListener('click',closeNav);
 
-  <!-- SCRIPTS -->
-  
-   <script>
-const hamburger = document.getElementById("hamburger");
-const navMenu = document.getElementById("navMenu");
-const overlay = document.getElementById("overlay");
+  // Reveal
+  const revEls=document.querySelectorAll('.reveal,.reveal-l,.reveal-r');
+  new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible')}})},{threshold:.1}).observe||(()=>{})();
+  const rObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');rObs.unobserve(e.target)}})},{threshold:.1});
+  revEls.forEach(el=>rObs.observe(el));
 
-hamburger.addEventListener("click", () => {
-  hamburger.classList.toggle("active");
-  navMenu.classList.toggle("show");
-  overlay.classList.toggle("show");
-  document.body.classList.toggle("no-scroll");
-});
+  // Counters
+  document.querySelectorAll('.count').forEach(counter=>{
+    const target=+counter.getAttribute('data-target');
+    const suffix=counter.getAttribute('data-suffix')||'';
+    let started=false;
+    new IntersectionObserver(entries=>{
+      if(entries[0].isIntersecting&&!started){
+        started=true;let c=0;const spd=80;
+        const run=()=>{c+=target/spd;if(c<target){counter.textContent=Math.floor(c)+suffix;requestAnimationFrame(run)}else{counter.textContent=target+suffix}};
+        run();
+      }
+    },{threshold:.5}).observe(counter);
+  });
 
-// Close y.addEventListener("click", () => {
-  hamburger.classList.remove("active");
-  navMenu.classList.remove("show");
-  overlay.classList.remove("show");
-  document.body.classList.remove("no-scroll");
-
-</script>
-
-
-<script>
-    // newsletter AJAX submit (graceful fallback to normal POST)
-    const newsletterForm = document.getElementById('newsletterForm');
-    if (newsletterForm) {
-      newsletterForm.addEventListener('submit', async function(e) {
-        // prefer AJAX but let normal submission work if fetch fails
-        e.preventDefault();
-        const formData = new FormData(this);
-        try {
-          const res = await fetch(this.action || '/subscribe', {
-            method: (this.method || 'POST').toUpperCase(),
-            body: formData
-          });
-          // if server returns HTML (redirect), we just show success message client-side
-          const msgBox = document.getElementById('newsletterMsg');
-          msgBox.innerText = "✅ Thank you for subscribing!";
-          msgBox.style.color = "green";
-          this.reset();
-        } catch (err) {
-          // fallback: show message and allow the normal form POST
-          console.error(err);
-          const msgBox = document.getElementById('newsletterMsg');
-          msgBox.innerText = "⚠️ Subscription failed (please try again).";
-          msgBox.style.color = "red";
-        }
+  // Testimonial carousel
+  (function(){
+    const wrap=document.getElementById('testimonialsWrap');
+    const dotsC=document.getElementById('testDots');
+    if(!wrap)return;
+    const cards=Array.from(wrap.querySelectorAll('.testimonial-card'));
+    let idx=0,timer=null;
+    const AUTO=6000;
+    function dots(){
+      dotsC.innerHTML='';
+      cards.forEach((_,i)=>{
+        const d=document.createElement('button');
+        d.className='test-dot'+(i===0?' active':'');
+        d.setAttribute('aria-label','Testimonial '+(i+1));
+        d.addEventListener('click',()=>go(i));
+        dotsC.appendChild(d);
       });
     }
+    function upDots(){Array.from(dotsC.children).forEach((d,i)=>d.classList.toggle('active',i===idx))}
+    function go(i){
+      idx=((i%cards.length)+cards.length)%cards.length;
+      wrap.scrollTo({left:cards[idx].offsetLeft-wrap.offsetLeft-(wrap.clientWidth-cards[idx].clientWidth)/2,behavior:'smooth'});
+      upDots();reset();
+    }
+    function reset(){clearInterval(timer);timer=setInterval(()=>go(idx+1),AUTO)}
+    wrap.addEventListener('mouseenter',()=>clearInterval(timer));
+    wrap.addEventListener('mouseleave',reset);
+    document.querySelector('.test-prev').addEventListener('click',()=>go(idx-1));
+    document.querySelector('.test-next').addEventListener('click',()=>go(idx+1));
+    let sx=0;
+    wrap.addEventListener('touchstart',e=>sx=e.touches[0].clientX);
+    wrap.addEventListener('touchend',e=>{const dx=e.changedTouches[0].clientX-sx;if(Math.abs(dx)>40)dx>0?go(idx-1):go(idx+1)});
+    dots();reset();
+  })();
 
-    // testimonial carousel script
-    (function(){
-      const wrap = document.getElementById('testimonialsWrap');
-      const prevBtn = document.querySelector('.test-prev');
-      const nextBtn = document.querySelector('.test-next');
-      const dotsContainer = document.getElementById('testDots');
-      if(!wrap) return;
-
-      const cards = Array.from(wrap.querySelectorAll('.testimonial-card'));
-      let currentIndex = 0;
-      const total = cards.length;
-      let timer = null;
-      const AUTO_MS = 6000;
-
-      function buildDots(){
-        if(!dotsContainer) return;
-        dotsContainer.innerHTML = '';
-        for(let i=0;i<total;i++){
-          const d = document.createElement('button');
-          d.className = 'test-dot';
-          d.setAttribute('aria-label','Show testimonial '+(i+1));
-          d.addEventListener('click', ()=> goTo(i));
-          dotsContainer.appendChild(d);
-        }
-        updateDots();
-      }
-
-      function updateDots(){
-        if(!dotsContainer) return;
-        Array.from(dotsContainer.children).forEach((dot,i)=>{
-          dot.classList.toggle('active', i===currentIndex);
-        });
-      }
-
-      function goTo(index){
-        currentIndex = (index + total) % total;
-        const card = cards[currentIndex];
-        if(card && wrap.scrollTo){
-          const left = card.offsetLeft - wrap.offsetLeft - (wrap.clientWidth - card.clientWidth)/2;
-          wrap.scrollTo({ left, behavior: 'smooth' });
-        } else {
-          cards.forEach((c,i)=> c.style.display = (i===currentIndex ? '' : 'none'));
-        }
-        updateDots();
-        resetTimer();
-      }
-
-      function prev(){ goTo(currentIndex-1); }
-      function next(){ goTo(currentIndex+1); }
-
-      function resetTimer(){
-        if(timer) clearInterval(timer);
-        timer = setInterval(()=> next(), AUTO_MS);
-      }
-
-      [wrap, prevBtn, nextBtn, dotsContainer].forEach(el=>{
-        if(!el) return;
-        el.addEventListener('mouseenter', ()=> { if(timer) clearInterval(timer); });
-        el.addEventListener('mouseleave', ()=> resetTimer());
-        el.addEventListener('focusin', ()=> { if(timer) clearInterval(timer); });
-        el.addEventListener('focusout', ()=> resetTimer());
-      });
-
-      if(prevBtn) prevBtn.addEventListener('click', prev);
-      if(nextBtn) nextBtn.addEventListener('click', next);
-
-      // swipe
-      let startX = 0;
-      wrap.addEventListener('touchstart', (e)=> { startX = e.touches[0].clientX; });
-      wrap.addEventListener('touchend', (e)=> {
-        const dx = (e.changedTouches[0].clientX - startX);
-        if(Math.abs(dx) > 40){
-          if(dx > 0) prev(); else next();
-        }
-      });
-
-      buildDots();
-      window.addEventListener('load', ()=> goTo(0));
-      window.addEventListener('resize', ()=> goTo(currentIndex));
-    })();
-
-    // modal logic (open/close)
-    (function(){
-      function openModal(id){
-        const m = document.getElementById(id);
-        if(!m) return;
-        m.style.display = 'flex';
-        m.setAttribute('aria-hidden', 'false');
-      }
-      function closeModal(m){
-        if(!m) return;
-        m.style.display = 'none';
-        m.setAttribute('aria-hidden', 'true');
-      }
-
-      // open from read-more buttons
-      document.querySelectorAll('.read-more').forEach(btn=>{
-        btn.addEventListener('click', (e)=>{
-          const target = btn.getAttribute('data-target');
-          if(target) openModal(target);
-        });
-      });
-
-      // close buttons
-      document.querySelectorAll('.modal .close').forEach(closeBtn=>{
-        closeBtn.addEventListener('click', (e)=>{
-          const modal = closeBtn.closest('.modal');
-          closeModal(modal);
-        });
-      });
-
-      // click outside to close
-      document.querySelectorAll('.modal').forEach(mod=>{
-        mod.addEventListener('click', (e)=>{
-          if(e.target === mod) closeModal(mod);
-        });
-      });
-
-      // ESC to close
-      document.addEventListener('keydown', (e)=>{
-        if(e.key === 'Escape'){
-          document.querySelectorAll('.modal').forEach(m => closeModal(m));
-        }
-      });
-    })();
-
-    // simple scroll reveal (for .animate-up / left / right)
-    (function(){
-      const obs = new IntersectionObserver((entries)=>{
-        entries.forEach(entry=>{
-          if(entry.isIntersecting){
-            entry.target.classList.add('visible');
-          }
-        });
-      }, { threshold: 0.12 });
-
-      document.querySelectorAll('.animate-up, .animate-left, .animate-right, .animate-on-scroll').forEach(el=>{
-        obs.observe(el);
-      });
-    })();
-  </script>
-
-
-
-<script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".estate-card");
-
-    const revealOnScroll = () => {
-      const triggerBottom = window.innerHeight * 0.85;
-
-      cards.forEach(card => {
-        const cardTop = card.getBoundingClientRect().top;
-
-        if (cardTop < triggerBottom) {
-          card.classList.add("visible");
-        }
-      });
-    };
-
-    window.addEventListener("scroll", revealOnScroll);
-    revealOnScroll(); // run on page load
+  // Newsletter
+  const nlf=document.getElementById('newsletterForm');
+  if(nlf)nlf.addEventListener('submit',async e=>{
+    e.preventDefault();
+    try{
+      await fetch(nlf.action,{method:'POST',body:new FormData(nlf)});
+      const m=document.getElementById('newsletterMsg');
+      m.textContent='✓ Subscribed! Welcome to GMC Realty updates.';m.style.color='#F0B429';nlf.reset();
+    }catch{
+      const m=document.getElementById('newsletterMsg');
+      m.textContent='⚠ Something went wrong — please try again.';m.style.color='#E24B4A';
+    }
   });
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const elements = document.querySelectorAll(".estate-card, .about-info");
-
-  const revealOnScroll = () => {
-    const triggerBottom = window.innerHeight * 0.85;
-
-    elements.forEach(el => {
-      const elTop = el.getBoundingClientRect().top;
-
-      if (elTop < triggerBottom) {
-        el.classList.add("visible");
-      }
-    });
-  };
-
-  window.addEventListener("scroll", revealOnScroll);
-  revealOnScroll(); // run on load
-});
-
-
-
 </script>
-
-
-
-
-<script>
-  const scrollElements = document.querySelectorAll('.animate-on-scroll');
-
-  const elementInView = (el, offset = 0) => {
-    const elementTop = el.getBoundingClientRect().top;
-    return elementTop <= (window.innerHeight || document.documentElement.clientHeight) - offset;
-  };
-
-  const displayScrollElement = (element) => {
-    element.classList.add('visible', 'float'); // slide in + float
-  };
-
-  const hideScrollElement = (element) => {
-    element.classList.remove('visible', 'float');
-  };
-
-  const handleScrollAnimation = () => {
-    scrollElements.forEach((el) => {
-      if (elementInView(el, 100)) {
-        displayScrollElement(el);
-      } else {
-        hideScrollElement(el);
-      }
-    });
-  };
-
-  window.addEventListener('scroll', handleScrollAnimation);
-  // Trigger once on page load
-  handleScrollAnimation();
-
-
-
-document.addEventListener("DOMContentLoaded", () => {
-  const counters = document.querySelectorAll('.count');
-  const speed = 150; // Adjust for faster/slower animation
-
-  counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    const suffix = counter.getAttribute('data-suffix') || '';
-    let count = 0;
-
-    const updateCount = () => {
-      const increment = target / speed;
-      count += increment;
-
-      if (count < target) {
-        if (target >= 1000) {
-          counter.innerText = `${(count / 1000).toFixed(1)}${suffix}`;
-        } else {
-          counter.innerText = `${Math.floor(count)}${suffix}`;
-        }
-        requestAnimationFrame(updateCount);
-      } else {
-        if (target >= 1000) {
-          counter.innerText = `${(target / 1000).toFixed(0)}${suffix}`;
-        } else {
-          counter.innerText = `${target}${suffix}`;
-        }
-      }
-    };
-
-    const observer = new IntersectionObserver(entries => {
-      if (entries[0].isIntersecting) {
-        updateCount();
-        observer.unobserve(counter);
-      }
-    }, { threshold: 0.5 });
-
-    observer.observe(counter);
-  });
-});
-
-</script>
-
-<script>
-const slider = document.querySelector('.about-cards');
-const cards = document.querySelectorAll('.about-box');
-let currentIndex = 0;
-const slideInterval = 3000; // 3s per slide
-
-// Only enable auto-slide if screen width is mobile
-function isMobile() {
-  return window.innerWidth <= 768;
-}
-
-// Slide function
-function autoSlide() {
-  if (!isMobile()) return; // stop on desktop
-
-  currentIndex = (currentIndex + 1) % cards.length;
-  const card = cards[currentIndex];
-  slider.scrollTo({
-    left: card.offsetLeft - slider.offsetLeft, // scroll only horizontal
-    behavior: 'smooth'
-  });
-}
-
-// Auto-slide interval
-let intervalId = setInterval(autoSlide, slideInterval);
-
-// Pause auto-slide if user touches/swipes
-slider.addEventListener('touchstart', () => clearInterval(intervalId));
-slider.addEventListener('mousedown', () => clearInterval(intervalId));
-</script>
-
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const slider = document.querySelector('.property-card');
-  const cards = document.querySelectorAll('.estate-card');
-  let currentIndex = 0;
-  const slideInterval = 3000;
-
-  function isMobile() {
-    return window.innerWidth <= 768;
-  }
-
-  function goToCard(index) {
-    const card = cards[index];
-    if (!card) return;
-    slider.scrollTo({
-      left: card.offsetLeft - slider.offsetLeft,
-      behavior: 'smooth'
-    });
-  }
-
-  // Immediately show the first card
-  if (isMobile()) goToCard(0);
-
-  // Auto-slide interval
-  let intervalId = setInterval(() => {
-    if (!isMobile()) return;
-    currentIndex = (currentIndex + 1) % cards.length;
-    goToCard(currentIndex);
-  }, slideInterval);
-
-  // Pause auto-slide when user interacts
-  slider.addEventListener('touchstart', () => clearInterval(intervalId));
-  slider.addEventListener('mousedown', () => clearInterval(intervalId));
-
-  // Resume auto-slide after interaction
-  slider.addEventListener('touchend', () => {
-    intervalId = setInterval(() => {
-      if (!isMobile()) return;
-      currentIndex = (currentIndex + 1) % cards.length;
-      goToCard(currentIndex);
-    }, slideInterval);
-  });
-});
-</script>
-
-<script>
-  const track = document.querySelector('.property-track');
-  if (track && window.innerWidth < 768) {
-    let scrollAmount = 0;
-    setInterval(() => {
-      track.scrollBy({ left: 320, behavior: 'smooth' });
-      scrollAmount += 320;
-      if (scrollAmount >= track.scrollWidth - window.innerWidth) {
-        scrollAmount = 0;
-        track.scrollTo({ left: 0, behavior: 'smooth' });
-      }
-    }, 4000);
-  }
-</script>
-
-
 </body>
 </html>
