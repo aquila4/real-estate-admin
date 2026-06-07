@@ -1,184 +1,614 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17421133724');</script>
+
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <!-- ✅ Dynamic Page Title & Description -->
   {% if posts|length > 0 %}
-    <title>{{ posts[0].title }} | Great Mar-cy’s & Sons Limited Blog</title>
+    <title>{{ posts[0].title }} | Great Mar-cy's & Sons Limited Blog</title>
     <meta name="description" content="{{ posts[0].description }}">
     <meta name="keywords" content="{{ posts[0].keywords }}">
     <link rel="canonical" href="https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}">
-    
-    <!-- Open Graph -->
     <meta property="og:title" content="{{ posts[0].title }}">
     <meta property="og:description" content="{{ posts[0].description }}">
     <meta property="og:type" content="article">
     <meta property="og:url" content="https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}">
     <meta property="og:image" content="{{ posts[0].image_url }}">
-
-    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="{{ posts[0].title }}">
     <meta name="twitter:description" content="{{ posts[0].description }}">
     <meta name="twitter:image" content="{{ posts[0].image_url }}">
-
-    <!-- JSON-LD -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "BlogPosting",
-      "headline": "{{ posts[0].title }}",
-      "description": "{{ posts[0].description }}",
-      "image": "{{ posts[0].image_url }}",
-      "author": {
-        "@type": "Organization",
-        "name": "Great Mar-cy’s & Sons Limited"
-      },
-      "publisher": {
-        "@type": "Organization",
-        "name": "Great Mar-cy’s & Sons Limited",
-        "logo": {
-          "@type": "ImageObject",
-          "url": "https://greatmarcysonslimited.com/static/image/logogmc.png"
-        }
-      },
-      "mainEntityOfPage": {
-        "@type": "WebPage",
-        "@id": "https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}"
-      },
-      "datePublished": "{{ posts[0].date_published }}",
-      "dateModified": "{{ posts[0].date_modified }}"
-    }
+    {"@context":"https://schema.org","@type":"BlogPosting","headline":"{{ posts[0].title }}","description":"{{ posts[0].description }}","image":"{{ posts[0].image_url }}","author":{"@type":"Organization","name":"Great Mar-cy's & Sons Limited"},"publisher":{"@type":"Organization","name":"Great Mar-cy's & Sons Limited","logo":{"@type":"ImageObject","url":"https://greatmarcysonslimited.com/static/image/logogmc.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://greatmarcysonslimited.com/blog/{{ posts[0].slug }}"},"datePublished":"{{ posts[0].date_published }}","dateModified":"{{ posts[0].date_modified }}"}
     </script>
   {% else %}
-    <title>Blog | Great Mar-cy’s & Sons Limited</title>
-    <meta name="description" content="Stay updated with property insights and news.">
+    <title>Blog | Great Mar-cy's & Sons Limited</title>
+    <meta name="description" content="Stay updated with property insights and news from Great Mar-cy's & Sons Limited.">
     <meta name="keywords" content="real estate blog, property tips, investment in Ilorin, Great Marcy Sons Limited">
   {% endif %}
 
-  <!-- Styles -->
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/blog.css') }}">
+  <link rel="icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
+
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --amber:#D4961A;--amber2:#F0B429;--amber3:#FCD77F;
+      --dark:#080808;--dark2:#111111;--dark3:#1A1A1A;
+      --cream:#FAF7F0;--cream2:#F0EBE0;--white:#FFFFFF;
+      --ff-display:'Playfair Display',Georgia,serif;
+      --ff-body:'Outfit',system-ui,sans-serif;
+      --ease:cubic-bezier(0.16,1,0.3,1);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--dark2);color:var(--white);overflow-x:hidden;cursor:none}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 2.5rem}
+
+    /* Cursor */
+    .cursor{position:fixed;width:12px;height:12px;background:var(--amber2);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+    .cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(212,150,26,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease}
+    .cursor.grow{width:20px;height:20px}
+    .cursor-ring.grow{width:64px;height:64px;border-color:var(--amber)}
+
+    /* ── HEADER ── */
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;transition:all .5s var(--ease)}
+    header.sticky{background:rgba(8,8,8,.94);backdrop-filter:blur(20px);padding:1rem 3rem;border-bottom:1px solid rgba(212,150,26,.1)}
+    .logo{height:42px;width:auto;object-fit:contain}
+    .nav-menu{display:flex;gap:3rem;align-items:center}
+    .nav-menu a{font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);position:relative;padding-bottom:4px;transition:color .3s}
+    .nav-menu a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--amber2);transition:width .4s var(--ease)}
+    .nav-menu a:hover{color:var(--amber2)}
+    .nav-menu a:hover::after{width:100%}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100}
+    .hamburger span{display:block;width:28px;height:2px;background:var(--white);border-radius:2px;transition:.4s var(--ease)}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .overlay-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:900;opacity:0;pointer-events:none;transition:.4s}
+    .overlay-bg.show{opacity:1;pointer-events:all}
+    body.no-scroll{overflow:hidden}
+
+    /* ── HERO ── */
+    .blog-hero{
+      position:relative;height:65dvh;min-height:500px;
+      display:flex;align-items:flex-end;overflow:hidden;background:var(--dark)
+    }
+    .hero-noise{position:absolute;inset:0;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+    /* animated diagonal lines */
+    .hero-lines{position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(45deg,transparent,transparent 80px,rgba(212,150,26,.025) 80px,rgba(212,150,26,.025) 81px);animation:linesDrift 30s linear infinite}
+    @keyframes linesDrift{from{background-position:0 0}to{background-position:200px 200px}}
+    .hero-grad{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,rgba(0,0,0,.97) 0%,rgba(0,0,0,.5) 55%,rgba(0,0,0,.85) 100%)}
+    .hero-content{position:relative;z-index:3;padding:0 3rem 5.5rem;max-width:860px}
+    .hero-breadcrumb{display:inline-flex;align-items:center;gap:8px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber3);margin-bottom:1.75rem;animation:fadeUp .8s var(--ease) .2s both}
+    .hero-breadcrumb a{color:rgba(255,255,255,.4);transition:color .3s}
+    .hero-breadcrumb a:hover{color:var(--amber2)}
+    .hero-breadcrumb span{color:rgba(255,255,255,.2)}
+    .hero-tag{display:inline-flex;align-items:center;gap:10px;background:rgba(212,150,26,.12);border:1px solid rgba(212,150,26,.25);padding:.45rem 1.1rem;border-radius:100px;font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber3);margin-bottom:1.5rem;animation:fadeUp .8s var(--ease) .3s both}
+    .hero-tag::before{content:'';width:6px;height:6px;background:var(--amber2);border-radius:50%;animation:pulse 2s infinite}
+    @keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.5)}}
+    .blog-hero h1{font-family:var(--ff-display);font-size:clamp(3rem,7vw,6.5rem);font-weight:900;line-height:.95;letter-spacing:-.02em;color:var(--white);margin-bottom:1rem;animation:fadeUp .9s var(--ease) .5s both}
+    .blog-hero h1 em{font-style:italic;color:var(--amber2)}
+    .hero-sub{font-size:1rem;color:rgba(255,255,255,.5);max-width:520px;line-height:1.75;animation:fadeUp .9s var(--ease) .7s both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
+
+    /* scroll indicator */
+    .scroll-indicator{position:absolute;bottom:2.5rem;right:3rem;z-index:3;display:flex;align-items:center;gap:10px;animation:fadeUp .8s var(--ease) 1s both}
+    .scroll-line{width:1px;height:55px;background:linear-gradient(to bottom,rgba(255,255,255,0),rgba(212,150,26,.5));position:relative;overflow:hidden}
+    .scroll-line::after{content:'';position:absolute;top:-100%;left:0;width:100%;height:100%;background:var(--amber2);animation:scrollAnim 2s ease infinite}
+    @keyframes scrollAnim{from{top:-100%}to{top:100%}}
+    .scroll-text{font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.3);writing-mode:vertical-rl;transform:rotate(180deg)}
+
+    /* ── TICKER ── */
+    .ticker{background:var(--amber);overflow:hidden;padding:.65rem 0}
+    .ticker-track{display:flex;animation:ticker 28s linear infinite;white-space:nowrap}
+    .ticker-track span{display:inline-flex;align-items:center;gap:2rem;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dark);padding:0 2rem}
+    .ticker-track span::before{content:'◆';font-size:.45rem;opacity:.6}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ── SECTION BASE ── */
+    section{padding:7rem 0}
+    .s-label{display:inline-flex;align-items:center;gap:10px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber2);margin-bottom:1.25rem}
+    .s-label::before{content:'';width:32px;height:1px;background:var(--amber2)}
+
+    /* ── FEATURED POST ── */
+    .featured-section{background:var(--dark3);padding:6rem 0}
+    .featured-label{margin-bottom:2.5rem}
+    .featured-card{
+      display:grid;grid-template-columns:1.2fr 1fr;gap:1px;
+      background:rgba(255,255,255,.03);overflow:hidden
+    }
+    .featured-img-wrap{position:relative;overflow:hidden;aspect-ratio:16/10}
+    .featured-img-wrap img{width:100%;height:100%;object-fit:cover;filter:brightness(.75) saturate(1.1);transition:transform .8s var(--ease),filter .4s}
+    .featured-card:hover .featured-img-wrap img{transform:scale(1.05);filter:brightness(.55) saturate(1.2)}
+    .feat-badge{
+      position:absolute;top:1.5rem;left:1.5rem;z-index:2;
+      font-size:.62rem;letter-spacing:.15em;font-weight:700;text-transform:uppercase;
+      background:var(--amber);color:var(--dark);padding:.32rem .85rem
+    }
+    .feat-date-strip{
+      position:absolute;bottom:1.5rem;left:1.5rem;z-index:2;
+      display:flex;align-items:center;gap:8px;
+      font-size:.65rem;letter-spacing:.12em;text-transform:uppercase;
+      color:rgba(255,255,255,.6);background:rgba(0,0,0,.6);
+      backdrop-filter:blur(8px);padding:.4rem 1rem
+    }
+    .feat-date-strip i{color:var(--amber2);font-size:.6rem}
+    .featured-content{
+      background:var(--dark2);padding:3.5rem;
+      display:flex;flex-direction:column;justify-content:center
+    }
+    .featured-content h2{font-family:var(--ff-display);font-size:clamp(1.6rem,2.5vw,2.5rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1.25rem}
+    .featured-content h2 a{color:inherit;transition:color .3s}
+    .featured-content h2 a:hover{color:var(--amber2)}
+    .featured-excerpt{color:rgba(255,255,255,.45);line-height:1.8;font-size:.95rem;margin-bottom:2rem;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;overflow:hidden}
+    .read-link{
+      display:inline-flex;align-items:center;gap:8px;
+      font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+      color:var(--amber2);border-bottom:1px solid rgba(212,150,26,.35);padding-bottom:3px;
+      transition:all .3s;width:fit-content
+    }
+    .read-link:hover{color:var(--amber3);border-color:var(--amber3)}
+    .feat-meta{display:flex;align-items:center;gap:1.5rem;margin-bottom:1.5rem;flex-wrap:wrap}
+    .feat-meta-item{display:flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.08em;color:rgba(255,255,255,.35)}
+    .feat-meta-item i{color:var(--amber2);font-size:.65rem}
+
+    /* ── BLOG GRID ── */
+    .blog-grid-section{background:var(--dark2)}
+    .blog-grid-header{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem}
+    .blog-grid-header h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.5rem);font-weight:700;color:var(--white);line-height:1}
+    .blog-grid-header h2 em{color:var(--amber2);font-style:italic}
+    .blog-grid{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      gap:1px;background:rgba(255,255,255,.03)
+    }
+    .blog-card{
+      background:var(--dark2);overflow:hidden;
+      display:flex;flex-direction:column;cursor:pointer;
+      transition:background .4s var(--ease)
+    }
+    .blog-card:hover{background:var(--dark3)}
+    .blog-card-img{position:relative;overflow:hidden;aspect-ratio:16/10}
+    .blog-card-img img{width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:transform .6s var(--ease),filter .4s}
+    .blog-card:hover .blog-card-img img{transform:scale(1.07);filter:brightness(.55)}
+    .blog-card-img-placeholder{
+      width:100%;aspect-ratio:16/10;
+      background:var(--dark3);display:flex;align-items:center;justify-content:center
+    }
+    .blog-card-img-placeholder i{font-size:2rem;color:rgba(212,150,26,.15)}
+    .card-badge{
+      position:absolute;top:1rem;left:1rem;
+      font-size:.58rem;letter-spacing:.15em;font-weight:700;text-transform:uppercase;
+      background:var(--amber);color:var(--dark);padding:.25rem .75rem;z-index:2
+    }
+    .card-hover-arrow{
+      position:absolute;bottom:1rem;right:1rem;z-index:2;
+      width:38px;height:38px;background:var(--amber);
+      display:flex;align-items:center;justify-content:center;
+      opacity:0;transform:translateY(8px) rotate(-45deg);
+      transition:all .4s var(--ease)
+    }
+    .blog-card:hover .card-hover-arrow{opacity:1;transform:none}
+    .card-hover-arrow i{color:var(--dark);font-size:.75rem}
+    .blog-card-body{padding:1.75rem 2rem;border-top:1px solid rgba(255,255,255,.04);flex:1;display:flex;flex-direction:column}
+    .card-meta{display:flex;align-items:center;gap:1rem;margin-bottom:.85rem;flex-wrap:wrap}
+    .card-date{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:5px}
+    .card-date i{color:var(--amber2);font-size:.6rem}
+    .card-cat{font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:var(--amber2);font-weight:600}
+    .blog-card-body h3{font-family:var(--ff-display);font-size:1.2rem;font-weight:700;color:var(--white);line-height:1.25;margin-bottom:.75rem}
+    .blog-card-body h3 a{color:inherit;transition:color .3s}
+    .blog-card-body h3 a:hover{color:var(--amber2)}
+    .card-excerpt{font-size:.88rem;color:rgba(255,255,255,.38);line-height:1.65;margin-bottom:1.25rem;flex:1;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .card-footer{display:flex;align-items:center;justify-content:space-between;margin-top:auto;padding-top:1rem;border-top:1px solid rgba(255,255,255,.04)}
+    .card-read-more{font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;font-weight:600;color:var(--amber2);display:flex;align-items:center;gap:6px;transition:color .3s}
+    .card-read-more:hover{color:var(--amber3)}
+    .card-read-more i{font-size:.6rem}
+
+    /* empty state */
+    .no-posts{
+      grid-column:1/-1;text-align:center;padding:6rem 2rem;
+      border:1px solid rgba(255,255,255,.04)
+    }
+    .no-posts i{font-size:3rem;color:rgba(212,150,26,.15);display:block;margin-bottom:1.5rem}
+    .no-posts h3{font-family:var(--ff-display);font-size:1.4rem;color:rgba(255,255,255,.35);margin-bottom:.6rem}
+    .no-posts p{color:rgba(255,255,255,.2);font-size:.9rem}
+
+    /* ── NEWSLETTER ── */
+    .nl-section{background:var(--dark);padding:6rem 0}
+    .nl-inner{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center}
+    .nl-left h2{font-family:var(--ff-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;color:var(--white);line-height:1.1;margin-bottom:1rem}
+    .nl-left h2 em{color:var(--amber2);font-style:italic}
+    .nl-left p{color:rgba(255,255,255,.4);line-height:1.7;font-size:.97rem}
+    .nl-form{display:flex;border:1px solid rgba(212,150,26,.2);overflow:hidden;margin-top:2rem}
+    .nl-input{flex:1;background:transparent;border:none;padding:1.1rem 1.5rem;color:var(--white);font-family:var(--ff-body);font-size:.9rem;outline:none}
+    .nl-input::placeholder{color:rgba(255,255,255,.22)}
+    .nl-btn{background:var(--amber);color:var(--dark);border:none;padding:1.1rem 2rem;font-weight:700;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:background .3s;white-space:nowrap}
+    .nl-btn:hover{background:var(--amber2)}
+    .nl-benefits{display:flex;flex-direction:column;gap:1rem}
+    .nl-benefit{display:flex;align-items:flex-start;gap:1rem}
+    .nl-icon{width:38px;height:38px;background:rgba(212,150,26,.08);border:1px solid rgba(212,150,26,.15);display:flex;align-items:center;justify-content:center;color:var(--amber2);font-size:.85rem;flex-shrink:0}
+    .nl-benefit-text h4{font-size:.88rem;font-weight:600;color:var(--white);margin-bottom:.2rem}
+    .nl-benefit-text p{font-size:.8rem;color:rgba(255,255,255,.35);line-height:1.5}
+
+    /* ── CTA BANNER ── */
+    .cta-banner{background:var(--amber);padding:4rem 0}
+    .cta-inner{display:flex;align-items:center;justify-content:space-between;gap:2rem;flex-wrap:wrap}
+    .cta-inner h2{font-family:var(--ff-display);font-size:clamp(1.8rem,3vw,3rem);font-weight:900;color:var(--dark);line-height:1}
+    .cta-inner p{color:rgba(0,0,0,.6);margin-top:.4rem;font-size:.95rem}
+    .btn-dark-solid{display:inline-flex;align-items:center;gap:10px;background:var(--dark);color:var(--white);padding:1rem 2.25rem;font-weight:600;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;white-space:nowrap;border:none}
+    .btn-dark-solid:hover{background:var(--dark2);transform:translateY(-2px)}
+
+    /* ── CTA STRIP ── */
+    .cta-strip{background:var(--dark3);padding:1.5rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2rem;border-top:1px solid rgba(255,255,255,.04)}
+    .cta-strip a{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s}
+    .cta-strip a:hover{color:var(--amber2)}
+    .cta-strip .sep{color:rgba(255,255,255,.12)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark);padding:5rem 0 2.5rem;border-top:1px solid rgba(255,255,255,.04)}
+    .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:5rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2.5rem}
+    .footer-logo-img{height:44px;width:auto;object-fit:contain;margin-bottom:1.5rem;filter:brightness(.9)}
+    .footer-brand h3{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.6rem}
+    .footer-brand p{color:rgba(255,255,255,.3);font-size:.86rem;line-height:1.7;max-width:340px}
+    .footer-col-title{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber2);margin-bottom:1.5rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+    .footer-col ul a{color:rgba(255,255,255,.4);font-size:.88rem;transition:color .3s}
+    .footer-col ul a:hover{color:var(--amber2)}
+    .footer-contact-info p,.footer-contact-info a{color:rgba(255,255,255,.4);font-size:.88rem;display:block;margin-bottom:.5rem;transition:color .3s}
+    .footer-contact-info a:hover{color:var(--amber2)}
+    .social-links-f{display:flex;gap:.75rem;margin-top:1.75rem}
+    .social-links-f a{width:40px;height:40px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .social-links-f a:hover{border-color:var(--amber2);background:rgba(212,150,26,.08)}
+    .social-links-f img{width:18px;height:18px;object-fit:contain}
+    .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.76rem;color:rgba(255,255,255,.2)}
+    .footer-bottom a{color:rgba(255,255,255,.2);transition:color .3s}
+    .footer-bottom a:hover{color:var(--amber2)}
+
+    /* WhatsApp FAB */
+    .whatsapp-button{position:fixed;bottom:2rem;right:2rem;z-index:9999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,.35);transition:transform .3s var(--ease)}
+    .whatsapp-button:hover{transform:scale(1.12)}
+    .whatsapp-button img{width:30px;height:30px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+    .reveal-l{opacity:0;transform:translateX(-48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal-l.visible{opacity:1;transform:none}
+    .reveal-r{opacity:0;transform:translateX(48px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal-r.visible{opacity:1;transform:none}
+
+    /* Responsive */
+    @media(max-width:1024px){.blog-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:900px){
+      .hamburger{display:flex}
+      .nav-menu{position:fixed;top:0;right:-100%;width:min(340px,80vw);height:100dvh;background:var(--dark);flex-direction:column;align-items:flex-start;gap:0;padding:6rem 2.5rem 2rem;z-index:1000;transition:right .5s var(--ease);overflow-y:auto;border-left:1px solid rgba(212,150,26,.1)}
+      .nav-menu.show{right:0}
+      .nav-menu a{width:100%;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.9rem}
+      header{padding:1.25rem 1.75rem}
+      .hero-content{padding:0 1.75rem 4.5rem}
+      .featured-card{grid-template-columns:1fr}
+      .featured-img-wrap{aspect-ratio:16/9}
+      .nl-inner{grid-template-columns:1fr;gap:3rem}
+      .footer-grid{grid-template-columns:1fr;gap:3rem}
+      .cta-inner{flex-direction:column}
+    }
+    @media(max-width:640px){
+      .blog-grid{grid-template-columns:1fr}
+      .blog-grid-header{flex-direction:column;align-items:flex-start}
+    }
+  </style>
 </head>
 <body>
 
-  <!-- 🌆 BLOG HERO -->
-  <section class="blog-hero">
-    <div class="hero-overlay">
-      <h1>Our Blog</h1>
-      <p>Stay informed with property insights, investment tips, and estate news</p>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- HEADER -->
+<header id="mainHeader">
+  <a href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Realty" class="logo">
+  </a>
+  <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+  <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('property_page') }}">Properties</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+  </nav>
+</header>
+<div class="overlay-bg" id="overlay"></div>
+
+<!-- HERO -->
+<section class="blog-hero" aria-labelledby="blog-hero-title">
+  <div class="hero-noise"></div>
+  <div class="hero-lines" aria-hidden="true"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="hero-breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span>/</span>
+      Blog
     </div>
-  </section>
+    <div class="hero-tag"><span></span>Property Insights &amp; News</div>
+    <h1 id="blog-hero-title">Our <em>Blog</em> &amp;<br>Insights</h1>
+    <p class="hero-sub">Stay informed with property tips, investment advice, estate news, and real estate trends from the heart of Ilorin.</p>
+  </div>
+  <div class="scroll-indicator" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span class="scroll-text">Scroll</span>
+  </div>
+</section>
 
-  <!-- 🌟 FEATURED POST -->
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Property Insights</span><span>Investment Tips</span><span>Estate News</span><span>Ilorin Real Estate</span><span>Land Buying Guide</span><span>Great Marcy Realty</span><span>Kwara State</span><span>Property Insights</span><span>Investment Tips</span><span>Estate News</span><span>Ilorin Real Estate</span><span>Land Buying Guide</span><span>Great Marcy Realty</span><span>Kwara State</span>
+  </div>
+</div>
+
+<!-- FEATURED POST -->
 {% if posts|length > 0 %}
-<section class="featured-post">
+{% set post = posts[0] %}
+<section class="featured-section reveal" aria-labelledby="featured-title">
   <div class="container">
+    <div class="featured-label">
+      <div class="s-label">Featured Article</div>
+      <h2 id="featured-title" style="font-family:var(--ff-display);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:700;color:var(--white)">Top Story</h2>
+    </div>
     <div class="featured-card">
-      {% set post = posts[0] %}
-
-      {% if post.image_url %}
-        <img 
-          src="{{ url_for('serve_file', filename=post.image_url) }}" 
-          alt="{{ post.title }}" 
-          loading="lazy" 
-          class="featured-image">
-      {% else %}
-        <img 
-          src="{{ url_for('static', filename='image/default-blog.jpg') }}" 
-          alt="Default blog image" 
-          loading="lazy" 
-          class="featured-image">
-      {% endif %}
-
-      <div class="featured-content">
-        <h2>
-          <a href="{{ url_for('blog_post', slug=post.slug) }}">
-            {{ post.title }}
-          </a>
-        </h2>
-
-        <p>
-          {{ post.content[:250] }}
-          {% if post.content|length > 250 %}...{% endif %}
-        </p>
-
-        <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
-
-        <div class="read-more">
-          <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+      <div class="featured-img-wrap">
+        {% if post.image_url %}
+          <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+        {% else %}
+          <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Blog post" loading="lazy">
+        {% endif %}
+        <span class="feat-badge">Featured</span>
+        <div class="feat-date-strip">
+          <i class="fas fa-calendar-alt"></i>
+          {{ post.created_at.strftime("%B %d, %Y") }}
         </div>
+      </div>
+      <div class="featured-content">
+        <div class="feat-meta">
+          <div class="feat-meta-item"><i class="fas fa-calendar-alt"></i>{{ post.created_at.strftime("%B %d, %Y") }}</div>
+          <div class="feat-meta-item"><i class="fas fa-tag"></i>Real Estate</div>
+          <div class="feat-meta-item"><i class="fas fa-clock"></i>5 min read</div>
+        </div>
+        <h2><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h2>
+        <p class="featured-excerpt">{{ post.content[:280] }}{% if post.content|length > 280 %}…{% endif %}</p>
+        <a href="{{ url_for('blog_post', slug=post.slug) }}" class="read-link">
+          Read Full Article <i class="fas fa-arrow-right"></i>
+        </a>
       </div>
     </div>
   </div>
 </section>
 {% endif %}
 
-  <!-- 📰 BLOG GRID -->
-  <section class="blog-list-section">
-    <div class="container blog-list">
+<!-- BLOG GRID -->
+<section class="blog-grid-section reveal" aria-labelledby="blog-grid-title">
+  <div class="container">
+    <div class="blog-grid-header">
+      <div>
+        <div class="s-label">All Articles</div>
+        <h2 id="blog-grid-title">Latest <em>Posts</em><br>&amp; Stories</h2>
+      </div>
+    </div>
+
+    <div class="blog-grid">
       {% for post in posts[1:] %}
       <article class="blog-card">
-        {% if post.image_url %}
-          <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
-        {% endif %}
-        <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
-        <p>{{ post.content[:150] }}{% if post.content|length > 150 %}...{% endif %}</p>
-        <small>Posted on {{ post.created_at.strftime("%B %d, %Y") }}</small>
-        <div class="read-more">
-          <a href="{{ url_for('blog_post', slug=post.slug) }}">Read More</a>
+        <div class="blog-card-img">
+          {% if post.image_url %}
+            <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+          {% else %}
+            <div class="blog-card-img-placeholder">
+              <i class="fas fa-newspaper"></i>
+            </div>
+          {% endif %}
+          <span class="card-badge">Real Estate</span>
+          <div class="card-hover-arrow"><i class="fas fa-arrow-right"></i></div>
+        </div>
+        <div class="blog-card-body">
+          <div class="card-meta">
+            <div class="card-date"><i class="fas fa-calendar-alt"></i>{{ post.created_at.strftime("%b %d, %Y") }}</div>
+            <span class="card-cat">Insight</span>
+          </div>
+          <h3><a href="{{ url_for('blog_post', slug=post.slug) }}">{{ post.title }}</a></h3>
+          <p class="card-excerpt">{{ post.content[:150] }}{% if post.content|length > 150 %}…{% endif %}</p>
+          <div class="card-footer">
+            <a href="{{ url_for('blog_post', slug=post.slug) }}" class="card-read-more">
+              Read More <i class="fas fa-arrow-right"></i>
+            </a>
+          </div>
         </div>
       </article>
       {% else %}
-      <p>No posts found.</p>
+      <div class="no-posts">
+        <i class="fas fa-newspaper" aria-hidden="true"></i>
+        <h3>No Posts Yet</h3>
+        <p>Check back soon — great content is coming your way.</p>
+      </div>
       {% endfor %}
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- 🌍 FOOTER -->
-  <footer class="modern-footer">
-    <div class="footer-container">
-      <div class="footer-logo-section">
-        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Mar-cy’s & Sons Limited Logo" class="footer-logo">
-        <p>Great Mar-cy’s & Sons Limited</p>
-        <p>Trusted Real Estate Partner in Ilorin, Kwara State.</p>
-        <p>Address: KULENDE AREA, KM5 OLD JEBBA ROAD, Sango Rd, Ilorin 240101, Kwara</p>
+<!-- NEWSLETTER -->
+<section class="nl-section reveal" aria-labelledby="nl-title">
+  <div class="container">
+    <div class="nl-inner">
+      <div class="nl-left">
+        <div class="s-label">Newsletter</div>
+        <h2 id="nl-title">Get <em>Insights</em><br>Delivered to You</h2>
+        <p>Subscribe to receive the latest property tips, new estate launches, and investment opportunities straight to your inbox.</p>
+        <form class="nl-form" method="POST" action="{{ url_for('subscribe') }}" id="nlForm">
+          <input class="nl-input" type="email" name="email" placeholder="Your email address" required>
+          <button type="submit" class="nl-btn">Subscribe</button>
+        </form>
+        <div id="nlMsg" role="status" aria-live="polite" style="margin-top:.75rem;font-size:.85rem"></div>
       </div>
-
-      <div class="footer-links">
-        <h3>Quick Links</h3>
-        <ul>
-          <li><a href="/">Home</a></li>
-          <li><a href="/property">Properties</a></li>
-          <li><a href="/about">About Us</a></li>
-          <li><a href="/contact">Contact</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-contact">
-        <h3>Contact Us</h3>
-        <p>Email: <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a></p>
-        <p>Phone: <a href="tel:+2349139070404">+234 913 907 0404</a></p>
-        <div class="social-links">
-          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank">
-            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
-          </a>
-          <a href="https://www.instagram.com/great_marcy_sons_limited?igsh=M2VoNm9yaGI2bGln&utm_source=qr" target="_blank">
-            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
-          </a>
+      <div class="nl-benefits">
+        <div class="nl-benefit">
+          <div class="nl-icon"><i class="fas fa-home"></i></div>
+          <div class="nl-benefit-text">
+            <h4>New Listings First</h4>
+            <p>Be the first to know when new estates and plots go on the market.</p>
+          </div>
+        </div>
+        <div class="nl-benefit">
+          <div class="nl-icon"><i class="fas fa-chart-line"></i></div>
+          <div class="nl-benefit-text">
+            <h4>Investment Insights</h4>
+            <p>Get expert tips on where and when to invest in Kwara State land.</p>
+          </div>
+        </div>
+        <div class="nl-benefit">
+          <div class="nl-icon"><i class="fas fa-newspaper"></i></div>
+          <div class="nl-benefit-text">
+            <h4>Weekly Blog Digest</h4>
+            <p>Our best articles curated and sent straight to your inbox every week.</p>
+          </div>
+        </div>
+        <div class="nl-benefit">
+          <div class="nl-icon"><i class="fas fa-tag"></i></div>
+          <div class="nl-benefit-text">
+            <h4>Exclusive Offers</h4>
+            <p>Subscriber-only discounts and early access to prime property deals.</p>
+          </div>
         </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="footer-bottom">
-      <p>&copy; <span id="year"></span> Great Mar-cy’s & Sons Limited. All Rights Reserved.</p>
+<!-- CTA BANNER -->
+<div class="cta-banner reveal">
+  <div class="container">
+    <div class="cta-inner">
+      <div>
+        <h2>Ready to Own Your Dream Land?</h2>
+        <p>Explore our verified properties and start your ownership journey today.</p>
+      </div>
+      <a href="{{ url_for('property_page') }}" class="btn-dark-solid">
+        <i class="fas fa-building"></i> Browse Properties
+      </a>
     </div>
-  </footer>
+  </div>
+</div>
 
-  <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
-  </script>
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <a href="{{ url_for('property_page') }}">View Properties</a>
+  <span class="sep">|</span>
+  <a href="tel:+2349139070404"><i class="fas fa-phone-alt" style="margin-right:6px;font-size:.7rem"></i>+234 913 907 0404</a>
+  <span class="sep">|</span>
+  <a href="https://wa.me/2349139070404" target="_blank"><i class="fab fa-whatsapp" style="margin-right:6px;font-size:.85rem"></i>WhatsApp</a>
+</div>
 
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Realty" class="footer-logo-img">
+        <h3>Great Marcy Realty</h3>
+        <p>A division of Great Mar-cy's &amp; Sons Limited. Trusted real estate in Ilorin — turning land into legacy, one plot at a time.</p>
+        <div class="social-links-f">
+          <a href="https://x.com/greatmarcy88214?s=21" target="_blank" aria-label="X / Twitter">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v2.png" alt="X">
+          </a>
+          <a href="https://www.instagram.com/_greatmarcyrealty?igsh=M2VoNm9yaGI2bGln" target="_blank" aria-label="Instagram">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+          </a>
+          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
+            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('property_page') }}">Properties</a></li>
+          <li><a href="{{ url_for('about') }}">About Us</a></li>
+          <li><a href="{{ url_for('blog') }}">Blog</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-info">
+          <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a>
+          <a href="tel:+2349139070404">+234 913 907 0404</a>
+          <p>Kulende Area, KM5 Old Jebba Road,<br>Sango Rd, Ilorin 240101, Kwara</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Great Mar-cy's &amp; Sons Limited. All Rights Reserved.</span>
+      <span>Developed by <a href="https://wa.me/2348105208988?text=Hello%20Aquila%20Studio%2C%20I%20need%20a%20website" target="_blank" rel="noopener">Aquila Tech</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy's%20%26%20Sons%20Limited!" class="whatsapp-button" target="_blank" aria-label="Chat on WhatsApp">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Cursor
+  const cursor=document.getElementById('cursor');
+  const ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+  document.querySelectorAll('a,button,.blog-card,.featured-card').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.classList.add('grow');ring.classList.add('grow')});
+    el.addEventListener('mouseleave',()=>{cursor.classList.remove('grow');ring.classList.remove('grow')});
+  });
+
+  // Header sticky
+  window.addEventListener('scroll',()=>document.getElementById('mainHeader').classList.toggle('sticky',window.scrollY>80));
+
+  // Nav
+  const ham=document.getElementById('hamburger');
+  const nav=document.getElementById('navMenu');
+  const ov=document.getElementById('overlay');
+  function closeNav(){ham.classList.remove('active');nav.classList.remove('show');ov.classList.remove('show');document.body.classList.remove('no-scroll')}
+  ham.addEventListener('click',()=>{const o=nav.classList.toggle('show');ham.classList.toggle('active',o);ov.classList.toggle('show',o);document.body.classList.toggle('no-scroll',o)});
+  ov.addEventListener('click',closeNav);
+
+  // Reveal
+  const rObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');rObs.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal,.reveal-l,.reveal-r').forEach(el=>rObs.observe(el));
+
+  // Newsletter AJAX
+  const nlf=document.getElementById('nlForm');
+  if(nlf)nlf.addEventListener('submit',async e=>{
+    e.preventDefault();
+    try{
+      await fetch(nlf.action,{method:'POST',body:new FormData(nlf)});
+      const m=document.getElementById('nlMsg');
+      m.textContent='✓ Subscribed! Welcome aboard.';m.style.color='#F0B429';nlf.reset();
+    }catch{
+      const m=document.getElementById('nlMsg');
+      m.textContent='⚠ Something went wrong — try again.';m.style.color='#ef4444';
+    }
+  });
+</script>
 </body>
 </html>
