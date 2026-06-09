@@ -1,234 +1,521 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17421133724');
-    </script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17421133724');</script>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Add Property</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/add-property.css') }}?v=5">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Add Property — Admin | Great Mar-cy's & Sons Limited</title>
+  <link rel="icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/png">
 
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #f8f9fa;
-            color: #333;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-        .form-title {
-            text-align: center;
-            color: #004080;
-            margin-bottom: 20px;
-        }
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --amber:#D4961A;--amber2:#F0B429;--amber3:#FCD77F;
+      --dark:#080808;--dark2:#111111;--dark3:#1A1A1A;--dark4:#222222;
+      --white:#FFFFFF;--danger:#ef4444;--danger-lt:rgba(239,68,68,.08);
+      --success:#22c55e;
+      --ff-display:'Playfair Display',Georgia,serif;
+      --ff-body:'Outfit',system-ui,sans-serif;
+      --ease:cubic-bezier(0.16,1,0.3,1);
+      --sidebar:260px;
+    }
+    html{font-size:16px;scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--dark2);color:var(--white);min-height:100dvh;display:flex;overflow-x:hidden}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
 
-        form {
-            max-width: 700px;
-            margin: 0 auto 40px auto;
-            background: #fff;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-        }
+    /* ── SIDEBAR ── */
+    .sidebar{position:fixed;top:0;left:0;bottom:0;width:var(--sidebar);background:var(--dark);border-right:1px solid rgba(212,150,26,.1);display:flex;flex-direction:column;z-index:200;transition:transform .4s var(--ease);overflow-y:auto}
+    .sidebar-brand{padding:2rem 1.75rem 1.5rem;border-bottom:1px solid rgba(255,255,255,.05)}
+    .sidebar-logo{height:36px;width:auto;object-fit:contain;margin-bottom:1rem;filter:brightness(.9)}
+    .sidebar-brand h2{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:var(--white);line-height:1.1}
+    .sidebar-brand h2 em{color:var(--amber2);font-style:italic}
+    .sidebar-brand p{font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:.25rem}
+    .sidebar-nav{flex:1;padding:1.5rem 0}
+    .nav-section-label{font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.2);padding:.75rem 1.75rem .4rem}
+    .sidebar-link{display:flex;align-items:center;gap:12px;padding:.85rem 1.75rem;font-size:.82rem;font-weight:500;color:rgba(255,255,255,.5);border-left:2px solid transparent;transition:all .3s var(--ease)}
+    .sidebar-link i{width:18px;text-align:center;font-size:.85rem;color:rgba(212,150,26,.4);transition:color .3s}
+    .sidebar-link:hover{color:var(--white);background:rgba(255,255,255,.03);border-left-color:rgba(212,150,26,.3)}
+    .sidebar-link:hover i{color:var(--amber2)}
+    .sidebar-link.active{color:var(--amber2);background:rgba(212,150,26,.06);border-left-color:var(--amber)}
+    .sidebar-link.active i{color:var(--amber2)}
+    .sidebar-footer{padding:1.25rem 1.75rem;border-top:1px solid rgba(255,255,255,.05)}
+    .sidebar-footer a{display:flex;align-items:center;gap:10px;font-size:.75rem;color:rgba(255,255,255,.3);transition:color .3s}
+    .sidebar-footer a:hover{color:var(--amber2)}
 
-        form label {
-            display: block;
-            margin-top: 15px;
-            font-weight: bold;
-        }
+    /* ── MAIN ── */
+    .main{margin-left:var(--sidebar);flex:1;min-height:100dvh;display:flex;flex-direction:column}
 
-        form input[type="text"],
-        form input[type="file"],
-        form textarea {
-            width: 100%;
-            padding: 10px;
-            margin-top: 5px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            box-sizing: border-box;
-        }
+    /* topbar */
+    .topbar{position:sticky;top:0;z-index:100;background:rgba(17,17,17,.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.05);padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;gap:1.5rem}
+    .topbar-left h1{font-family:var(--ff-display);font-size:1.3rem;font-weight:700;color:var(--white)}
+    .topbar-left h1 em{color:var(--amber2);font-style:italic}
+    .topbar-left p{font-size:.75rem;color:rgba(255,255,255,.3);margin-top:.15rem}
+    .topbar-right{display:flex;align-items:center;gap:1rem}
+    .topbar-btn{display:inline-flex;align-items:center;gap:8px;padding:.65rem 1.5rem;font-size:.72rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s;border:none}
+    .topbar-btn.ghost{background:transparent;color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1)}
+    .topbar-btn.ghost:hover{border-color:var(--amber2);color:var(--amber2)}
+    .hamburger-mob{display:none;flex-direction:column;gap:4px;cursor:pointer;padding:6px}
+    .hamburger-mob span{display:block;width:22px;height:2px;background:var(--white);border-radius:2px;transition:.3s}
 
-        form button {
-            margin-top: 20px;
-            background-color: #004080;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
+    .page-content{flex:1;padding:2.5rem}
 
-        form button:hover {
-            background-color: #003366;
-        }
+    /* ── BREADCRUMB ── */
+    .breadcrumb{display:flex;align-items:center;gap:8px;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:2rem}
+    .breadcrumb a{color:rgba(255,255,255,.4);transition:color .3s}
+    .breadcrumb a:hover{color:var(--amber2)}
+    .breadcrumb span{color:rgba(255,255,255,.15)}
 
-        .property-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-            max-width: 1200px;
-            margin: 0 auto 50px auto;
-        }
+    /* ── FORM CARD ── */
+    .form-card{background:var(--dark3);border:1px solid rgba(255,255,255,.05);border-top:2px solid var(--amber);padding:2.5rem;margin-bottom:2.5rem;position:relative}
+    .form-card-title{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.35rem}
+    .form-card-title em{color:var(--amber2);font-style:italic}
+    .form-card-sub{font-size:.8rem;color:rgba(255,255,255,.3);margin-bottom:2.5rem}
 
-        .property-card {
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
+    /* section heading inside form */
+    .form-section-hd{
+      display:flex;align-items:center;gap:10px;
+      font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--amber2);margin:2.25rem 0 1.25rem;
+    }
+    .form-section-hd::before{content:'';flex:none;width:24px;height:1px;background:var(--amber2)}
+    .form-section-hd::after{content:'';flex:1;height:1px;background:rgba(212,150,26,.12)}
 
-        .property-media img,
-        .property-media video {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
+    /* grid layout */
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.25rem}
+    .form-grid.single{grid-template-columns:1fr}
+    .form-grid.triple{grid-template-columns:1fr 1fr 1fr}
 
-        .property-details {
-            padding: 15px;
-        }
+    /* field */
+    .fgroup{display:flex;flex-direction:column;gap:.4rem}
+    .fgroup.span2{grid-column:span 2}
+    .fgroup label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);font-weight:500}
+    .fgroup label .req{color:var(--amber2);margin-left:2px}
 
-        .property-details h3 {
-            margin-top: 0;
-            color: #004080;
-        }
+    .fgroup input[type="text"],
+    .fgroup input[type="number"],
+    .fgroup textarea,
+    .fgroup select{
+      width:100%;
+      background:rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.07);
+      padding:.95rem 1.1rem;
+      color:var(--white);
+      font-family:var(--ff-body);font-size:.9rem;
+      outline:none;transition:border-color .3s,background .3s;
+      appearance:none;
+    }
+    .fgroup input:focus,.fgroup textarea:focus,.fgroup select:focus{border-color:rgba(212,150,26,.45);background:rgba(212,150,26,.02)}
+    .fgroup input::placeholder,.fgroup textarea::placeholder{color:rgba(255,255,255,.18)}
+    .fgroup textarea{resize:vertical;min-height:120px}
+    .fgroup select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23F0B429' d='M6 8L1 3h10z'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 1rem center;padding-right:2.5rem;background-color:var(--dark3);color:rgba(255,255,255,.7);cursor:pointer}
+    .fgroup select option{background:var(--dark2)}
 
-        .property-details p {
-            margin: 5px 0;
-        }
+    /* file upload */
+    .file-drop{
+      border:1px dashed rgba(212,150,26,.25);
+      background:rgba(212,150,26,.03);
+      padding:2rem;text-align:center;cursor:pointer;
+      transition:border-color .3s,background .3s;position:relative;
+    }
+    .file-drop:hover{border-color:rgba(212,150,26,.5);background:rgba(212,150,26,.06)}
+    .file-drop input[type="file"]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
+    .file-drop-icon{font-size:1.75rem;color:rgba(212,150,26,.35);margin-bottom:.75rem;display:block}
+    .file-drop-label{font-size:.82rem;color:rgba(255,255,255,.4);margin-bottom:.3rem}
+    .file-drop-hint{font-size:.7rem;color:rgba(255,255,255,.2);letter-spacing:.05em}
+    .file-drop-name{font-size:.78rem;color:var(--amber2);margin-top:.5rem;display:none}
 
-        .delete-form button {
-            margin-top: 10px;
-            background-color: #cc0000;
-        }
+    /* char counter */
+    .field-hint{font-size:.68rem;color:rgba(255,255,255,.2);margin-top:.3rem}
+    .char-count{font-size:.65rem;color:rgba(255,255,255,.2);text-align:right;margin-top:.2rem}
+    .char-count.warn{color:var(--amber2)}
+    .char-count.over{color:var(--danger)}
 
-        .delete-form button:hover {
-            background-color: #990000;
-        }
+    /* submit row */
+    .form-actions{display:flex;align-items:center;gap:1rem;margin-top:2.5rem;flex-wrap:wrap}
+    .submit-btn{
+      display:inline-flex;align-items:center;gap:10px;
+      background:var(--amber);color:var(--dark);
+      padding:1rem 2.5rem;font-weight:700;font-size:.82rem;
+      letter-spacing:.1em;text-transform:uppercase;border:none;cursor:pointer;
+      position:relative;overflow:hidden;transition:all .4s var(--ease);
+    }
+    .submit-btn::before{content:'';position:absolute;inset:0;background:var(--amber2);transform:translateX(-101%);transition:.4s var(--ease)}
+    .submit-btn:hover::before{transform:translateX(0)}
+    .submit-btn span,.submit-btn i{position:relative;z-index:1}
+    .cancel-btn{display:inline-flex;align-items:center;gap:8px;padding:1rem 2rem;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);border:1px solid rgba(255,255,255,.1);cursor:pointer;transition:all .3s;background:transparent}
+    .cancel-btn:hover{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.7)}
 
-        .back-link {
-            display: inline-block;
-            text-decoration: none;
-            color: white;
-            background-color: #004080;
-            padding: 10px 15px;
-            border-radius: 5px;
-            margin-top: 20px;
-        }
+    /* ── UPLOADED PROPERTIES ── */
+    .s-label{display:inline-flex;align-items:center;gap:8px;font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber2);margin-bottom:.4rem}
+    .s-label::before{content:'';width:24px;height:1px;background:var(--amber2)}
+    .section-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:2rem;flex-wrap:wrap;gap:1rem}
+    .section-hd h2{font-family:var(--ff-display);font-size:1.5rem;font-weight:700;color:var(--white)}
+    .section-hd h2 em{color:var(--amber2);font-style:italic}
 
-        .back-link:hover {
-            background-color: #003366;
-        }
+    .prop-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1px;background:rgba(255,255,255,.04)}
+    .prop-card{background:var(--dark2);overflow:hidden;display:flex;flex-direction:column;transition:background .3s var(--ease)}
+    .prop-card:hover{background:var(--dark3)}
+    .prop-card-media{position:relative;aspect-ratio:16/10;overflow:hidden;background:var(--dark3)}
+    .prop-card-media img{width:100%;height:100%;object-fit:cover;filter:brightness(.75);transition:transform .5s var(--ease)}
+    .prop-card:hover .prop-card-media img{transform:scale(1.05)}
+    .prop-card-media video{width:100%;height:100%;object-fit:cover;display:block}
+    .media-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center}
+    .media-placeholder i{font-size:2rem;color:rgba(212,150,26,.12)}
+    .prop-card-badge{position:absolute;top:1rem;left:1rem;font-size:.58rem;letter-spacing:.14em;font-weight:700;text-transform:uppercase;background:var(--amber);color:var(--dark);padding:.25rem .7rem;z-index:2}
+    .prop-card-body{padding:1.5rem;border-top:1px solid rgba(255,255,255,.04);flex:1;display:flex;flex-direction:column}
+    .prop-card-body h3{font-family:var(--ff-display);font-size:1.05rem;font-weight:700;color:var(--white);margin-bottom:.35rem;line-height:1.2}
+    .prop-meta{font-size:.73rem;color:rgba(255,255,255,.3);display:flex;align-items:center;gap:5px;margin-bottom:.65rem}
+    .prop-meta i{color:var(--amber2);font-size:.62rem}
+    .prop-desc{font-size:.82rem;color:rgba(255,255,255,.35);line-height:1.6;flex:1;margin-bottom:1rem;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+    .prop-actions{display:flex;gap:.5rem;padding-top:1rem;border-top:1px solid rgba(255,255,255,.04)}
+    .action-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:.55rem 1rem;font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .3s;border:none;flex:1}
+    .action-btn.delete{background:var(--danger-lt);color:#fca5a5;border:1px solid rgba(239,68,68,.2)}
+    .action-btn.delete:hover{background:var(--danger);color:var(--white);border-color:var(--danger)}
+    .action-btn i{font-size:.62rem}
 
-        @media (max-width: 600px) {
-            form {
-                padding: 15px;
-            }
-        }
-    </style>
+    /* listing link */
+    .listing-link-wrap{margin-top:1.5rem}
+    .listing-btn{display:inline-flex;align-items:center;gap:10px;background:rgba(212,150,26,.1);border:1px solid rgba(212,150,26,.2);color:var(--amber2);padding:.85rem 1.75rem;font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;transition:all .3s}
+    .listing-btn:hover{background:var(--amber);color:var(--dark);border-color:var(--amber)}
+
+    /* empty */
+    .empty{grid-column:1/-1;text-align:center;padding:4rem 2rem;border:1px solid rgba(255,255,255,.04);background:var(--dark2)}
+    .empty i{font-size:2.5rem;color:rgba(212,150,26,.1);display:block;margin-bottom:1rem}
+    .empty h3{font-family:var(--ff-display);font-size:1.2rem;color:rgba(255,255,255,.25);margin-bottom:.4rem}
+    .empty p{font-size:.82rem;color:rgba(255,255,255,.18)}
+
+    /* delete modal */
+    .modal-overlay{position:fixed;inset:0;z-index:9000;background:rgba(0,0,0,.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:.3s}
+    .modal-overlay.open{opacity:1;pointer-events:all}
+    .modal-box{background:var(--dark2);border:1px solid rgba(239,68,68,.2);border-top:2px solid var(--danger);padding:2.5rem;max-width:420px;width:90%;transform:scale(.92);transition:transform .3s var(--ease)}
+    .modal-overlay.open .modal-box{transform:scale(1)}
+    .modal-box h3{font-family:var(--ff-display);font-size:1.3rem;color:var(--white);margin-bottom:.75rem}
+    .modal-box p{font-size:.88rem;color:rgba(255,255,255,.45);line-height:1.65;margin-bottom:2rem}
+    .modal-actions{display:flex;gap:.75rem}
+    .modal-cancel{flex:1;padding:.85rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);font-family:var(--ff-body);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:all .3s}
+    .modal-cancel:hover{border-color:rgba(255,255,255,.2);color:var(--white)}
+    .modal-confirm{flex:1;padding:.85rem;background:var(--danger);border:none;color:var(--white);font-family:var(--ff-body);font-size:.75rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .3s}
+    .modal-confirm:hover{background:#dc2626}
+
+    .mob-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:150;opacity:0;pointer-events:none;transition:.3s}
+    .mob-overlay.show{opacity:1;pointer-events:all}
+
+    /* Responsive */
+    @media(max-width:900px){
+      .sidebar{transform:translateX(-100%)}
+      .sidebar.show{transform:translateX(0)}
+      .main{margin-left:0}
+      .hamburger-mob{display:flex}
+      .page-content{padding:1.5rem}
+      .topbar{padding:1rem 1.5rem}
+      .form-grid{grid-template-columns:1fr}
+      .fgroup.span2{grid-column:span 1}
+      .form-grid.triple{grid-template-columns:1fr}
+    }
+    @media(max-width:600px){
+      .form-card{padding:1.5rem}
+      .form-actions{flex-direction:column;align-items:stretch}
+      .submit-btn,.cancel-btn{justify-content:center;width:100%}
+    }
+  </style>
 </head>
 <body>
-<h1 class="form-title">➕ Add New Property</h1>
 
-<form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
-    <!-- Basic Info -->
-    <label>Title:</label>
-    <input type="text" name="title" placeholder="Property Title" required>
+<div class="mob-overlay" id="mobOverlay"></div>
 
-    <label>Location:</label>
-    <input type="text" name="location" placeholder="Location" required>
+<!-- SIDEBAR -->
+<aside class="sidebar" id="sidebar">
+  <div class="sidebar-brand">
+    <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy" class="sidebar-logo">
+    <h2>Great <em>Marcy</em></h2>
+    <p>Admin Dashboard</p>
+  </div>
+  <nav class="sidebar-nav">
+    <div class="nav-section-label">Management</div>
+    <a href="{{ url_for('admin_dashboard') }}" class="sidebar-link">
+      <i class="fas fa-th-large"></i> Dashboard
+    </a>
+    <a href="{{ url_for('add_property') }}" class="sidebar-link active">
+      <i class="fas fa-plus-circle"></i> Add Property
+    </a>
+    <a href="{{ url_for('admin_blog') }}" class="sidebar-link">
+      <i class="fas fa-newspaper"></i> Manage Blog
+    </a>
+    <div class="nav-section-label" style="margin-top:1rem">Site</div>
+    <a href="{{ url_for('property_page') }}" class="sidebar-link" target="_blank">
+      <i class="fas fa-building"></i> View Listings
+    </a>
+    <a href="{{ url_for('home') }}" class="sidebar-link" target="_blank">
+      <i class="fas fa-globe"></i> View Website
+    </a>
+  </nav>
+  <div class="sidebar-footer">
+    <a href="{{ url_for('home') }}"><i class="fas fa-sign-out-alt"></i> Back to Website</a>
+  </div>
+</aside>
 
-    <label>Price:</label>
-    <input type="text" name="price" placeholder="Enter Price (e.g. ₦500,000 per plot)" required>
+<!-- MAIN -->
+<div class="main">
+  <!-- TOPBAR -->
+  <div class="topbar">
+    <div style="display:flex;align-items:center;gap:1rem">
+      <div class="hamburger-mob" id="hamburgerMob"><span></span><span></span><span></span></div>
+      <div class="topbar-left">
+        <h1>Add <em>Property</em></h1>
+        <p>Upload a new listing to the website</p>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <a href="{{ url_for('admin_dashboard') }}" class="topbar-btn ghost">
+        <i class="fas fa-arrow-left"></i> Back to Dashboard
+      </a>
+    </div>
+  </div>
 
-    <label>Description:</label>
-    <textarea name="description" rows="4" placeholder="Property Description" required></textarea>
+  <div class="page-content">
 
-        <!-- SEO Fields -->
-        <h3>SEO Settings</h3>
-        <label>SEO Title:</label>
-        <input type="text" name="seo_title" placeholder="SEO-friendly title for Google">
+    <!-- BREADCRUMB -->
+    <div class="breadcrumb">
+      <a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+      <span>/</span>
+      Add Property
+    </div>
 
-        <label>Meta Description:</label>
-        <textarea name="meta_description" rows="3" placeholder="Short description for search engines"></textarea>
+    <!-- FORM CARD -->
+    <div class="form-card">
+      <h2 class="form-card-title">New <em>Property</em> Listing</h2>
+      <p class="form-card-sub">Fill in all fields below. Fields marked <span style="color:var(--amber2)">*</span> are required.</p>
 
-        <label>Keywords (comma-separated):</label>
-        <input type="text" name="keywords" placeholder="keyword1, keyword2, ...">
+      <form action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data" id="propForm">
 
-        <!-- Media Upload -->
-        <label>Main Image:</label>
-        <input type="file" name="image" accept="image/*" required>
-
-        <label>Main Video:</label>
-        <input type="file" name="video" accept="video/*">
-
-        <button type="submit">Upload Property</button>
-        <a href="{{ url_for('admin_dashboard') }}" class="back-link">← Back to Admin Dashboard</a>
-    </form>
-
-    {% if properties %}
-        <h2 style="text-align:center; color:#003366;">Uploaded Properties</h2>
-        <div class="property-grid">
-            {% for property in properties %}
-                <div class="property-card">
-                    <div class="property-media">
-                        {% if property.image_url %}
-                            <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="Property Image">
-                        {% endif %}
-                        {% if property.video_url %}
-                            <video controls>
-                                <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
-                            </video>
-                        {% endif %}
-                    </div>
-                    <div class="property-details">
-                        <h3>{{ property.title }}</h3>
-                        <p><strong>Location:</strong> {{ property.location }}</p>
-                        <p>{{ property.description }}</p>
-                        <form action="{{ url_for('delete_property', property_id=property.id) }}" method="POST" class="delete-form">
-                            <button type="submit" onclick="return confirm('Are you sure you want to delete this property?');">Delete</button>
-                        </form>
-                    </div>
-                </div>
-            {% endfor %}
+        <!-- BASIC INFO -->
+        <div class="form-section-hd">Basic Information</div>
+        <div class="form-grid">
+          <div class="fgroup">
+            <label>Property Title <span class="req">*</span></label>
+            <input type="text" name="title" placeholder="e.g. Mercy Estate Plot" required>
+          </div>
+          <div class="fgroup">
+            <label>Location <span class="req">*</span></label>
+            <input type="text" name="location" placeholder="e.g. Olooru, Ilorin" required>
+          </div>
+          <div class="fgroup">
+            <label>Price <span class="req">*</span></label>
+            <input type="text" name="price" placeholder="e.g. ₦260,000 per plot" required>
+          </div>
+          <div class="fgroup">
+            <label>Property Type</label>
+            <select name="type">
+              <option value="" disabled selected>Select type</option>
+              <option value="land">Land</option>
+              <option value="house">House</option>
+              <option value="commercial">Commercial</option>
+              <option value="estate">Estate Plot</option>
+            </select>
+          </div>
+          <div class="fgroup span2">
+            <label>Description <span class="req">*</span></label>
+            <textarea name="description" rows="5" placeholder="Describe the property — location benefits, title type, features…" required id="descField"></textarea>
+            <div class="char-count" id="descCount">0 / 500</div>
+          </div>
         </div>
+
+        <!-- SEO -->
+        <div class="form-section-hd">SEO Settings</div>
+        <div class="form-grid">
+          <div class="fgroup span2">
+            <label>SEO Title</label>
+            <input type="text" name="seo_title" placeholder="SEO-friendly title for Google search results" id="seoTitle">
+            <div class="char-count" id="seoTitleCount">0 / 60</div>
+          </div>
+          <div class="fgroup span2">
+            <label>Meta Description</label>
+            <textarea name="meta_description" rows="3" placeholder="Short description shown in search results (120–160 chars)" id="metaDesc"></textarea>
+            <div class="char-count" id="metaDescCount">0 / 160</div>
+          </div>
+          <div class="fgroup span2">
+            <label>Keywords <span style="color:rgba(255,255,255,.3);font-weight:400">(comma-separated)</span></label>
+            <input type="text" name="keywords" placeholder="e.g. land for sale Ilorin, Mercy Estate, buy plot Kwara">
+            <div class="field-hint">Separate keywords with commas</div>
+          </div>
+        </div>
+
+        <!-- MEDIA -->
+        <div class="form-section-hd">Media Upload</div>
+        <div class="form-grid">
+          <div class="fgroup">
+            <label>Main Image <span class="req">*</span></label>
+            <div class="file-drop" id="imageDrop">
+              <input type="file" name="image" accept="image/*" required id="imageInput">
+              <i class="fas fa-image file-drop-icon"></i>
+              <div class="file-drop-label">Click or drag to upload image</div>
+              <div class="file-drop-hint">JPG, PNG, WEBP — max 10MB</div>
+              <div class="file-drop-name" id="imageName"></div>
+            </div>
+          </div>
+          <div class="fgroup">
+            <label>Property Video <span style="color:rgba(255,255,255,.3);font-weight:400">(optional)</span></label>
+            <div class="file-drop" id="videoDrop">
+              <input type="file" name="video" accept="video/*" id="videoInput">
+              <i class="fas fa-video file-drop-icon"></i>
+              <div class="file-drop-label">Click or drag to upload video</div>
+              <div class="file-drop-hint">MP4, MOV — max 100MB</div>
+              <div class="file-drop-name" id="videoName"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTIONS -->
+        <div class="form-actions">
+          <button type="submit" class="submit-btn">
+            <span>Upload Property</span>
+            <i class="fas fa-cloud-upload-alt"></i>
+          </button>
+          <a href="{{ url_for('admin_dashboard') }}" class="cancel-btn">
+            <i class="fas fa-times"></i> Cancel
+          </a>
+        </div>
+
+      </form>
+    </div>
+
+    <!-- ADD LISTING SHORTCUT -->
+    <div class="listing-link-wrap">
+      <a href="{{ url_for('upload_listing') }}" class="listing-btn">
+        <i class="fas fa-plus"></i> Add Listing (Alternative)
+      </a>
+    </div>
+
+    <!-- UPLOADED PROPERTIES -->
+    {% if properties %}
+    <div style="margin-top:3rem">
+      <div class="section-hd">
+        <div>
+          <div class="s-label">Uploaded</div>
+          <h2>Current <em>Properties</em></h2>
+        </div>
+        <span style="font-size:.75rem;color:rgba(255,255,255,.25)">{{ properties|length }} listing{{ 's' if properties|length != 1 }}</span>
+      </div>
+
+      <div class="prop-grid">
+        {% for property in properties %}
+        <div class="prop-card">
+          <div class="prop-card-media">
+            {% if property.image_url %}
+              <img src="{{ url_for('serve_file', filename=property.image_url) }}" alt="{{ property.title }}" loading="lazy">
+            {% elif property.video_url %}
+              <video controls preload="metadata">
+                <source src="{{ url_for('serve_file', filename=property.video_url) }}" type="video/mp4">
+              </video>
+            {% else %}
+              <div class="media-placeholder"><i class="fas fa-image"></i></div>
+            {% endif %}
+            <span class="prop-card-badge">Property</span>
+          </div>
+          <div class="prop-card-body">
+            <h3>{{ property.title }}</h3>
+            <div class="prop-meta"><i class="fas fa-map-marker-alt"></i>{{ property.location }}</div>
+            <p class="prop-desc">{{ property.description }}</p>
+            <div class="prop-actions">
+              <button type="button" class="action-btn delete"
+                onclick="openDeleteModal('{{ url_for('delete_property', property_id=property.id) }}', '{{ property.title|e }}')">
+                <i class="fas fa-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
     {% else %}
-        <p style="text-align:center; color:#666;">No properties uploaded yet.</p>
+    <div style="margin-top:3rem">
+      <div class="section-hd">
+        <div>
+          <div class="s-label">Uploaded</div>
+          <h2>Current <em>Properties</em></h2>
+        </div>
+      </div>
+      <div class="prop-grid">
+        <div class="empty">
+          <i class="fas fa-building"></i>
+          <h3>No Properties Yet</h3>
+          <p>Upload your first property using the form above.</p>
+        </div>
+      </div>
+    </div>
     {% endif %}
 
-
-<div class="add-listing-link">
-    <a href="{{ url_for('upload_listing') }}" class="btn-primary">+ Add Listing</a>
+  </div>
 </div>
 
-<style>
-.btn-primary {
-    display: inline-block;
-    background: linear-gradient(90deg, #003cff, #00bcd4);
-    color: white;
-    padding: 12px 25px;
-    border-radius: 8px;
-    text-decoration: none;
-    font-weight: 600;
-    transition: 0.3s;
-}
-.btn-primary:hover {
-    opacity: 0.85;
-}
-.add-listing-link {
-    margin: 20px 0;
-}
-</style>
+<!-- DELETE MODAL -->
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-box">
+    <h3>Delete Property</h3>
+    <p>Are you sure you want to delete <strong id="deletePropName" style="color:var(--white)"></strong>? This cannot be undone.</p>
+    <div class="modal-actions">
+      <button class="modal-cancel" onclick="closeDeleteModal()">Cancel</button>
+      <form id="deleteForm" method="POST" style="flex:1">
+        <button type="submit" class="modal-confirm" style="width:100%"><i class="fas fa-trash" style="margin-right:6px"></i>Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
 
+<script>
+  // Mobile sidebar
+  const sidebar=document.getElementById('sidebar');
+  const mobOverlay=document.getElementById('mobOverlay');
+  document.getElementById('hamburgerMob').addEventListener('click',()=>{sidebar.classList.toggle('show');mobOverlay.classList.toggle('show')});
+  mobOverlay.addEventListener('click',()=>{sidebar.classList.remove('show');mobOverlay.classList.remove('show')});
 
+  // File name display
+  function trackFile(inputId, nameId){
+    document.getElementById(inputId).addEventListener('change',function(){
+      const el=document.getElementById(nameId);
+      if(this.files.length){
+        el.textContent=this.files[0].name;
+        el.style.display='block';
+      }
+    });
+  }
+  trackFile('imageInput','imageName');
+  trackFile('videoInput','videoName');
+
+  // Char counters
+  function charCounter(fieldId, countId, max){
+    const field=document.getElementById(fieldId);
+    const count=document.getElementById(countId);
+    if(!field||!count) return;
+    field.addEventListener('input',()=>{
+      const len=field.value.length;
+      count.textContent=`${len} / ${max}`;
+      count.className='char-count'+(len>max?' over':len>max*.85?' warn':'');
+    });
+  }
+  charCounter('descField','descCount',500);
+  charCounter('seoTitle','seoTitleCount',60);
+  charCounter('metaDesc','metaDescCount',160);
+
+  // Delete modal
+  function openDeleteModal(action,name){
+    document.getElementById('deleteForm').action=action;
+    document.getElementById('deletePropName').textContent=name;
+    document.getElementById('deleteModal').classList.add('open');
+  }
+  function closeDeleteModal(){document.getElementById('deleteModal').classList.remove('open')}
+  document.getElementById('deleteModal').addEventListener('click',function(e){if(e.target===this)closeDeleteModal()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeDeleteModal()});
+</script>
 </body>
 </html>
