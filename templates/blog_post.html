@@ -1,170 +1,507 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ post.title }}</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17421133724"></script>
+  <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-17421133724');</script>
 
-    <style>
-        /* === RADIANT BLOG POST STYLES === */
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ post.title }} | Great Mar-cy's & Sons Limited Blog</title>
+  <meta name="description" content="{{ post.description if post.description else post.content[:160] }}">
+  {% if post.keywords %}<meta name="keywords" content="{{ post.keywords }}">{% endif %}
+  <link rel="canonical" href="https://greatmarcysonslimited.com/blog/{{ post.slug }}">
+  <meta property="og:title" content="{{ post.title }}">
+  <meta property="og:description" content="{{ post.description if post.description else post.content[:160] }}">
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://greatmarcysonslimited.com/blog/{{ post.slug }}">
+  {% if post.image_url %}<meta property="og:image" content="{{ post.image_url }}">{% endif %}
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ post.title }}">
+  <link rel="icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/png">
 
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+  <script type="application/ld+json">
+  {"@context":"https://schema.org","@type":"BlogPosting","headline":"{{ post.title }}","description":"{{ post.description if post.description else '' }}","author":{"@type":"Organization","name":"Great Mar-cy's & Sons Limited"},"publisher":{"@type":"Organization","name":"Great Mar-cy's & Sons Limited","logo":{"@type":"ImageObject","url":"https://greatmarcysonslimited.com/static/image/logogmc.png"}},"mainEntityOfPage":{"@type":"WebPage","@id":"https://greatmarcysonslimited.com/blog/{{ post.slug }}"},"datePublished":"{{ post.created_at }}"}
+  </script>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            background: radial-gradient(circle at top left, #004aad, #001f3f, #000);
-            color: #f5f7ff;
-            margin: 0;
-            padding: 0;
-            line-height: 1.7;
-            overflow-x: hidden;
-        }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous">
 
-        .blog-header {
-            text-align: center;
-            background: linear-gradient(135deg, rgba(0,74,173,0.9), rgba(0,119,255,0.85));
-            color: white;
-            padding: 70px 20px;
-            border-bottom: 2px solid rgba(255,255,255,0.2);
-            box-shadow: 0 0 40px rgba(0,123,255,0.4);
-        }
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    :root{
+      --amber:#D4961A;--amber2:#F0B429;--amber3:#FCD77F;
+      --dark:#080808;--dark2:#111111;--dark3:#1A1A1A;
+      --cream:#FAF7F0;--cream2:#F0EBE0;--white:#FFFFFF;
+      --ff-display:'Playfair Display',Georgia,serif;
+      --ff-body:'Outfit',system-ui,sans-serif;
+      --ease:cubic-bezier(0.16,1,0.3,1);
+    }
+    html{scroll-behavior:smooth}
+    body{font-family:var(--ff-body);background:var(--dark2);color:var(--white);overflow-x:hidden;cursor:none}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:1280px;margin:0 auto;padding:0 2.5rem}
 
-        .blog-title {
-            font-size: 2.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
+    /* Cursor */
+    .cursor{position:fixed;width:12px;height:12px;background:var(--amber2);border-radius:50%;pointer-events:none;z-index:99999;transform:translate(-50%,-50%);transition:width .2s,height .2s}
+    .cursor-ring{position:fixed;width:40px;height:40px;border:1.5px solid rgba(212,150,26,.5);border-radius:50%;pointer-events:none;z-index:99998;transform:translate(-50%,-50%);transition:all .12s ease}
+    .cursor.grow{width:20px;height:20px}
+    .cursor-ring.grow{width:64px;height:64px;border-color:var(--amber)}
 
-        .blog-meta {
-            font-size: 1rem;
-            opacity: 0.85;
-        }
+    /* ── HEADER ── */
+    header{position:fixed;top:0;left:0;right:0;z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:1.5rem 3rem;transition:all .5s var(--ease)}
+    header.sticky{background:rgba(8,8,8,.94);backdrop-filter:blur(20px);padding:1rem 3rem;border-bottom:1px solid rgba(212,150,26,.1)}
+    .logo{height:42px;width:auto;object-fit:contain}
+    .nav-menu{display:flex;gap:3rem;align-items:center}
+    .nav-menu a{font-size:.75rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.7);position:relative;padding-bottom:4px;transition:color .3s}
+    .nav-menu a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--amber2);transition:width .4s var(--ease)}
+    .nav-menu a:hover{color:var(--amber2)}
+    .nav-menu a:hover::after{width:100%}
+    .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;z-index:1100}
+    .hamburger span{display:block;width:28px;height:2px;background:var(--white);border-radius:2px;transition:.4s var(--ease)}
+    .hamburger.active span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+    .hamburger.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .hamburger.active span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+    .overlay-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:900;opacity:0;pointer-events:none;transition:.4s}
+    .overlay-bg.show{opacity:1;pointer-events:all}
+    body.no-scroll{overflow:hidden}
 
-        .blog-container {
-            max-width: 900px;
-            margin: 60px auto;
-            background: rgba(255,255,255,0.07);
-            padding: 45px 35px;
-            border-radius: 25px;
-            box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(255,255,255,0.2);
-            animation: fadeIn 1.5s ease;
-        }
+    /* ── HERO ── */
+    .post-hero{
+      position:relative;height:70dvh;min-height:520px;
+      display:flex;align-items:flex-end;overflow:hidden;background:var(--dark)
+    }
+    .hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.25) saturate(1.2);z-index:0}
+    .hero-noise{position:absolute;inset:0;z-index:1;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:200px}
+    .hero-grad{position:absolute;inset:0;z-index:2;background:linear-gradient(135deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.4) 55%,rgba(0,0,0,.8) 100%)}
+    .hero-content{position:relative;z-index:3;padding:0 3rem 5rem;max-width:860px;animation:fadeUp .9s var(--ease) .3s both}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:none}}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+    .hero-breadcrumb{display:inline-flex;align-items:center;gap:8px;font-size:.65rem;letter-spacing:.22em;text-transform:uppercase;color:var(--amber3);margin-bottom:1.75rem}
+    .hero-breadcrumb a{color:rgba(255,255,255,.4);transition:color .3s}
+    .hero-breadcrumb a:hover{color:var(--amber2)}
+    .hero-breadcrumb span{color:rgba(255,255,255,.2)}
 
-        .blog-image img {
-            width: 100%;
-            border-radius: 18px;
-            margin-bottom: 35px;
-            box-shadow: 0 0 25px rgba(0,119,255,0.3);
-            transition: transform 0.4s ease, box-shadow 0.4s ease;
-        }
+    .post-hero h1{
+      font-family:var(--ff-display);font-size:clamp(2.2rem,5vw,4.5rem);
+      font-weight:900;line-height:1.05;letter-spacing:-.02em;
+      color:var(--white);margin-bottom:1.5rem
+    }
 
-        .blog-image img:hover {
-            transform: scale(1.03);
-            box-shadow: 0 0 40px rgba(0,119,255,0.6);
-        }
+    .post-meta-row{display:flex;align-items:center;flex-wrap:wrap;gap:1.5rem}
+    .post-meta-item{display:flex;align-items:center;gap:6px;font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+    .post-meta-item i{color:var(--amber2);font-size:.65rem}
 
-        .blog-content {
-            font-size: 1.15rem;
-            color: #f1f1f1;
-        }
+    /* ── TICKER ── */
+    .ticker{background:var(--amber);overflow:hidden;padding:.65rem 0}
+    .ticker-track{display:flex;animation:ticker 28s linear infinite;white-space:nowrap}
+    .ticker-track span{display:inline-flex;align-items:center;gap:2rem;font-size:.68rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--dark);padding:0 2rem}
+    .ticker-track span::before{content:'◆';font-size:.45rem;opacity:.6}
+    @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-        .blog-content p {
-            margin-bottom: 20px;
-        }
+    /* ── ARTICLE LAYOUT ── */
+    .post-layout{
+      display:grid;grid-template-columns:1fr 320px;gap:3rem;
+      padding:5rem 0 7rem;align-items:flex-start
+    }
 
-        .blog-tags {
-            margin-top: 30px;
-        }
+    /* ── ARTICLE BODY ── */
+    .post-article{min-width:0}
 
-        .blog-tags .tag {
-            background: linear-gradient(135deg, #0077ff, #00b4d8);
-            color: white;
-            padding: 8px 14px;
-            border-radius: 25px;
-            font-size: 0.9rem;
-            margin-right: 8px;
-            display: inline-block;
-            box-shadow: 0 0 10px rgba(0,119,255,0.5);
-            transition: transform 0.2s ease;
-        }
+    .post-featured-img{
+      position:relative;overflow:hidden;
+      aspect-ratio:16/9;margin-bottom:3rem
+    }
+    .post-featured-img img{
+      width:100%;height:100%;object-fit:cover;
+      filter:brightness(.85);
+      transition:transform .8s var(--ease)
+    }
+    .post-featured-img:hover img{transform:scale(1.03)}
+    .post-featured-img::before{
+      content:'FEATURED';
+      position:absolute;top:1.25rem;left:1.25rem;z-index:2;
+      font-size:.58rem;letter-spacing:.18em;font-weight:700;
+      background:var(--amber);color:var(--dark);padding:.28rem .8rem
+    }
 
-        .blog-tags .tag:hover {
-            transform: scale(1.05);
-        }
+    /* article prose */
+    .post-prose{
+      font-size:1.05rem;line-height:1.85;color:rgba(255,255,255,.72);
+    }
+    .post-prose h2{font-family:var(--ff-display);font-size:1.9rem;font-weight:700;color:var(--white);margin:2.5rem 0 1rem;line-height:1.1}
+    .post-prose h3{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--white);margin:2rem 0 .75rem}
+    .post-prose h4{font-family:var(--ff-display);font-size:1.1rem;font-weight:700;color:var(--amber2);margin:1.75rem 0 .5rem}
+    .post-prose p{margin-bottom:1.5rem}
+    .post-prose strong{color:var(--white);font-weight:600}
+    .post-prose em{color:var(--amber3);font-style:italic}
+    .post-prose a{color:var(--amber2);border-bottom:1px solid rgba(212,150,26,.3);transition:color .3s,border-color .3s}
+    .post-prose a:hover{color:var(--amber3);border-color:var(--amber3)}
+    .post-prose ul,.post-prose ol{margin:1.25rem 0 1.5rem 1.5rem;display:flex;flex-direction:column;gap:.5rem}
+    .post-prose li{color:rgba(255,255,255,.65)}
+    .post-prose li::marker{color:var(--amber2)}
+    .post-prose blockquote{
+      border-left:3px solid var(--amber);
+      background:rgba(212,150,26,.05);
+      padding:1.25rem 1.75rem;margin:2rem 0;
+      font-family:var(--ff-display);font-size:1.15rem;font-style:italic;
+      color:rgba(255,255,255,.7)
+    }
+    .post-prose img{width:100%;margin:2rem 0;filter:brightness(.85)}
+    .post-prose hr{border:none;border-top:1px solid rgba(255,255,255,.06);margin:2.5rem 0}
+    .post-prose code{background:rgba(212,150,26,.1);border:1px solid rgba(212,150,26,.15);padding:.15rem .5rem;font-size:.88rem;color:var(--amber3);border-radius:2px}
+    .post-prose pre{background:var(--dark3);border:1px solid rgba(255,255,255,.07);padding:1.5rem;overflow-x:auto;margin:1.5rem 0}
+    .post-prose pre code{background:none;border:none;padding:0;font-size:.88rem;color:rgba(255,255,255,.75)}
 
-        .back-btn {
-            display: inline-block;
-            margin-top: 45px;
-            padding: 12px 22px;
-            background: linear-gradient(135deg, #004aad, #00b4d8);
-            color: white;
-            border-radius: 10px;
-            text-decoration: none;
-            font-weight: 500;
-            letter-spacing: 0.5px;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 15px rgba(0,119,255,0.4);
-        }
+    /* tags */
+    .post-tags{margin-top:3rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,.06)}
+    .post-tags-label{font-size:.65rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:.85rem}
+    .tags-wrap{display:flex;flex-wrap:wrap;gap:.5rem}
+    .tag{
+      display:inline-flex;align-items:center;
+      background:rgba(212,150,26,.08);border:1px solid rgba(212,150,26,.18);
+      color:var(--amber3);font-size:.68rem;letter-spacing:.1em;font-weight:500;
+      padding:.35rem .9rem;text-transform:uppercase;
+      transition:all .3s
+    }
+    .tag:hover{background:var(--amber);color:var(--dark);border-color:var(--amber)}
 
-        .back-btn:hover {
-            background: linear-gradient(135deg, #00b4d8, #0077ff);
-            box-shadow: 0 0 25px rgba(0,119,255,0.8);
-            transform: translateY(-2px);
-        }
+    /* back btn */
+    .back-btn{
+      display:inline-flex;align-items:center;gap:8px;
+      margin-top:2.5rem;
+      font-size:.75rem;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+      color:var(--amber2);border-bottom:1px solid rgba(212,150,26,.3);padding-bottom:3px;
+      transition:all .3s
+    }
+    .back-btn:hover{color:var(--amber3);border-color:var(--amber3)}
 
-        /* === RESPONSIVE === */
-        @media (max-width: 768px) {
-            .blog-container {
-                margin: 30px 15px;
-                padding: 25px;
-            }
+    /* share row */
+    .share-row{
+      margin-top:2.5rem;padding:1.5rem 2rem;
+      background:var(--dark3);border:1px solid rgba(255,255,255,.05);
+      border-left:2px solid var(--amber);
+      display:flex;align-items:center;flex-wrap:wrap;gap:1rem
+    }
+    .share-label{font-size:.65rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-right:.5rem}
+    .share-btn{
+      display:inline-flex;align-items:center;gap:6px;
+      padding:.5rem 1rem;font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;
+      border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.5);
+      cursor:pointer;transition:all .3s;background:transparent
+    }
+    .share-btn:hover{border-color:var(--amber2);color:var(--amber2)}
+    .share-btn i{font-size:.75rem}
 
-            .blog-title {
-                font-size: 2.1rem;
-            }
-        }
-    </style>
+    /* ── SIDEBAR ── */
+    .post-sidebar{display:flex;flex-direction:column;gap:1.5rem;position:sticky;top:100px}
+
+    .sidebar-widget{background:var(--dark3);border:1px solid rgba(255,255,255,.05);border-top:2px solid var(--amber);padding:1.75rem}
+    .widget-title{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:1.25rem;display:flex;align-items:center;gap:8px}
+    .widget-title i{color:var(--amber2);font-size:.85rem}
+
+    /* CTA widget */
+    .cta-widget{background:var(--amber);border:none}
+    .cta-widget .widget-title{color:var(--dark)}
+    .cta-widget p{font-size:.85rem;color:rgba(0,0,0,.65);line-height:1.6;margin-bottom:1.25rem}
+    .cta-widget-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:.85rem;background:var(--dark);color:var(--white);font-size:.72rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;transition:background .3s}
+    .cta-widget-btn:hover{background:var(--dark2)}
+
+    /* author widget */
+    .author-img{width:52px;height:52px;border-radius:50%;object-fit:cover;border:2px solid var(--amber);margin-bottom:1rem}
+    .author-name{font-family:var(--ff-display);font-size:1rem;font-weight:700;color:var(--white);margin-bottom:.3rem}
+    .author-bio{font-size:.82rem;color:rgba(255,255,255,.4);line-height:1.6}
+
+    /* related posts */
+    .related-post{display:flex;gap:10px;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.04)}
+    .related-post:last-child{border-bottom:none;padding-bottom:0}
+    .related-thumb{width:60px;height:50px;object-fit:cover;flex-shrink:0;filter:brightness(.75)}
+    .related-title{font-size:.82rem;color:rgba(255,255,255,.65);line-height:1.4;transition:color .3s}
+    .related-post:hover .related-title{color:var(--amber2)}
+    .related-date{font-size:.65rem;color:rgba(255,255,255,.25);margin-top:.2rem}
+
+    /* ── CTA STRIP ── */
+    .cta-strip{background:var(--dark3);padding:1.5rem 2.5rem;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:2rem;border-top:1px solid rgba(255,255,255,.04)}
+    .cta-strip a{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s}
+    .cta-strip a:hover{color:var(--amber2)}
+    .cta-strip .sep{color:rgba(255,255,255,.12)}
+
+    /* ── FOOTER ── */
+    footer{background:var(--dark);padding:5rem 0 2.5rem;border-top:1px solid rgba(255,255,255,.04)}
+    .footer-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr;gap:5rem;padding-bottom:4rem;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:2.5rem}
+    .footer-logo-img{height:44px;width:auto;object-fit:contain;margin-bottom:1.5rem;filter:brightness(.9)}
+    .footer-brand h3{font-family:var(--ff-display);font-size:1.4rem;font-weight:700;color:var(--white);margin-bottom:.6rem}
+    .footer-brand p{color:rgba(255,255,255,.3);font-size:.86rem;line-height:1.7;max-width:340px}
+    .footer-col-title{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--amber2);margin-bottom:1.5rem}
+    .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:.6rem}
+    .footer-col ul a{color:rgba(255,255,255,.4);font-size:.88rem;transition:color .3s}
+    .footer-col ul a:hover{color:var(--amber2)}
+    .footer-contact-info p,.footer-contact-info a{color:rgba(255,255,255,.4);font-size:.88rem;display:block;margin-bottom:.5rem;transition:color .3s}
+    .footer-contact-info a:hover{color:var(--amber2)}
+    .social-links-f{display:flex;gap:.75rem;margin-top:1.75rem}
+    .social-links-f a{width:40px;height:40px;border:1px solid rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;transition:all .3s}
+    .social-links-f a:hover{border-color:var(--amber2);background:rgba(212,150,26,.08)}
+    .social-links-f img{width:18px;height:18px;object-fit:contain}
+    .footer-bottom{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem;font-size:.76rem;color:rgba(255,255,255,.2)}
+    .footer-bottom a{color:rgba(255,255,255,.2);transition:color .3s}
+    .footer-bottom a:hover{color:var(--amber2)}
+
+    /* WhatsApp FAB */
+    .whatsapp-button{position:fixed;bottom:2rem;right:2rem;z-index:9999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 24px rgba(37,211,102,.35);transition:transform .3s var(--ease)}
+    .whatsapp-button:hover{transform:scale(1.12)}
+    .whatsapp-button img{width:30px;height:30px}
+
+    /* Reveal */
+    .reveal{opacity:0;transform:translateY(40px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Responsive */
+    @media(max-width:1024px){.post-layout{grid-template-columns:1fr;gap:3rem}.post-sidebar{position:static}}
+    @media(max-width:900px){
+      .hamburger{display:flex}
+      .nav-menu{position:fixed;top:0;right:-100%;width:min(340px,80vw);height:100dvh;background:var(--dark);flex-direction:column;align-items:flex-start;gap:0;padding:6rem 2.5rem 2rem;z-index:1000;transition:right .5s var(--ease);overflow-y:auto;border-left:1px solid rgba(212,150,26,.1)}
+      .nav-menu.show{right:0}
+      .nav-menu a{width:100%;padding:1rem 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.9rem}
+      header{padding:1.25rem 1.75rem}
+      .hero-content{padding:0 1.75rem 4rem}
+      .post-layout{padding:3rem 0 5rem}
+      .footer-grid{grid-template-columns:1fr;gap:3rem}
+    }
+    @media(max-width:600px){.post-hero{height:55dvh}}
+  </style>
 </head>
-
 <body>
 
-    <header class="blog-header">
-        <h1 class="blog-title">{{ post.title }}</h1>
-        <p class="blog-meta">
-            Published on {{ post.created_at.strftime('%B %d, %Y') }}
-        </p>
-    </header>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
 
-    <section class="blog-container">
-        {% if post.image_url %}
-        <div class="blog-image">
-            <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}">
+<!-- HEADER -->
+<header id="mainHeader">
+  <a href="{{ url_for('home') }}">
+    <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Realty" class="logo">
+  </a>
+  <div class="hamburger" id="hamburger" aria-label="Toggle navigation" role="button" tabindex="0">
+    <span></span><span></span><span></span>
+  </div>
+  <nav class="nav-menu" id="navMenu" aria-label="Main navigation">
+    <a href="{{ url_for('home') }}">Home</a>
+    <a href="{{ url_for('property_page') }}">Properties</a>
+    <a href="{{ url_for('about') }}">About</a>
+    <a href="{{ url_for('blog') }}">Blog</a>
+    <a href="{{ url_for('contact') }}">Contact</a>
+  </nav>
+</header>
+<div class="overlay-bg" id="overlay"></div>
+
+<!-- HERO -->
+<section class="post-hero" aria-labelledby="post-title">
+  {% if post.image_url %}
+    <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" class="hero-img">
+  {% endif %}
+  <div class="hero-noise"></div>
+  <div class="hero-grad"></div>
+  <div class="hero-content">
+    <div class="hero-breadcrumb">
+      <a href="{{ url_for('home') }}">Home</a>
+      <span>/</span>
+      <a href="{{ url_for('blog') }}">Blog</a>
+      <span>/</span>
+      Article
+    </div>
+    <h1 id="post-title">{{ post.title }}</h1>
+    <div class="post-meta-row">
+      <div class="post-meta-item"><i class="fas fa-calendar-alt"></i>{{ post.created_at.strftime('%B %d, %Y') }}</div>
+      <div class="post-meta-item"><i class="fas fa-tag"></i>Real Estate</div>
+      <div class="post-meta-item"><i class="fas fa-clock"></i>5 min read</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>Great Marcy Realty</span><span>Property Insights</span><span>Ilorin Real Estate</span><span>Investment Tips</span><span>Land for Sale</span><span>Kwara State</span><span>Great Marcy Realty</span><span>Property Insights</span><span>Ilorin Real Estate</span><span>Investment Tips</span><span>Land for Sale</span><span>Kwara State</span>
+  </div>
+</div>
+
+<!-- ARTICLE + SIDEBAR -->
+<div class="container">
+  <div class="post-layout">
+
+    <!-- ARTICLE -->
+    <main class="post-article reveal" aria-label="Blog post content">
+
+      {% if post.image_url %}
+      <div class="post-featured-img">
+        <img src="{{ url_for('serve_file', filename=post.image_url) }}" alt="{{ post.title }}" loading="lazy">
+      </div>
+      {% endif %}
+
+      <article class="post-prose">
+        {{ post.content | safe }}
+      </article>
+
+      <!-- TAGS -->
+      {% if post.keywords %}
+      <div class="post-tags">
+        <div class="post-tags-label">Tags</div>
+        <div class="tags-wrap">
+          {% for tag in post.keywords.split(',') %}
+            <span class="tag">{{ tag.strip() }}</span>
+          {% endfor %}
         </div>
-        {% endif %}
+      </div>
+      {% endif %}
 
-        <article class="blog-content">
-            {{ post.content | safe }}
-        </article>
+      <!-- SHARE -->
+      <div class="share-row">
+        <span class="share-label">Share</span>
+        <a href="https://wa.me/?text={{ post.title | urlencode }}%20https://greatmarcysonslimited.com/blog/{{ post.slug }}" target="_blank" class="share-btn">
+          <i class="fab fa-whatsapp"></i> WhatsApp
+        </a>
+        <a href="https://www.facebook.com/sharer/sharer.php?u=https://greatmarcysonslimited.com/blog/{{ post.slug }}" target="_blank" class="share-btn">
+          <i class="fab fa-facebook"></i> Facebook
+        </a>
+        <a href="https://twitter.com/intent/tweet?text={{ post.title | urlencode }}&url=https://greatmarcysonslimited.com/blog/{{ post.slug }}" target="_blank" class="share-btn">
+          <i class="fab fa-x-twitter"></i> X
+        </a>
+      </div>
 
-        {% if post.keywords %}
-        <div class="blog-tags">
-            <strong>Tags:</strong>
-            {% for tag in post.keywords.split(',') %}
-                <span class="tag">{{ tag.strip() }}</span>
-            {% endfor %}
+      <a href="{{ url_for('blog') }}" class="back-btn">
+        <i class="fas fa-arrow-left"></i> Back to Blog
+      </a>
+    </main>
+
+    <!-- SIDEBAR -->
+    <aside class="post-sidebar" aria-label="Post sidebar">
+
+      <!-- CTA Widget -->
+      <div class="sidebar-widget cta-widget">
+        <div class="widget-title"><i class="fas fa-home"></i> Find Your Land</div>
+        <p>Explore our premium estates and verified property listings across Kwara State.</p>
+        <a href="{{ url_for('property_page') }}" class="cta-widget-btn">
+          <i class="fas fa-building"></i> View Properties
+        </a>
+      </div>
+
+      <!-- Author Widget -->
+      <div class="sidebar-widget">
+        <div class="widget-title"><i class="fas fa-user"></i> About the Author</div>
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy" class="author-img">
+        <div class="author-name">Great Marcy Realty</div>
+        <p class="author-bio">Trusted real estate company in Ilorin, helping clients buy, sell, and invest in land across Kwara State since 2018.</p>
+      </div>
+
+      <!-- Contact Widget -->
+      <div class="sidebar-widget">
+        <div class="widget-title"><i class="fas fa-phone-alt"></i> Contact Us</div>
+        <div style="display:flex;flex-direction:column;gap:.75rem">
+          <a href="tel:+2349139070404" style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.5);transition:color .3s" onmouseover="this.style.color='var(--amber2)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+            <i style="color:var(--amber2);font-size:.75rem" class="fas fa-phone-alt"></i>+234 913 907 0404
+          </a>
+          <a href="https://wa.me/2349139070404" target="_blank" style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.5);transition:color .3s" onmouseover="this.style.color='#25D366'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+            <i style="color:#25D366;font-size:.75rem" class="fab fa-whatsapp"></i>Chat on WhatsApp
+          </a>
+          <a href="mailto:info@greatmarcysonslimited.com" style="display:flex;align-items:center;gap:8px;font-size:.82rem;color:rgba(255,255,255,.5);transition:color .3s" onmouseover="this.style.color='var(--amber2)'" onmouseout="this.style.color='rgba(255,255,255,.5)'">
+            <i style="color:var(--amber2);font-size:.75rem" class="fas fa-envelope"></i>Send Email
+          </a>
         </div>
-        {% endif %}
+      </div>
 
-        <a href="{{ url_for('blog') }}" class="back-btn">← Back to Blog</a>
-    </section>
+    </aside>
+  </div>
+</div>
 
+<!-- CTA STRIP -->
+<div class="cta-strip">
+  <a href="{{ url_for('property_page') }}">View Properties</a>
+  <span class="sep">|</span>
+  <a href="tel:+2349139070404"><i class="fas fa-phone-alt" style="margin-right:6px;font-size:.7rem"></i>+234 913 907 0404</a>
+  <span class="sep">|</span>
+  <a href="https://wa.me/2349139070404" target="_blank"><i class="fab fa-whatsapp" style="margin-right:6px;font-size:.85rem"></i>WhatsApp</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <img src="{{ url_for('static', filename='image/logogmc.png') }}" alt="Great Marcy Realty" class="footer-logo-img">
+        <h3>Great Marcy Realty</h3>
+        <p>A division of Great Mar-cy's &amp; Sons Limited. Trusted real estate in Ilorin — turning land into legacy, one plot at a time.</p>
+        <div class="social-links-f">
+          <a href="https://x.com/greatmarcy88214?s=21" target="_blank" aria-label="X / Twitter">
+            <img src="https://img.icons8.com/ios-filled/50/ffffff/twitterx--v2.png" alt="X">
+          </a>
+          <a href="https://www.instagram.com/_greatmarcyrealty?igsh=M2VoNm9yaGI2bGln" target="_blank" aria-label="Instagram">
+            <img src="https://img.icons8.com/color/48/instagram-new.png" alt="Instagram">
+          </a>
+          <a href="https://www.facebook.com/share/19dQ18nAEM/?mibextid=wwXIfr" target="_blank" aria-label="Facebook">
+            <img src="https://img.icons8.com/color/48/facebook-new.png" alt="Facebook">
+          </a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Quick Links</div>
+        <ul>
+          <li><a href="{{ url_for('home') }}">Home</a></li>
+          <li><a href="{{ url_for('property_page') }}">Properties</a></li>
+          <li><a href="{{ url_for('about') }}">About Us</a></li>
+          <li><a href="{{ url_for('blog') }}">Blog</a></li>
+          <li><a href="{{ url_for('contact') }}">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contact</div>
+        <div class="footer-contact-info">
+          <a href="mailto:info@greatmarcysonslimited.com">info@greatmarcysonslimited.com</a>
+          <a href="tel:+2349139070404">+234 913 907 0404</a>
+          <p>Kulende Area, KM5 Old Jebba Road,<br>Sango Rd, Ilorin 240101, Kwara</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year"></span> Great Mar-cy's &amp; Sons Limited. All Rights Reserved.</span>
+      <span>Developed by <a href="https://wa.me/2348105208988?text=Hello%20Aquila%20Studio%2C%20I%20need%20a%20website" target="_blank" rel="noopener">Aquila Tech</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/2349139070404?text=Hello%20Great%20Mar-cy's%20%26%20Sons%20Limited!" class="whatsapp-button" target="_blank" aria-label="Chat on WhatsApp">
+  <img src="https://img.icons8.com/color/48/000000/whatsapp--v1.png" alt="WhatsApp">
+</a>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Cursor
+  const cursor=document.getElementById('cursor');
+  const ring=document.getElementById('cursorRing');
+  let mx=0,my=0,rx=0,ry=0;
+  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+  (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)})();
+  document.querySelectorAll('a,button,.tag').forEach(el=>{
+    el.addEventListener('mouseenter',()=>{cursor.classList.add('grow');ring.classList.add('grow')});
+    el.addEventListener('mouseleave',()=>{cursor.classList.remove('grow');ring.classList.remove('grow')});
+  });
+
+  // Header sticky
+  window.addEventListener('scroll',()=>document.getElementById('mainHeader').classList.toggle('sticky',window.scrollY>80));
+
+  // Nav
+  const ham=document.getElementById('hamburger');
+  const nav=document.getElementById('navMenu');
+  const ov=document.getElementById('overlay');
+  function closeNav(){ham.classList.remove('active');nav.classList.remove('show');ov.classList.remove('show');document.body.classList.remove('no-scroll')}
+  ham.addEventListener('click',()=>{const o=nav.classList.toggle('show');ham.classList.toggle('active',o);ov.classList.toggle('show',o);document.body.classList.toggle('no-scroll',o)});
+  ov.addEventListener('click',closeNav);
+
+  // Reveal
+  const rObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');rObs.unobserve(e.target)}})},{threshold:.1});
+  document.querySelectorAll('.reveal').forEach(el=>rObs.observe(el));
+</script>
 </body>
 </html>
