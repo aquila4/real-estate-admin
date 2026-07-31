@@ -1069,11 +1069,10 @@
       <i class="fas fa-times"></i>
     </button>
     <div class="video-modal-frame">
-      <video id="companyVideo" controls playsinline preload="none"
-             poster="{{ url_for('static', filename='image/company-video-poster.jpg') }}">
-        <source src="{{ url_for('static', filename='video/company-intro.mp4') }}" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+      <video id="companyVideo" controls playsinline preload="none">
+  <source src="{{ url_for('static', filename='image/vid1.MP4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
     </div>
   </div>
 </div>
