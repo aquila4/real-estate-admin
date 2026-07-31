@@ -657,6 +657,67 @@
     .scrolling-row span.accent{color:rgba(212,150,26,.12)}
     @keyframes scroll-l{from{transform:translateX(0)}to{transform:translateX(-50%)}}
     @keyframes scroll-r{from{transform:translateX(-50%)}to{transform:translateX(0)}}
+
+
+    /* ── ABOUT VIDEO THUMB ── */
+.about-video-thumb{
+  position:relative;overflow:hidden;cursor:pointer;
+  margin-top:2rem;border-radius:4px;
+  aspect-ratio:16/9;max-width:480px;
+  outline:none
+}
+.about-video-thumb img{
+  width:100%;height:100%;object-fit:cover;
+  filter:brightness(.6) saturate(1.1);
+  transition:transform .8s var(--ease),filter .4s
+}
+.about-video-thumb:hover img{transform:scale(1.05);filter:brightness(.5) saturate(1.1)}
+.about-video-overlay{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.75rem
+}
+.about-video-play{
+  width:60px;height:60px;border-radius:50%;
+  background:var(--amber);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .4s var(--ease)
+}
+.about-video-play i{color:var(--dark);font-size:1.1rem;margin-left:3px}
+.about-video-thumb:hover .about-video-play{transform:scale(1.1)}
+.about-video-label{
+  color:var(--white);font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;font-weight:600
+}
+
+/* ── VIDEO MODAL (shared, reusable anywhere) ── */
+.video-modal{
+  position:fixed;inset:0;z-index:999;
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;
+  transition:opacity .4s var(--ease)
+}
+.video-modal.active{opacity:1;pointer-events:auto}
+.video-modal-backdrop{
+  position:absolute;inset:0;background:rgba(0,0,0,.92)
+}
+.video-modal-inner{
+  position:relative;width:90%;max-width:1100px;z-index:1
+}
+.video-modal-close{
+  position:absolute;top:-3rem;right:0;
+  width:40px;height:40px;background:transparent;border:1px solid rgba(255,255,255,.3);
+  color:var(--white);display:flex;align-items:center;justify-content:center;
+  cursor:pointer;transition:background .3s,border-color .3s
+}
+.video-modal-close:hover{background:var(--amber);border-color:var(--amber);color:var(--dark)}
+.video-modal-frame{
+  aspect-ratio:16/9;background:#000
+}
+.video-modal-frame video{width:100%;height:100%;object-fit:contain}
+
+@media(max-width:640px){
+  .about-video-thumb{max-width:100%}
+  .video-modal-close{top:-2.8rem;width:36px;height:36px}
+}
   </style>
 </head>
 <body>
@@ -736,6 +797,7 @@
       </div>
       <p>Handpicked premium land and properties across Kwara State — built for value, built for legacy.</p>
     </div>
+
     <div class="estates-grid">
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/MERCY ESTATE.png') }}" alt="Mercy Estate" loading="lazy">
@@ -746,6 +808,7 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/extent.jpg') }}" alt="Phase 3 Mashankore" loading="lazy">
         <div class="estate-card-overlay">
@@ -755,6 +818,7 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/success.jpg') }}" alt="Success City Estate" loading="lazy">
         <div class="estate-card-overlay">
@@ -764,6 +828,7 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/hisgrace1.png') }}" alt="His Grace Phase 1" loading="lazy">
         <div class="estate-card-overlay">
@@ -773,6 +838,7 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/hisgrace2.png') }}" alt="His Grace Phase 2" loading="lazy">
         <div class="estate-card-overlay">
@@ -782,6 +848,7 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
+
       <div class="estate-card">
         <img src="{{ url_for('static', filename='image/oloru.JPG') }}" alt="Success City Estate Survey Plan" loading="lazy">
         <div class="estate-card-overlay">
@@ -801,8 +868,20 @@
         </div>
         <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
       </div>
-    </div>
-  </div>
+
+      <!-- ✅ moved inside the grid -->
+      <div class="estate-card">
+        <img src="{{ url_for('static', filename='image/prop1.JPG') }}" alt="Luxury Duplex & Apartments" loading="lazy">
+        <div class="estate-card-overlay">
+          <span class="estate-tag">Apartments</span>
+          <h3>Luxury Duplex &amp; Apartments</h3>
+          <p class="estate-price">Asking price ₦135M (C of O)</p>
+        </div>
+        <div class="estate-arrow"><i class="fas fa-arrow-right"></i></div>
+      </div>
+    </div><!-- /estates-grid -->
+
+  </div><!-- /container -->
 </section>
 
 <!-- BILLBOARD 1 -->
@@ -933,7 +1012,21 @@
         <h2 id="about-title">Redefining <em>Real Estate</em><br>in Nigeria</h2>
         <p>We help people buy, sell, and manage properties with ease, transparency, and innovation. From land surveys to allocation — we handle it all so you don't have to.</p>
         <a href="{{ url_for('about') }}" class="btn-primary" style="margin-top:1rem"><span>Learn More</span><i class="fas fa-arrow-right"></i></a>
+
+       <!-- COMPANY VIDEO THUMB -->
+        <div class="about-video-thumb" id="videoThumb" tabindex="0" role="button" aria-label="Play company video">
+          <video muted playsinline preload="metadata">
+            <source src="{{ url_for('static', filename='video/vid1.mp4') }}#t=0.1" type="video/mp4">
+          </video>
+          <div class="about-video-overlay">
+            <div class="about-video-play">
+              <i class="fas fa-play"></i>
+            </div>
+            <span class="about-video-label">Watch Our Story</span>
+          </div>
+        </div>
       </div>
+      
       <div class="about-cards-stack">
         <div class="about-box">
           <div class="about-box-icon"><i class="fas fa-eye"></i></div>
@@ -967,6 +1060,23 @@
     </div>
   </div>
 </section>
+
+<!-- VIDEO MODAL -->
+<div class="video-modal" id="videoModal" aria-hidden="true">
+  <div class="video-modal-backdrop" id="videoModalBackdrop"></div>
+  <div class="video-modal-inner">
+    <button class="video-modal-close" id="videoModalClose" aria-label="Close video">
+      <i class="fas fa-times"></i>
+    </button>
+    <div class="video-modal-frame">
+      <video id="companyVideo" controls playsinline preload="none"
+             poster="{{ url_for('static', filename='image/company-video-poster.jpg') }}">
+        <source src="{{ url_for('static', filename='video/company-intro.mp4') }}" type="video/mp4">
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</div>
 
 <!-- BILLBOARD 2 -->
 <div class="billboard">
@@ -1303,6 +1413,37 @@
       m.textContent='⚠ Something went wrong — please try again.';m.style.color='#E24B4A';
     }
   });
+</script>
+
+<script>
+(function(){
+  const thumb = document.getElementById('videoThumb');
+  const modal = document.getElementById('videoModal');
+  const backdrop = document.getElementById('videoModalBackdrop');
+  const closeBtn = document.getElementById('videoModalClose');
+  const video = document.getElementById('companyVideo');
+
+  function openModal(){
+    modal.classList.add('active');
+    modal.setAttribute('aria-hidden','false');
+    document.body.style.overflow = 'hidden';
+    video.play().catch(()=>{});
+  }
+
+  function closeModal(){
+    modal.classList.remove('active');
+    modal.setAttribute('aria-hidden','true');
+    document.body.style.overflow = '';
+    video.pause();
+    video.currentTime = 0;
+  }
+
+  thumb.addEventListener('click', openModal);
+  thumb.addEventListener('keypress', e => { if(e.key === 'Enter') openModal(); });
+  backdrop.addEventListener('click', closeModal);
+  closeBtn.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeModal(); });
+})();
 </script>
 </body>
 </html>
