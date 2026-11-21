@@ -27,10 +27,8 @@ ADMIN_PASS = os.getenv("ADMIN_PASS", "1234")
 DEFAULT_SENDER = os.getenv("DEFAULT_SENDER", "greatmarcysonslimited@gmail.com")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    "DATABASE_URL",
-    "postgresql://postgres:jGNEMNdfkQiNnUlvVSlbxQamOkwTAchb@centerbeam.proxy.rlwy.net:25167/railway"
-)
+# Database credentials must be supplied through Railway environment variables.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "static/uploads")
