@@ -27,10 +27,8 @@ ADMIN_PASS = os.getenv("ADMIN_PASS", "1234")
 DEFAULT_SENDER = os.getenv("DEFAULT_SENDER", "greatmarcysonslimited@gmail.com")
 SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
 
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
-    "DATABASE_URL",
-    "postgresql://postgres:jGNEMNdfkQiNnUlvVSlbxQamOkwTAchb@centerbeam.proxy.rlwy.net:25167/railway"
-)
+# Database credentials must be supplied through Railway environment variables.
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 UPLOAD_FOLDER = os.getenv("UPLOAD_FOLDER", "static/uploads")
@@ -250,13 +248,35 @@ def enquiry():
     user_html = f"<p>Hi <b>{name}</b>,</p><p>Thanks for contacting us!</p>"
     send_email(subject="We’ve received your enquiry", recipients=[email], body_text=user_text, body_html=user_html)
 
-    # Admin notification
-    admin_text = f"New Enquiry:\nName: {name}\nEmail: {email}\nSubject: {subject}\nMessage: {message}\nSent: {datetime.now()}"
-    send_email(subject=f"New Enquiry from {name}", recipients=[DEFAULT_SENDER], body_text=admin_text)
+    # Notify the office; keep the verified SendGrid sender separate from the inbox.
+    enquiry_recipient = os.getenv("ENQUIRY_NOTIFICATION_EMAIL", "info@greatmarcysonslimited.com")
+    admin_text = (
+        f"Source: Great Marcy & Sons Limited Website (greatmarcysonslimited.com)\n"
+        f"Name: {name}\nEmail: {email}\nSubject: {subject}\n"
+        f"Message: {message}\nSubmitted (UTC): {datetime.utcnow().isoformat()}Z"
+    )
+    send_email(
+        subject=f"[GMC Website Enquiry] New message from {name}",
+        recipients=[enquiry_recipient],
+        body_text=admin_text,
+        reply_to=email,
+    )
 
     flash("✅ Your enquiry has been received."); return redirect(url_for('contact'))
 
 # ==============================
+@app.route('/admin/enquiries')
+@admin_required
+def admin_enquiries():
+    entries = Enquiry.query.order_by(Enquiry.created_at.desc()).limit(250).all()
+    return render_template('admin_leads.html', entries=entries, kind='enquiries', title='Website Enquiries')
+
+@app.route('/admin/newsletter')
+@admin_required
+def admin_newsletter():
+    entries = Newsletter.query.order_by(Newsletter.created_at.desc()).limit(250).all()
+    return render_template('admin_leads.html', entries=entries, kind='newsletter', title='Newsletter Subscribers')
+
 # 🔹 ADMIN LOGIN / LOGOUT
 # ==============================
 @app.route('/admin-login', methods=['GET', 'POST'])

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow"><title>{{ title }} | GMC Admin</title>
+<style>
+body{margin:0;background:#111;color:#f6f3ec;font:15px system-ui,sans-serif}header{background:#080808;border-bottom:1px solid #5b441d;padding:22px max(20px,5vw)}a{color:#e7b94d}nav{display:flex;gap:24px;flex-wrap:wrap;margin-top:14px}main{max-width:1200px;margin:auto;padding:30px 20px}h1{font-size:26px}p{color:#bcb7ac}.card{background:#1c1c1c;border:1px solid #36302a;border-radius:8px;padding:20px;margin:15px 0;overflow-wrap:anywhere}.meta{color:#c8a45c;font-size:13px}.message{white-space:pre-wrap;line-height:1.5}small{color:#aaa}
+</style></head><body>
+<header><strong>Great Marcy · Admin</strong><nav>
+<a href="{{ url_for('admin_dashboard') }}">Dashboard</a>
+<a href="{{ url_for('admin_enquiries') }}">Website Enquiries</a>
+<a href="{{ url_for('admin_newsletter') }}">Newsletter Subscribers</a>
+<a href="{{ url_for('logout') }}">Log out</a></nav></header>
+<main><h1>{{ title }}</h1>
+<p>Showing the 250 most recent records. Messages remain in the database even when email delivery fails.</p>
+{% if not entries %}<div class="card">No records yet.</div>{% endif %}
+{% for item in entries %}
+<article class="card">
+{% if kind == 'enquiries' %}
+<h2>{{ item.name }}</h2><div class="meta">Source: GMC Website · {{ item.created_at.strftime('%d %b %Y %H:%M') if item.created_at else 'Date unavailable' }} UTC</div>
+<p><strong>Subject:</strong> {{ item.subject }}</p>
+<p><strong>Email:</strong> <a href="mailto:{{ item.email }}">{{ item.email }}</a></p>
+<div class="message">{{ item.message }}</div>
+{% else %}
+<p><strong>{{ item.email }}</strong></p>
+<div class="meta">Website newsletter · {{ item.created_at.strftime('%d %b %Y %H:%M') if item.created_at else 'Date unavailable' }} UTC</div>
+<small>{{ 'Confirmed' if item.confirmed else 'Not confirmed' }}</small>
+{% endif %}
+</article>
+{% endfor %}</main></body></html>
