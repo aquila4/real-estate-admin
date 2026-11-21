@@ -267,6 +267,18 @@ def enquiry():
     flash("✅ Your enquiry has been received."); return redirect(url_for('contact'))
 
 # ==============================
+@app.route('/admin/enquiries')
+@admin_required
+def admin_enquiries():
+    entries = Enquiry.query.order_by(Enquiry.created_at.desc()).limit(250).all()
+    return render_template('admin_leads.html', entries=entries, kind='enquiries', title='Website Enquiries')
+
+@app.route('/admin/newsletter')
+@admin_required
+def admin_newsletter():
+    entries = Newsletter.query.order_by(Newsletter.created_at.desc()).limit(250).all()
+    return render_template('admin_leads.html', entries=entries, kind='newsletter', title='Newsletter Subscribers')
+
 # 🔹 ADMIN LOGIN / LOGOUT
 # ==============================
 @app.route('/admin-login', methods=['GET', 'POST'])
