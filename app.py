@@ -25,7 +25,18 @@ app.config['SECRET_KEY'] = os.getenv("SECRET_KEY", "fallback_secret")
 ADMIN_USER = os.getenv("ADMIN_USER", "admin")
 ADMIN_PASS = os.getenv("ADMIN_PASS", "1234")
 DEFAULT_SENDER = os.getenv("DEFAULT_SENDER", "greatmarcysonslimited@gmail.com")
-SENDGRID_API_KEY = os.getenv("SENDGRID_API_KEY")
+# Strip accidental whitespace, but never log the secret itself.
+SENDGRID_API_KEY = (os.getenv("SENDGRID_API_KEY") or "").strip()
+
+def validate_sendgrid_config():
+    """Fail safely before making an HTTP request with an invalid Authorization header."""
+    if not SENDGRID_API_KEY:
+        raise ValueError("SENDGRID_API_KEY is missing")
+    if not SENDGRID_API_KEY.isascii() or any(ch.isspace() for ch in SENDGRID_API_KEY):
+        raise ValueError("SENDGRID_API_KEY contains unsupported whitespace or non-ASCII characters")
+    if not SENDGRID_API_KEY.startswith("SG."):
+        raise ValueError("SENDGRID_API_KEY must be a SendGrid API key starting with SG.")
+
 
 # Database credentials must be supplied through Railway environment variables.
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ["DATABASE_URL"]
@@ -69,6 +80,7 @@ def send_email(subject, recipients, body_text=None, body_html=None, reply_to=Non
                 if reply_to:
                     message.reply_to = Email(reply_to)
                 
+                validate_sendgrid_config()
                 sg = SendGridAPIClient(SENDGRID_API_KEY)
                 response = sg.send(message)
                 print(f"✅ Email sent to {recipient}, Status Code: {response.status_code}")
