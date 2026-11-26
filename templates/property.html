@@ -10,45 +10,33 @@
 
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Available Properties | Great Mar-cy's & Sons Limited</title>
-  <meta name="description" content="Explore all available properties, lands, and houses for sale in Ilorin, Kwara State — curated by Great Mar-cy's & Sons Limited.">
+  <title>Land &amp; Properties for Sale in Ilorin | Great Marcy</title>
+  <meta name="description" content="Explore land, estates and residential properties in Ilorin, Kwara State, including Mercy Estate, Success City and His Grace City. Enquire about prices and availability.">
   <meta name="keywords" content="Great Marcy Sons Limited, properties in Ilorin, lands for sale Ilorin, houses in Kwara State, Ilorin real estate">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Great Mar-cy's & Sons Limited">
   <link rel="canonical" href="https://greatmarcysonslimited.com/property">
-  <meta property="og:title" content="Available Properties | Great Mar-cy's & Sons Limited">
-  <meta property="og:description" content="Browse verified properties and land for sale in Ilorin, Kwara State.">
+  <meta property="og:title" content="Land &amp; Properties for Sale in Ilorin | Great Marcy">
+  <meta property="og:description" content="Explore land, estates and residential properties in Ilorin, Kwara State, including Mercy Estate, Success City and His Grace City. Enquire about prices and availability.">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://greatmarcysonslimited.com/property">
   <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Available Properties | Great Mar-cy's & Sons Limited">
+  <meta name="twitter:title" content="Land &amp; Properties for Sale in Ilorin | Great Marcy">
+  <meta name="twitter:description" content="Explore land, estates and residential properties in Ilorin, Kwara State, including Mercy Estate, Success City and His Grace City. Enquire about prices and availability.">
   <meta name="twitter:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
   <link rel="icon" href="{{ url_for('static', filename='image/logogmc.png') }}" type="image/png">
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "CollectionPage",
-    "name": "Available Properties | Great Mar-cy's & Sons Limited",
-    "description": "Explore verified property listings — lands and houses for sale in Ilorin, Kwara State.",
-    "url": "https://greatmarcysonslimited.com/property",
-    "image": "https://greatmarcysonslimited.com/static/image/logogmc.png",
-    "hasPart": [
-      {% for p in properties %}
-      {
-        "@type": "Product",
-        "name": "{{ p.title }}",
-        "description": "{{ p.description[:150] }}",
-        "url": "{{ url_for('property_detail', slug=p.slug, _external=True) }}",
-        "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=p.image_url) if p.image_url else '/static/image/logogmc.png' }}",
-        "offers": {"@type": "Offer","priceCurrency": "NGN","availability": "https://schema.org/InStock"}
-      }{% if not loop.last %},{% endif %}
-      {% endfor %}
-    ],
-    "publisher": {"@type": "Organization","name": "Great Mar-cy's & Sons Limited","logo": {"@type": "ImageObject","url": "https://greatmarcysonslimited.com/static/image/logogmc.png"}}
-  }
-  </script>
+  {% set items = namespace(values=[]) %}
+{% for p in properties %}
+{% set items.values = items.values + [{"@type":"ListItem","position":loop.index,"item":{"@type":"RealEstateListing","name":p.title,"url":"https://greatmarcysonslimited.com" ~ url_for('property_detail', slug=p.slug),"description":(p.description or '')[:150]}}] %}
+{% endfor %}
+{% for estate in featured.items %}
+{% set items.values = items.values + [{"@type":"ListItem","position":(properties|length + loop.index),"item":{"@type":"Thing","name":estate[0],"image":"https://greatmarcysonslimited.com" ~ url_for('static',filename=estate[1])}}] %}
+{% endfor %}
+<script type="application/ld+json">
+{{ {"@context":"https://schema.org","@type":"CollectionPage","name":"Land and Properties for Sale in Ilorin","description":"Explore the Great Marcy property portfolio in Kwara State.","url":"https://greatmarcysonslimited.com/property","mainEntity":{"@type":"ItemList","numberOfItems":items.values|length,"itemListElement":items.values},"publisher":{"@type":"Organization","name":"Great Marcy & Sons Limited"}}|tojson }}
+</script>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
