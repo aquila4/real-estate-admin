@@ -99,8 +99,8 @@ def home():
     posts = BlogPost.query.order_by(BlogPost.created_at.desc()).limit(2).all()
     
     seo = {
-        "title": "Great Mar-cy’s & Sons Limited - Real Estate in Ilorin",
-        "description": "Find and buy land or property in Ilorin with Great Mar-cy’s & Sons Limited.",
+        "title": "Real Estate & Land for Sale in Ilorin | Great Marcy",
+        "description": "Explore estates, land and properties for sale in Ilorin, Kwara State with Great Marcy & Sons Limited. Contact our team for pricing and property enquiries.",
         "keywords": "Ilorin real estate, buy land Ilorin, Great Marcy Sons Limited, property for sale",
         "image": url_for('static', filename='image/logo.png')
     }
@@ -135,6 +135,10 @@ def contact(): return render_template('contact.html')
 
 @app.route('/privacy')
 def privacy(): return render_template('privacy.html')
+
+@app.route('/robots.txt')
+def robots_txt():
+    return "User-agent: *\nDisallow: /admin\nDisallow: /login\nSitemap: https://greatmarcysonslimited.com/sitemap.xml\n", 200, {"Content-Type": "text/plain; charset=utf-8"}
 
 @app.route('/sitemap.xml')
 def sitemap(): return send_from_directory('static', 'sitemap.xml')
