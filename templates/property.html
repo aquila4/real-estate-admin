@@ -1,3 +1,7 @@
+{% set featured_estates = [["Mercy Estate","image/MERCY ESTATE.png","Land","₦260,000 / plot"],["Phase 3 Mashankore Extension","image/extent.jpg","Extension","₦150,000 / plot"],["Success City Estate","image/success.jpg","Acres","₦960,000 / acre"],["His Grace City Estate Phase 1","image/hisgrace1.png","Premium","₦1,520,190 / acre"],["His Grace City Estate Phase 2","image/hisgrace2.png","Premium","₦960,000 / acre"],["Success City Estate Survey Plan","image/oloru.JPG","Survey Plan","₦960,000 / acre"],["Mercy Estate Plan","image/AL.jpg","Plan","Land Survey Plan"],["Luxury Duplex & Apartments","image/prop1.JPG","Apartments","Asking price ₦135M (C of O)"]] %}
+{% set existing_titles = properties|map(attribute='title')|map('lower')|list %}
+{% set featured = namespace(items=[]) %}
+{% for estate in featured_estates %}{% if estate[0]|lower not in existing_titles %}{% set featured.items = featured.items + [estate] %}{% endif %}{% endfor %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,11 +15,11 @@
   <meta name="keywords" content="Great Marcy Sons Limited, properties in Ilorin, lands for sale Ilorin, houses in Kwara State, Ilorin real estate">
   <meta name="robots" content="index, follow">
   <meta name="author" content="Great Mar-cy's & Sons Limited">
-  <link rel="canonical" href="https://greatmarcysonslimited.com/properties">
+  <link rel="canonical" href="https://greatmarcysonslimited.com/property">
   <meta property="og:title" content="Available Properties | Great Mar-cy's & Sons Limited">
   <meta property="og:description" content="Browse verified properties and land for sale in Ilorin, Kwara State.">
   <meta property="og:type" content="website">
-  <meta property="og:url" content="https://greatmarcysonslimited.com/properties">
+  <meta property="og:url" content="https://greatmarcysonslimited.com/property">
   <meta property="og:image" content="https://greatmarcysonslimited.com/static/image/logogmc.png">
   <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="Available Properties | Great Mar-cy's & Sons Limited">
@@ -28,7 +32,7 @@
     "@type": "CollectionPage",
     "name": "Available Properties | Great Mar-cy's & Sons Limited",
     "description": "Explore verified property listings — lands and houses for sale in Ilorin, Kwara State.",
-    "url": "https://greatmarcysonslimited.com/properties",
+    "url": "https://greatmarcysonslimited.com/property",
     "image": "https://greatmarcysonslimited.com/static/image/logogmc.png",
     "hasPart": [
       {% for p in properties %}
@@ -36,7 +40,7 @@
         "@type": "Product",
         "name": "{{ p.title }}",
         "description": "{{ p.description[:150] }}",
-        "url": "https://greatmarcysonslimited.com/property/{{ p.id }}",
+        "url": "{{ url_for('property_detail', slug=p.slug, _external=True) }}",
         "image": "https://greatmarcysonslimited.com{{ url_for('serve_file', filename=p.image_url) if p.image_url else '/static/image/logogmc.png' }}",
         "offers": {"@type": "Offer","priceCurrency": "NGN","availability": "https://schema.org/InStock"}
       }{% if not loop.last %},{% endif %}
@@ -374,7 +378,7 @@
         <option value="newest" {% if request.args.get('sort')=='newest' %}selected{% endif %}>Newest First</option>
       </select>
       <div class="results-count">
-        <span id="propCount">{{ properties|length }}</span> propert{{ 'y' if properties|length == 1 else 'ies' }} found
+        <span id="propCount">{{ properties|length + featured.items|length }}</span> propert{{ 'y' if properties|length + featured.items|length == 1 else 'ies' }} found
       </div>
     </form>
   </div>
@@ -399,7 +403,7 @@
     </div>
 
     <div class="property-grid reveal" id="propertyGrid">
-      {% if properties %}
+      {% if properties or featured.items %}
         {% for property in properties %}
         <div class="property-card" data-title="{{ property.title|lower }}" data-location="{{ property.location|lower }}">
           <a href="{{ url_for('property_detail', slug=property.slug) }}"
@@ -446,6 +450,22 @@
               </div>
             </div>
 
+          </a>
+        </div>
+        {% endfor %}
+        {% for estate in featured.items %}
+        <div class="property-card" data-title="{{ estate[0]|lower }}" data-location="">
+          <a href="{{ url_for('contact') }}">
+            <div class="prop-media">
+              <img src="{{ url_for('static', filename=estate[1]) }}" alt="{{ estate[0] }}" loading="lazy">
+              <span class="prop-badge">{{ estate[2] }}</span>
+              <div class="prop-arrow"><i class="fas fa-arrow-right"></i></div>
+            </div>
+            <div class="prop-body">
+              <h3>{{ estate[0] }}</h3>
+              <p class="prop-desc">Featured in our portfolio. Contact our team to confirm current availability and pricing.</p>
+              <div class="prop-footer"><div><div class="prop-price">{{ estate[3] }}</div></div><span class="prop-cta">Enquire <i class="fas fa-arrow-right"></i></span></div>
+            </div>
           </a>
         </div>
         {% endfor %}
